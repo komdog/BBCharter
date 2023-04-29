@@ -8,52 +8,32 @@ bg_color = Color(0.0627451, 0.0627451, 0.0627451, 1)
 [sub_resource type="Animation" id="Animation_3puq7"]
 resource_name = "Notify"
 length = 5.0
-tracks/0/type = "bezier"
+tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath(".:position:x")
+tracks/0/path = NodePath(".:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"handle_modes": PackedInt32Array(0, 0, 0, 0),
-"points": PackedFloat32Array(-550, 0, 0, 0, 0, 0, -0.5, 0, 0, 0, 0, 0, 0, 0.5, 0, -550, 0, 0, 0, 0),
-"times": PackedFloat32Array(0, 1, 4, 5)
-}
-tracks/1/type = "bezier"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:position:y")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"handle_modes": PackedInt32Array(0, 0, 0, 0),
-"points": PackedFloat32Array(100, -0.25, 0, 0.25, 0, 100, -0.25, 0, 0.25, 0, 100, -0.25, 0, 0.25, 0, 100, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0, 1, 4, 5)
+"times": PackedFloat32Array(0, 1, 4, 5),
+"transitions": PackedFloat32Array(0.5, 1, 2, 1),
+"update": 0,
+"values": [Vector2(1920, 100), Vector2(1370, 100), Vector2(1370, 100), Vector2(1920, 100)]
 }
 
 [sub_resource type="Animation" id="Animation_qxa3c"]
 length = 0.001
-tracks/0/type = "bezier"
+tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath(".:position:x")
+tracks/0/path = NodePath(".:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(-550, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/1/type = "bezier"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:position:y")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(100, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1920, 100)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_4glp3"]
@@ -65,10 +45,12 @@ _data = {
 [node name="Notification" type="Control"]
 layout_mode = 3
 anchors_preset = 0
-offset_left = -550.0
+offset_left = 1920.0
 offset_top = 100.0
+offset_right = 2470.0
 offset_bottom = 250.0
 script = ExtResource("1_g8b3e")
+metadata/_edit_group_ = true
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 1
