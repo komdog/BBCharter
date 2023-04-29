@@ -338,17 +338,15 @@ shortcut = SubResource("Shortcut_4ufp1")
 icon = ExtResource("9_lohrd")
 icon_alignment = 1
 
-[node name="AssetsManager" type="Control" parent="."]
-clip_contents = true
+[node name="Assets" type="Control" parent="."]
 anchors_preset = 0
-offset_left = 1488.0
+offset_left = 1.0
 offset_top = 56.0
-offset_right = 1920.0
+offset_right = 494.0
 offset_bottom = 616.0
-script = ExtResource("14_eesym")
 metadata/_edit_group_ = true
 
-[node name="Panel" type="Panel" parent="AssetsManager"]
+[node name="Panel" type="Panel" parent="Assets"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -357,22 +355,21 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_bx0p2")
 
-[node name="AssetContainer" type="GridContainer" parent="AssetsManager"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -188.0
-offset_top = -267.0
-offset_right = 188.0
-offset_bottom = 267.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/h_separation = 95
-theme_override_constants/v_separation = 95
-columns = 4
+[node name="AssetsManager" type="ScrollContainer" parent="Assets"]
+layout_mode = 0
+offset_left = -1.0
+offset_top = 7.0
+offset_right = 493.0
+offset_bottom = 560.0
+horizontal_scroll_mode = 0
+script = ExtResource("14_eesym")
+metadata/_edit_group_ = true
+
+[node name="AssetContainer" type="GridContainer" parent="Assets/AssetsManager"]
+layout_mode = 2
+theme_override_constants/h_separation = 100
+theme_override_constants/v_separation = 100
+columns = 5
 
 [node name="FileDialog" type="FileDialog" parent="."]
 title = "Open a File"
@@ -463,6 +460,8 @@ width = 5.0
 default_color = Color(0.619608, 0.027451, 0.266667, 1)
 
 [node name="Notification" parent="." instance=ExtResource("8_vyifj")]
+offset_left = 1920.0
+offset_right = 2470.0
 
 [node name="BottomBar" type="Panel" parent="."]
 layout_mode = 0
