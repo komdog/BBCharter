@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=3 uid="uid://bcwocxkuf6q5b"]
+
+[ext_resource type="Script" path="res://prefabs/ShutterKeyframe.gd" id="1_smxwl"]
+[ext_resource type="Texture2D" uid="uid://crepyud1dot2s" path="res://assets/icon_shutter.png" id="2_bdml5"]
+
+[node name="ShutterKeyframe" type="Node2D"]
+script = ExtResource("1_smxwl")
+
+[node name="Visual" type="Sprite2D" parent="."]
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("2_bdml5")
+
+[node name="InputHandler" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[connection signal="gui_input" from="InputHandler" to="." method="_on_input_handler_gui_input"]

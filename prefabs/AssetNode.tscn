@@ -1,0 +1,40 @@
+[gd_scene load_steps=3 format=3 uid="uid://c1uylg3wims4w"]
+
+[ext_resource type="Script" path="res://prefabs/AssetNode.gd" id="1_le0sj"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j4cqx"]
+bg_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[node name="AssetNode" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_le0sj")
+
+[node name="Background" type="Panel" parent="."]
+layout_mode = 0
+offset_right = 90.0
+offset_bottom = 90.0
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_j4cqx")
+
+[node name="Icon" type="TextureRect" parent="Background"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 8.0
+offset_right = -10.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Preview" type="AudioStreamPlayer" parent="."]
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]

@@ -1,0 +1,123 @@
+[gd_scene load_steps=6 format=3 uid="uid://c3m8f3aiheycv"]
+
+[ext_resource type="Script" path="res://prefabs/Notification.gd" id="1_g8b3e"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cb5t2"]
+bg_color = Color(0.0627451, 0.0627451, 0.0627451, 1)
+
+[sub_resource type="Animation" id="Animation_3puq7"]
+resource_name = "Notify"
+length = 5.0
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0),
+"points": PackedFloat32Array(-550, 0, 0, 0, 0, 0, -0.5, 0, 0, 0, 0, 0, 0, 0.5, 0, -550, 0, 0, 0, 0),
+"times": PackedFloat32Array(0, 1, 4, 5)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0),
+"points": PackedFloat32Array(100, -0.25, 0, 0.25, 0, 100, -0.25, 0, 0.25, 0, 100, -0.25, 0, 0.25, 0, 100, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 1, 4, 5)
+}
+
+[sub_resource type="Animation" id="Animation_qxa3c"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(-550, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(100, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_4glp3"]
+_data = {
+"Notify": SubResource("Animation_3puq7"),
+"RESET": SubResource("Animation_qxa3c")
+}
+
+[node name="Notification" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -550.0
+offset_top = 100.0
+offset_bottom = 250.0
+script = ExtResource("1_g8b3e")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_cb5t2")
+
+[node name="Header" type="Label" parent="."]
+layout_mode = 0
+offset_left = 34.0
+offset_top = 24.0
+offset_right = 390.0
+offset_bottom = 88.0
+theme_override_font_sizes/font_size = 40
+text = "_Header"
+
+[node name="SubHeader" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 37.0
+offset_top = 89.0
+offset_right = 219.0
+offset_bottom = 126.0
+theme_override_colors/default_color = Color(1, 0.427451, 0.12549, 1)
+theme_override_font_sizes/normal_font_size = 24
+bbcode_enabled = true
+text = "_ SUBHEADER"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+
+[node name="Icon" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -75.0
+offset_bottom = 75.0
+grow_horizontal = 0
+grow_vertical = 2
+expand_mode = 5
+stretch_mode = 5
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_4glp3")
+}

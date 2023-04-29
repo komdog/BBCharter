@@ -1,0 +1,32 @@
+[gd_scene load_steps=2 format=3 uid="uid://ddcjctehqf625"]
+
+[ext_resource type="Script" path="res://prefabs/Indicator.gd" id="1_reinn"]
+
+[node name="LineBeat" type="Line2D"]
+points = PackedVector2Array(0, 104, 0, -104)
+width = 5.0
+script = ExtResource("1_reinn")
+
+[node name="BeatNum" type="Label" parent="."]
+visible = false
+offset_left = 5.0
+offset_top = -98.0
+offset_right = 83.0
+offset_bottom = -72.0
+size_flags_horizontal = 0
+text = "0"
+
+[node name="Animation" type="Line2D" parent="."]
+points = PackedVector2Array(0, -104, 0, -208)
+width = 3.0
+default_color = Color(0.952941, 0, 0.164706, 0.196078)
+
+[node name="OneShot" type="Line2D" parent="."]
+points = PackedVector2Array(0, -208, 0, -256)
+width = 3.0
+default_color = Color(0.803922, 0.498039, 0, 0.196078)
+
+[node name="Shutter" type="Line2D" parent="."]
+points = PackedVector2Array(0, -256, 0, -304)
+width = 3.0
+default_color = Color(0.654902, 0.513726, 0.00784314, 0.196078)

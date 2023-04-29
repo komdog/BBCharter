@@ -1,0 +1,826 @@
+[gd_scene load_steps=51 format=3 uid="uid://bo2pso1k2xik8"]
+
+[ext_resource type="Theme" uid="uid://cehpee20dikgi" path="res://themes/main_theme.tres" id="1_71y40"]
+[ext_resource type="Script" path="res://src/cl_main.gd" id="2_ca1lw"]
+[ext_resource type="Script" path="res://src/cl_notecontroller.gd" id="3_t55vn"]
+[ext_resource type="Script" path="res://src/cl_menubar_add.gd" id="5_2p0vi"]
+[ext_resource type="Script" path="res://src/cl_menubar_project.gd" id="5_577ur"]
+[ext_resource type="Script" path="res://src/cl_character.gd" id="5_in5ur"]
+[ext_resource type="Script" path="res://src/cl_filedialog.gd" id="5_qvt2c"]
+[ext_resource type="Texture2D" uid="uid://cfg72q00eldnt" path="res://assets/Checker.png" id="6_bp6ey"]
+[ext_resource type="Script" path="res://src/cl_music.gd" id="6_f3wwk"]
+[ext_resource type="Script" path="res://src/cl_difficulty.gd" id="7_alc5b"]
+[ext_resource type="PackedScene" uid="uid://c3m8f3aiheycv" path="res://prefabs/Notification.tscn" id="8_vyifj"]
+[ext_resource type="Script" path="res://src/cl_tools.gd" id="8_waaxy"]
+[ext_resource type="Script" path="res://src/cl_menubar_edit.gd" id="8_yungy"]
+[ext_resource type="Texture2D" uid="uid://crfo7mgcdp00n" path="res://assets/icon_select.png" id="9_j5sdo"]
+[ext_resource type="Texture2D" uid="uid://cmfihxdtx36aa" path="res://assets/icon_marquee.png" id="9_lohrd"]
+[ext_resource type="Script" path="res://src/cl_menubar_file.gd" id="9_qoohm"]
+[ext_resource type="Script" path="res://src/cl_menubar_help.gd" id="10_p48ck"]
+[ext_resource type="Script" path="res://src/cl_timecode.gd" id="11_ycej5"]
+[ext_resource type="Script" path="res://src/cl_sfx.gd" id="13_i7gdi"]
+[ext_resource type="Script" path="res://src/cl_snapping.gd" id="13_oym2h"]
+[ext_resource type="Script" path="res://src/cl_asset_manager.gd" id="14_eesym"]
+[ext_resource type="Script" path="res://src/cl_shutters.gd" id="15_kn5dq"]
+[ext_resource type="Script" path="res://src/cl_popup_new_difficulty.gd" id="18_iev55"]
+[ext_resource type="Script" path="res://src/cl_popup_quit.gd" id="20_brhb6"]
+[ext_resource type="Script" path="res://src/cl_oneshot.gd" id="22_wed7f"]
+[ext_resource type="Script" path="res://src/cl_popups.gd" id="24_hyexw"]
+[ext_resource type="Script" path="res://src/cl_popup_place_animation.gd" id="26_6tqyk"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_id34j"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ritwt"]
+bg_color = Color(0.0588235, 0.0588235, 0.0588235, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fxxnx"]
+bg_color = Color(0.0627451, 0.0627451, 0.0627451, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w0hwe"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_xvp3s"]
+
+[sub_resource type="InputEventKey" id="InputEventKey_kwt1r"]
+device = -1
+keycode = 80
+unicode = 112
+
+[sub_resource type="Shortcut" id="Shortcut_t0pcs"]
+events = [SubResource("InputEventKey_kwt1r")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_mmjiq"]
+device = -1
+keycode = 77
+unicode = 109
+
+[sub_resource type="Shortcut" id="Shortcut_4ufp1"]
+events = [SubResource("InputEventKey_mmjiq")]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bx0p2"]
+bg_color = Color(0.0823529, 0.0823529, 0.0823529, 1)
+
+[sub_resource type="Animation" id="Animation_jfjoc"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Top:polygon")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [PackedVector2Array(-640, -360, -640, -360, 640, -360, 640, -360)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Bottom:polygon")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [PackedVector2Array(-640, 360, 640, 360, 640, 360, -640, 360)]
+}
+
+[sub_resource type="Animation" id="Animation_0h03h"]
+resource_name = "Shutters"
+length = 0.25
+step = 0.0004
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Top:polygon")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [PackedVector2Array(-640, -360, -640, 0, 640, 0, 640, -360), PackedVector2Array(-640, -360, -640, -360, 640, -360, 640, -360)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Bottom:polygon")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [PackedVector2Array(-640, 0, 640, 0, 640, 360, -640, 360), PackedVector2Array(-640, 360, 640, 360, 640, 360, -640, 360)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_0k37x"]
+_data = {
+"RESET": SubResource("Animation_jfjoc"),
+"Shutters": SubResource("Animation_0h03h")
+}
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8ujmx"]
+bg_color = Color(0.0470588, 0.0470588, 0.0470588, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_41pyu"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2cfo2"]
+bg_color = Color(0.909804, 0.909804, 0.909804, 1)
+
+[sub_resource type="InputEventKey" id="InputEventKey_pbv2h"]
+device = -1
+alt_pressed = true
+keycode = 83
+
+[sub_resource type="Shortcut" id="Shortcut_02m8d"]
+events = [SubResource("InputEventKey_pbv2h")]
+
+[sub_resource type="Gradient" id="Gradient_gs3md"]
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_3shvh"]
+gradient = SubResource("Gradient_gs3md")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_awqg8"]
+texture = SubResource("GradientTexture2D_3shvh")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qq0lv"]
+bg_color = Color(0, 0, 0, 0.498039)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y543m"]
+bg_color = Color(0.129412, 0.129412, 0.129412, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[node name="Main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_71y40")
+script = ExtResource("2_ca1lw")
+metadata/_edit_lock_ = true
+
+[node name="Background" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_lock_ = true
+
+[node name="Background3" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 768.0
+offset_bottom = -208.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_id34j")
+
+[node name="Background4" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 720.0
+offset_bottom = -312.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ritwt")
+
+[node name="Toolbar" type="Panel" parent="."]
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 56.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_fxxnx")
+
+[node name="MenuBar" type="MenuBar" parent="Toolbar"]
+layout_direction = 2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = 8.0
+offset_right = 289.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/h_separation = 20
+theme_override_font_sizes/font_size = 24
+flat = true
+
+[node name="File" type="PopupMenu" parent="Toolbar/MenuBar"]
+theme_override_font_sizes/font_size = 20
+item_count = 3
+item_0/text = "New Project"
+item_0/id = 0
+item_1/text = "Open Project"
+item_1/id = 1
+item_2/text = "Save Project"
+item_2/id = 2
+script = ExtResource("9_qoohm")
+
+[node name="Edit" type="PopupMenu" parent="Toolbar/MenuBar"]
+theme_override_font_sizes/font_size = 20
+item_count = 3
+item_0/text = "<temp>"
+item_0/id = 0
+item_0/disabled = true
+item_1/text = "<temp>"
+item_1/id = 1
+item_1/disabled = true
+item_2/text = "Clear Chart"
+item_2/id = 2
+script = ExtResource("8_yungy")
+
+[node name="Add" type="PopupMenu" parent="Toolbar/MenuBar"]
+theme_override_font_sizes/font_size = 20
+item_count = 1
+item_0/text = "Add Shutter"
+item_0/id = 0
+item_0/disabled = true
+script = ExtResource("5_2p0vi")
+
+[node name="Project" type="PopupMenu" parent="Toolbar/MenuBar"]
+theme_override_font_sizes/font_size = 20
+item_count = 4
+item_0/text = "Reload Project"
+item_0/id = 0
+item_0/disabled = true
+item_1/text = "Create New Difficulty"
+item_1/id = 1
+item_1/disabled = true
+item_2/text = "Delete Difficulty"
+item_2/id = 2
+item_3/text = "Rename Difficulty"
+item_3/id = 3
+script = ExtResource("5_577ur")
+
+[node name="Help" type="PopupMenu" parent="Toolbar/MenuBar"]
+theme_override_font_sizes/font_size = 20
+item_count = 2
+item_0/text = "Github Repo"
+item_0/id = 0
+item_1/text = "Discord Server"
+item_1/id = 1
+script = ExtResource("10_p48ck")
+
+[node name="Difficulty" type="OptionButton" parent="Toolbar"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -256.0
+offset_top = -20.0
+offset_right = -16.0
+offset_bottom = 20.0
+grow_horizontal = 0
+grow_vertical = 2
+tooltip_text = "Change Difficulty"
+focus_mode = 0
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_disabled_color = Color(0.482353, 0.482353, 0.482353, 1)
+theme_override_styles/pressed = SubResource("StyleBoxFlat_w0hwe")
+item_count = 1
+popup/item_0/text = "None"
+popup/item_0/id = 0
+popup/item_0/disabled = true
+script = ExtResource("7_alc5b")
+
+[node name="Tools" type="Control" parent="Toolbar"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("8_waaxy")
+
+[node name="Select" type="Button" parent="Toolbar/Tools"]
+layout_mode = 2
+offset_left = 920.0
+offset_top = 8.0
+offset_right = 960.0
+offset_bottom = 48.0
+tooltip_text = "Pointer Tool"
+focus_mode = 0
+toggle_mode = true
+button_pressed = true
+button_group = SubResource("ButtonGroup_xvp3s")
+shortcut = SubResource("Shortcut_t0pcs")
+icon = ExtResource("9_j5sdo")
+icon_alignment = 1
+
+[node name="Marquee" type="Button" parent="Toolbar/Tools"]
+layout_mode = 2
+offset_left = 960.0
+offset_top = 8.0
+offset_right = 1000.0
+offset_bottom = 48.0
+tooltip_text = "Marquee Tool"
+focus_mode = 0
+toggle_mode = true
+button_group = SubResource("ButtonGroup_xvp3s")
+shortcut = SubResource("Shortcut_4ufp1")
+icon = ExtResource("9_lohrd")
+icon_alignment = 1
+
+[node name="AssetsManager" type="Control" parent="."]
+clip_contents = true
+anchors_preset = 0
+offset_left = 1488.0
+offset_top = 56.0
+offset_right = 1920.0
+offset_bottom = 616.0
+script = ExtResource("14_eesym")
+metadata/_edit_group_ = true
+
+[node name="Panel" type="Panel" parent="AssetsManager"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bx0p2")
+
+[node name="AssetContainer" type="GridContainer" parent="AssetsManager"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -188.0
+offset_top = -267.0
+offset_right = 188.0
+offset_bottom = 267.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/h_separation = 95
+theme_override_constants/v_separation = 95
+columns = 4
+
+[node name="FileDialog" type="FileDialog" parent="."]
+title = "Open a File"
+position = Vector2i(460, 140)
+size = Vector2i(1000, 800)
+popup_window = true
+ok_button_text = "Open"
+mode_overrides_title = false
+file_mode = 0
+access = 2
+root_subfolder = "D:\\Mega\\Projects\\BunFan\\Games\\BeatBanger\\_project\\data\\act1"
+script = ExtResource("5_qvt2c")
+
+[node name="Character" type="Node2D" parent="."]
+position = Vector2(992, 336)
+scale = Vector2(0.778, 0.778)
+script = ExtResource("5_in5ur")
+metadata/_edit_group_ = true
+
+[node name="Checkers" type="Sprite2D" parent="Character"]
+texture = ExtResource("6_bp6ey")
+metadata/_edit_lock_ = true
+
+[node name="Visual" type="Sprite2D" parent="Character"]
+
+[node name="Shutters" type="Node2D" parent="Character"]
+script = ExtResource("15_kn5dq")
+
+[node name="Top" type="Polygon2D" parent="Character/Shutters"]
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-640, -360, -640, -360, 640, -360, 640, -360)
+
+[node name="Bottom" type="Polygon2D" parent="Character/Shutters"]
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-640, 360, 640, 360, 640, 360, -640, 360)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Character/Shutters"]
+libraries = {
+"": SubResource("AnimationLibrary_0k37x")
+}
+
+[node name="Hud" type="Node2D" parent="Character"]
+
+[node name="Polygon2D" type="Polygon2D" parent="Character/Hud"]
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-640, -360, 80, -360, -640, -210)
+
+[node name="Polygon2D2" type="Polygon2D" parent="Character/Hud"]
+position = Vector2(-1200, -450)
+scale = Vector2(1.25, 1.25)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(1472, 648, 896, 648, 1472, 520)
+
+[node name="NoteTimeline" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 872.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_fxxnx")
+
+[node name="NoteLine" type="Line2D" parent="NoteTimeline"]
+position = Vector2(960, 104)
+points = PackedVector2Array(-960, 0, 960, 0)
+width = 5.0
+
+[node name="NoteController" type="Node2D" parent="NoteTimeline/NoteLine"]
+script = ExtResource("3_t55vn")
+
+[node name="Indicators" type="Node2D" parent="NoteTimeline/NoteLine/NoteController"]
+
+[node name="Notes" type="Node2D" parent="NoteTimeline/NoteLine/NoteController"]
+
+[node name="AnimationsTrack" type="Node2D" parent="NoteTimeline/NoteLine/NoteController"]
+position = Vector2(0, -156)
+
+[node name="OneshotSoundTrack" type="Node2D" parent="NoteTimeline/NoteLine/NoteController"]
+position = Vector2(0, -232)
+
+[node name="ShutterTrack" type="Node2D" parent="NoteTimeline/NoteLine/NoteController"]
+position = Vector2(0, -280)
+
+[node name="LineCenter" type="Line2D" parent="NoteTimeline/NoteLine"]
+points = PackedVector2Array(0, 104, 0, -304)
+width = 5.0
+default_color = Color(0.619608, 0.027451, 0.266667, 1)
+
+[node name="Notification" parent="." instance=ExtResource("8_vyifj")]
+
+[node name="BottomBar" type="Panel" parent="."]
+layout_mode = 0
+offset_top = 616.0
+offset_right = 1920.0
+offset_bottom = 672.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_8ujmx")
+
+[node name="TimeCode" type="Label" parent="BottomBar"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 42.0
+offset_top = -22.5
+offset_right = 186.0
+offset_bottom = 22.5
+grow_vertical = 2
+theme_override_font_sizes/font_size = 24
+text = "0:00 - 0:00"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("11_ycej5")
+
+[node name="Snapping" type="OptionButton" parent="BottomBar"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 8.0
+offset_top = -15.0
+offset_right = 144.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+tooltip_text = "Snapping Interval"
+focus_mode = 0
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_styles/pressed = SubResource("StyleBoxFlat_41pyu")
+item_count = 4
+popup/item_0/text = "Beat"
+popup/item_0/id = 0
+popup/item_1/text = "1/2"
+popup/item_1/id = 1
+popup/item_2/text = "1/4"
+popup/item_2/id = 2
+popup/item_3/text = "1/8"
+popup/item_3/id = 3
+script = ExtResource("13_oym2h")
+
+[node name="SnapToggle" type="Button" parent="BottomBar/Snapping"]
+layout_mode = 0
+offset_left = -152.0
+offset_right = -8.0
+offset_bottom = 31.0
+tooltip_text = "Toggle Timeline Snapping"
+focus_mode = 0
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_styles/pressed = SubResource("StyleBoxFlat_2cfo2")
+toggle_mode = true
+button_pressed = true
+shortcut = SubResource("Shortcut_02m8d")
+text = "SNAPPING : ON"
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+script = ExtResource("6_f3wwk")
+
+[node name="Sfx" type="AudioStreamPlayer" parent="."]
+script = ExtResource("13_i7gdi")
+
+[node name="OneShot" type="AudioStreamPlayer" parent="."]
+script = ExtResource("22_wed7f")
+
+[node name="Background5" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 672.0
+offset_right = -1728.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_awqg8")
+
+[node name="Label" type="Label" parent="Background5"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 208.0
+offset_right = 136.0
+offset_bottom = 237.0
+theme_override_colors/font_color = Color(1, 1, 1, 0.737255)
+theme_override_font_sizes/font_size = 18
+text = "NOTES"
+
+[node name="Label2" type="Label" parent="Background5"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 104.0
+offset_right = 143.0
+offset_bottom = 133.0
+theme_override_colors/font_color = Color(1, 1, 1, 0.737255)
+theme_override_font_sizes/font_size = 18
+text = "ANIMATIONS"
+
+[node name="Label3" type="Label" parent="Background5"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 56.0
+offset_right = 189.0
+offset_bottom = 85.0
+theme_override_colors/font_color = Color(1, 1, 1, 0.737255)
+theme_override_font_sizes/font_size = 18
+text = "ONESHOT SOUND"
+
+[node name="Label4" type="Label" parent="Background5"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 8.0
+offset_right = 189.0
+offset_bottom = 37.0
+theme_override_colors/font_color = Color(1, 1, 1, 0.737255)
+theme_override_font_sizes/font_size = 18
+text = "SHUTTER"
+
+[node name="Popups" type="Panel" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_qq0lv")
+script = ExtResource("24_hyexw")
+
+[node name="NewDifficultyPopup" type="Panel" parent="Popups"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -276.0
+offset_top = -134.0
+offset_right = 276.0
+offset_bottom = 134.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_y543m")
+script = ExtResource("18_iev55")
+
+[node name="Label" type="Label" parent="Popups/NewDifficultyPopup"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 58.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 20
+text = "Create New Difficulty"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DifficultyNameField" type="LineEdit" parent="Popups/NewDifficultyPopup"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -203.0
+offset_top = -45.0
+offset_right = 205.0
+offset_bottom = -6.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 1
+theme_override_font_sizes/font_size = 24
+placeholder_text = "Difficulty Name"
+
+[node name="DifficultyRatingField" type="SpinBox" parent="Popups/NewDifficultyPopup"]
+layout_mode = 0
+offset_left = 74.0
+offset_top = 142.0
+offset_right = 481.0
+offset_bottom = 173.0
+max_value = 10.0
+value = 1.0
+rounded = true
+
+[node name="Create" type="Button" parent="Popups/NewDifficultyPopup"]
+layout_mode = 2
+offset_left = 196.0
+offset_top = 210.0
+offset_right = 268.0
+offset_bottom = 250.0
+focus_mode = 0
+theme_override_font_sizes/font_size = 18
+text = "Create"
+
+[node name="Cancel" type="Button" parent="Popups/NewDifficultyPopup"]
+layout_mode = 2
+offset_left = 284.0
+offset_top = 210.0
+offset_right = 356.0
+offset_bottom = 250.0
+theme_override_font_sizes/font_size = 18
+text = "Cancel"
+
+[node name="PlaceAnimation" type="Panel" parent="Popups"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -295.0
+offset_right = 300.0
+offset_bottom = 295.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_y543m")
+script = ExtResource("26_6tqyk")
+
+[node name="Label" type="Label" parent="Popups/PlaceAnimation"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 58.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 20
+text = "Place New Animation"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SheetH" type="SpinBox" parent="Popups/PlaceAnimation"]
+layout_mode = 0
+offset_left = 100.0
+offset_top = 123.0
+offset_right = 507.0
+offset_bottom = 154.0
+value = 2.0
+rounded = true
+
+[node name="SheetV" type="SpinBox" parent="Popups/PlaceAnimation"]
+layout_mode = 0
+offset_left = 100.0
+offset_top = 163.0
+offset_right = 507.0
+offset_bottom = 194.0
+value = 3.0
+rounded = true
+
+[node name="Total" type="SpinBox" parent="Popups/PlaceAnimation"]
+layout_mode = 0
+offset_left = 100.0
+offset_top = 203.0
+offset_right = 507.0
+offset_bottom = 234.0
+value = 6.0
+rounded = true
+
+[node name="Create" type="Button" parent="Popups/PlaceAnimation"]
+layout_mode = 2
+offset_left = 196.0
+offset_top = 531.0
+offset_right = 292.0
+offset_bottom = 571.0
+focus_mode = 0
+theme_override_font_sizes/font_size = 18
+text = "Create"
+
+[node name="Cancel" type="Button" parent="Popups/PlaceAnimation"]
+layout_mode = 2
+offset_left = 308.0
+offset_top = 531.0
+offset_right = 394.0
+offset_bottom = 571.0
+theme_override_font_sizes/font_size = 18
+text = "Cancel"
+
+[node name="QuitPopup" type="Panel" parent="Popups"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -276.0
+offset_top = -76.0
+offset_right = 276.0
+offset_bottom = 76.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_y543m")
+script = ExtResource("20_brhb6")
+
+[node name="Label" type="Label" parent="Popups/QuitPopup"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 58.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 20
+text = "Are You Sure?"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Save" type="Button" parent="Popups/QuitPopup"]
+layout_mode = 2
+offset_left = 132.0
+offset_top = 104.0
+offset_right = 212.0
+offset_bottom = 136.0
+focus_mode = 0
+theme_override_font_sizes/font_size = 18
+text = "Save"
+
+[node name="Discard" type="Button" parent="Popups/QuitPopup"]
+layout_mode = 2
+offset_left = 236.0
+offset_top = 104.0
+offset_right = 316.0
+offset_bottom = 136.0
+focus_mode = 0
+theme_override_font_sizes/font_size = 18
+text = "Discard"
+
+[node name="Cancel" type="Button" parent="Popups/QuitPopup"]
+layout_mode = 2
+offset_left = 340.0
+offset_top = 104.0
+offset_right = 420.0
+offset_bottom = 136.0
+theme_override_font_sizes/font_size = 18
+text = "Cancel"
+
+[connection signal="id_pressed" from="Toolbar/MenuBar/File" to="Toolbar/MenuBar/File" method="_on_id_pressed"]
+[connection signal="id_pressed" from="Toolbar/MenuBar/Edit" to="Toolbar/MenuBar/Edit" method="_on_id_pressed"]
+[connection signal="id_pressed" from="Toolbar/MenuBar/Add" to="Toolbar/MenuBar/Add" method="_on_id_pressed"]
+[connection signal="id_pressed" from="Toolbar/MenuBar/Project" to="Toolbar/MenuBar/Project" method="_on_id_pressed"]
+[connection signal="id_pressed" from="Toolbar/MenuBar/Help" to="Toolbar/MenuBar/Help" method="_on_id_pressed"]
+[connection signal="item_selected" from="Toolbar/Difficulty" to="Toolbar/Difficulty" method="_on_item_selected"]
+[connection signal="dir_selected" from="FileDialog" to="FileDialog" method="_on_dir_selected"]
+[connection signal="file_selected" from="FileDialog" to="FileDialog" method="_on_file_selected"]
+[connection signal="item_selected" from="BottomBar/Snapping" to="BottomBar/Snapping" method="_on_item_selected"]
+[connection signal="toggled" from="BottomBar/Snapping/SnapToggle" to="BottomBar/Snapping" method="_on_snap_toggle_toggled"]
+[connection signal="gui_input" from="Popups" to="Popups" method="_on_gui_input"]
+[connection signal="button_up" from="Popups/NewDifficultyPopup/Create" to="Popups/NewDifficultyPopup" method="_on_create_button_up"]
+[connection signal="button_up" from="Popups/NewDifficultyPopup/Cancel" to="Popups/NewDifficultyPopup" method="_on_cancel_button_up"]
+[connection signal="button_up" from="Popups/PlaceAnimation/Create" to="Popups/PlaceAnimation" method="_on_create_button_up"]
+[connection signal="button_up" from="Popups/PlaceAnimation/Cancel" to="Popups/PlaceAnimation" method="_on_cancel_button_up"]
+[connection signal="button_up" from="Popups/QuitPopup/Save" to="Popups/QuitPopup" method="_on_save_button_up"]
+[connection signal="button_up" from="Popups/QuitPopup/Discard" to="Popups/QuitPopup" method="_on_discard_button_up"]
+[connection signal="button_up" from="Popups/QuitPopup/Cancel" to="Popups/QuitPopup" method="_on_cancel_button_up"]

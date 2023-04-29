@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://b0br18ymicbpi"]
+
+[ext_resource type="Texture2D" uid="uid://dsf8qvbqau8rm" path="res://assets/icon_audio.png" id="1_n3up2"]
+[ext_resource type="Script" path="res://prefabs/OneshotSoundKeyframe.gd" id="1_w1u6d"]
+
+[node name="OneshotSoundKeyframe" type="Node2D"]
+script = ExtResource("1_w1u6d")
+
+[node name="Visual" type="Sprite2D" parent="."]
+texture = ExtResource("1_n3up2")
+
+[node name="InputHandler" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -24.0
+offset_top = -20.0
+offset_right = 24.0
+offset_bottom = 20.0
+
+[connection signal="gui_input" from="InputHandler" to="." method="_on_input_handler_gui_input"]
