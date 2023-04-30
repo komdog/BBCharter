@@ -48,6 +48,7 @@ func change_animation(idx: int) -> void:
 	$Visual.hframes = loop['sheet_data']["h"] # Get hframes from preset
 	$Visual.vframes = loop['sheet_data']["v"] # Get vframes from preset
 	total_sprite_frames = loop['sheet_data']["total"]
+	run_loop()
 
 	# Set Scale
 #	if Config.field_valid(loop, 'scale_multiplier') == OK:
@@ -84,10 +85,15 @@ func _on_hit_note(data) -> void:
 #	animation_time = (next_note_timestamp - current_note_timestamp) / Game.stats['manual_speed_multiplier']
 	animation_time = (next_note_timestamp - current_note_timestamp)
 	
+	print("index: ", index, " : ", total_sprite_frames)
+	run_loop()
+	
+
+
+func run_loop():
 	$Visual.frame = 0
 	if tween:
 		tween.kill() # Abort the previous animation.
 	tween = create_tween()
 	tween.tween_property($Visual, "frame", total_sprite_frames-1, animation_time / Global.music.pitch_scale)
 	tween.play()
-	
