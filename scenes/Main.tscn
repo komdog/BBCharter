@@ -1,4 +1,4 @@
-[gd_scene load_steps=51 format=3 uid="uid://bo2pso1k2xik8"]
+[gd_scene load_steps=52 format=3 uid="uid://bo2pso1k2xik8"]
 
 [ext_resource type="Theme" uid="uid://cehpee20dikgi" path="res://themes/main_theme.tres" id="1_71y40"]
 [ext_resource type="Script" path="res://src/cl_main.gd" id="2_ca1lw"]
@@ -18,6 +18,7 @@
 [ext_resource type="Script" path="res://src/cl_menubar_file.gd" id="9_qoohm"]
 [ext_resource type="Script" path="res://src/cl_menubar_help.gd" id="10_p48ck"]
 [ext_resource type="Script" path="res://src/cl_timecode.gd" id="11_ycej5"]
+[ext_resource type="Texture2D" uid="uid://j7ypji0xwic6" path="res://assets/tool_audio.png" id="12_a3q0d"]
 [ext_resource type="Script" path="res://src/cl_sfx.gd" id="13_i7gdi"]
 [ext_resource type="Script" path="res://src/cl_snapping.gd" id="13_oym2h"]
 [ext_resource type="Script" path="res://src/cl_asset_manager.gd" id="14_eesym"]
@@ -52,8 +53,8 @@ events = [SubResource("InputEventKey_kwt1r")]
 
 [sub_resource type="InputEventKey" id="InputEventKey_mmjiq"]
 device = -1
-keycode = 77
-unicode = 109
+keycode = 84
+unicode = 116
 
 [sub_resource type="Shortcut" id="Shortcut_4ufp1"]
 events = [SubResource("InputEventKey_mmjiq")]
@@ -303,18 +304,22 @@ popup/item_0/id = 0
 popup/item_0/disabled = true
 script = ExtResource("7_alc5b")
 
-[node name="Tools" type="Control" parent="Toolbar"]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="Tools" type="HBoxContainer" parent="Toolbar"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -43.0
+offset_top = 6.0
+offset_right = 43.0
+offset_bottom = 46.0
+grow_horizontal = 2
 script = ExtResource("8_waaxy")
 
 [node name="Select" type="Button" parent="Toolbar/Tools"]
+texture_filter = 1
+custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
-offset_left = 920.0
-offset_top = 8.0
-offset_right = 960.0
-offset_bottom = 48.0
 tooltip_text = "Pointer Tool"
 focus_mode = 0
 toggle_mode = true
@@ -325,17 +330,27 @@ icon = ExtResource("9_j5sdo")
 icon_alignment = 1
 
 [node name="Marquee" type="Button" parent="Toolbar/Tools"]
+texture_filter = 1
+custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
-offset_left = 960.0
-offset_top = 8.0
-offset_right = 1000.0
-offset_bottom = 48.0
 tooltip_text = "Marquee Tool"
 focus_mode = 0
 toggle_mode = true
 button_group = SubResource("ButtonGroup_xvp3s")
 shortcut = SubResource("Shortcut_4ufp1")
 icon = ExtResource("9_lohrd")
+icon_alignment = 1
+
+[node name="Voice" type="Button" parent="Toolbar/Tools"]
+texture_filter = 1
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+tooltip_text = "Marquee Tool"
+focus_mode = 0
+toggle_mode = true
+button_group = SubResource("ButtonGroup_xvp3s")
+shortcut = SubResource("Shortcut_4ufp1")
+icon = ExtResource("12_a3q0d")
 icon_alignment = 1
 
 [node name="Assets" type="Control" parent="."]

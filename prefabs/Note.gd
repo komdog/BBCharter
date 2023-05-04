@@ -38,13 +38,8 @@ func _on_input_handler_gui_input(event):
 				MOUSE_BUTTON_LEFT:
 					if Global.current_tool == Enums.TOOL.SELECT:
 						set_selected()
-				MOUSE_BUTTON_MIDDLE:
-					if data.has('trigger_voice'):
-						data.erase('trigger_voice')
-					else:
-						data['trigger_voice'] = true
-					print(data)
-					update_visual()
+					if Global.current_tool == Enums.TOOL.VOICE:
+						toggle_voice_trigger()
 				MOUSE_BUTTON_RIGHT:
 					if Global.current_tool == Enums.TOOL.SELECT:
 						Timeline.delete_note(self, Global.current_chart.find(data))
@@ -58,3 +53,9 @@ func set_selected():
 	
 	print(Clipboard.selected_notes)
 	
+func toggle_voice_trigger():
+	if data.has('trigger_voice'):
+		data.erase('trigger_voice')
+	else:
+		data['trigger_voice'] = true
+	update_visual()
