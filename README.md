@@ -23,7 +23,7 @@ The Godot 4.0 version of the BB Modding Tool
 |X|Spawn A Orange note|
 |C|Spawn A Red note|
 |V|Spawn A Purple note|
-|Delete|Delete Selected notes|
+|Backspace|Delete Selected notes|
 ### Timeline Shortcuts
 | Hotkey | Function |
 | ------ | ------ |
@@ -31,8 +31,8 @@ The Godot 4.0 version of the BB Modding Tool
 |Alt + Mouse Scroll| Slow Scrub timeline|
 |Ctrl + Mouse Scroll| Zoom|
 |Spacebar|Play / Pause|
-|Page Up| Scrub -5.0 seconds|
-|Page Down| Scrub 5.0 seconds|
+|Up Arrow| Scrub -5.0 seconds|
+|Down Arrow| Scrub 5.0 seconds|
 |Home|Go to Beginning|
 |End|Go to end|
 |Right Arrow|Speed Up Song|
