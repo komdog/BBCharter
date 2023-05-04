@@ -84,7 +84,7 @@ func load_song():
 	var path = project_dir + "/audio/" + asset['song_path']
 	Global.music.stream = Global.load_mp3(path)
 	Global.song_length = Global.music.stream.get_length()
-	Global.song_beats_per_second = (60.0/Global.bpm)
+	Global.song_beats_per_second = float(60.0/Global.bpm)
 	Global.song_beats_total = int(Global.song_length / Global.song_beats_per_second)
 	Events.emit_signal('song_loaded')
 
