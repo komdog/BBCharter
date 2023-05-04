@@ -380,7 +380,6 @@ ok_button_text = "Open"
 mode_overrides_title = false
 file_mode = 0
 access = 2
-root_subfolder = "D:\\Mega\\Projects\\BunFan\\Games\\BeatBanger\\_project\\data\\act1"
 script = ExtResource("5_qvt2c")
 
 [node name="Character" type="Node2D" parent="."]
@@ -460,8 +459,6 @@ width = 5.0
 default_color = Color(0.619608, 0.027451, 0.266667, 1)
 
 [node name="Notification" parent="." instance=ExtResource("8_vyifj")]
-offset_left = 1920.0
-offset_right = 2470.0
 
 [node name="BottomBar" type="Panel" parent="."]
 layout_mode = 0
