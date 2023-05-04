@@ -372,19 +372,19 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_bx0p2")
 
 [node name="AssetsManager" type="ScrollContainer" parent="Assets"]
 layout_mode = 0
-offset_left = -1.0
-offset_top = 7.0
-offset_right = 493.0
-offset_bottom = 560.0
+offset_left = 21.0
+offset_top = 23.0
+offset_right = 471.0
+offset_bottom = 544.0
+follow_focus = true
 horizontal_scroll_mode = 0
 script = ExtResource("14_eesym")
 metadata/_edit_group_ = true
 
-[node name="AssetContainer" type="GridContainer" parent="Assets/AssetsManager"]
+[node name="AssetContainer" type="VBoxContainer" parent="Assets/AssetsManager"]
 layout_mode = 2
-theme_override_constants/h_separation = 100
-theme_override_constants/v_separation = 100
-columns = 5
+theme_override_constants/separation = 10
+alignment = 1
 
 [node name="FileDialog" type="FileDialog" parent="."]
 title = "Open a File"

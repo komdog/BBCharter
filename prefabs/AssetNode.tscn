@@ -1,40 +1,61 @@
-[gd_scene load_steps=3 format=3 uid="uid://c1uylg3wims4w"]
+[gd_scene load_steps=5 format=3 uid="uid://c1uylg3wims4w"]
 
 [ext_resource type="Script" path="res://prefabs/AssetNode.gd" id="1_le0sj"]
+[ext_resource type="Texture2D" uid="uid://cmfihxdtx36aa" path="res://assets/icon_marquee.png" id="2_chnd5"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j4cqx"]
-bg_color = Color(0, 0, 0, 1)
+bg_color = Color(0.054902, 0.054902, 0.054902, 1)
 corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
+[sub_resource type="LabelSettings" id="LabelSettings_5xyom"]
+font_size = 20
+
 [node name="AssetNode" type="Control"]
+custom_minimum_size = Vector2(420, 90)
 layout_mode = 3
 anchors_preset = 0
+size_flags_horizontal = 3
 script = ExtResource("1_le0sj")
 
 [node name="Background" type="Panel" parent="."]
-layout_mode = 0
-offset_right = 90.0
-offset_bottom = 90.0
-mouse_filter = 1
-theme_override_styles/panel = SubResource("StyleBoxFlat_j4cqx")
-
-[node name="Icon" type="TextureRect" parent="Background"]
+custom_minimum_size = Vector2(400, 90)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 10.0
-offset_top = 8.0
-offset_right = -10.0
-offset_bottom = -8.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_j4cqx")
+
+[node name="Icon" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(74, 74)
+layout_mode = 1
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 82.0
+offset_bottom = 82.0
+texture = ExtResource("2_chnd5")
 expand_mode = 1
 stretch_mode = 5
 
 [node name="Preview" type="AudioStreamPlayer" parent="."]
+
+[node name="Filename" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 104.0
+offset_top = -37.0
+offset_right = 387.0
+offset_bottom = -6.0
+grow_vertical = 2
+text = "Filename.ext"
+label_settings = SubResource("LabelSettings_5xyom")
+text_overrun_behavior = 3
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]

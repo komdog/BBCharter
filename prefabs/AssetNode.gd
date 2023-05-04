@@ -3,20 +3,29 @@ extends Control
 var asset_type: int
 var asset_path
 
+var icon: TextureRect
+var music_preview: AudioStreamPlayer
+var filename: Label
+
 func setup_asset_note(asset_name):
+	
+	icon = $Icon
+	music_preview = $Preview
+	filename = $Filename
 	
 	tooltip_text = asset_name
 	
 	asset_path = asset_name
+	filename.text = asset_path
 	
 	if Assets.lib[asset_name] is ImageTexture:
-		$Background/Icon.texture = Assets.lib[asset_name]
+		icon.texture = Assets.lib[asset_name]
 		asset_type = Enums.ASSET.IMAGE
 		
 	elif Assets.lib[asset_name] is AudioStreamMP3:
-		$Background/Icon.texture = Prefabs.audio_icon
+		icon.texture = Prefabs.audio_icon
 		asset_type = Enums.ASSET.AUDIO
-		$Preview.stream = Assets.lib[asset_name]
+		music_preview.stream = Assets.lib[asset_name]
 		
 	else:
 		print("Uncategorized: %s" % asset_name)
@@ -24,7 +33,7 @@ func setup_asset_note(asset_name):
 	
 
 func _process(_delta):
-	$Background/Icon.modulate = Color.DARK_SEA_GREEN if $Preview.playing else Color.WHITE
+	icon.modulate = Color.DARK_SEA_GREEN if music_preview.playing else Color.WHITE
 
 
 func _on_gui_input(event):
@@ -43,11 +52,11 @@ func _on_gui_input(event):
 					
 
 func preview_audio():
-	if $Preview.playing:
-		$Preview.stop()
+	if music_preview.playing:
+		music_preview.stop()
 	else:
-		$Preview.stop()
-		$Preview.play()
+		music_preview.stop()
+		music_preview.play()
 		
 		
 func add_sound_oneshot_to_timeline():
