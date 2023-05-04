@@ -102,20 +102,6 @@ func _input(event):
 					clamp_seek(inc_scale)
 				if event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
 					clamp_seek(-inc_scale)
-	elif event is InputEventPanGesture:
-		if get_viewport().get_mouse_position().y > 672:
-			
-			# Zooming
-			if Input.is_action_pressed("ui_control"):
-				
-				Global.note_speed = clampf(Global.note_speed + (10 * event.delta.y), 100, 1000 )
-				Events.emit_signal('update_notespeed')
-				
-			else:
-				
-			# Seeking
-				inc_scale = (Global.song_beats_per_second / 8) if !Input.is_action_pressed("ui_alt") else 0.005
-				clamp_seek(inc_scale * event.delta.y)
 			
 			
 	if event is InputEventKey:
@@ -132,9 +118,9 @@ func _input(event):
 			seek(Global.song_length)
 			
 		# Fast Seek +10
-		if event.is_action_pressed("ui_down"):
+		if event.is_action_pressed("ui_page_down"):
 			clamp_seek(5.0)
-		if event.is_action_pressed("ui_up"):
+		if event.is_action_pressed("ui_page_up"):
 			clamp_seek(-5.0)
 
 		

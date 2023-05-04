@@ -26,20 +26,11 @@ func _input(event):
 	if event.is_action_pressed("project_save"):
 		Save.save_project()
 	if event.is_action_pressed("open_project_dir"):
-		if OS.get_name() == "macOS":
-			OS.shell_open("file:" + Save.project_dir)
-		else:
-			OS.shell_open(Save.project_dir)
+		OS.shell_open(Save.project_dir)
 	if event.is_action_pressed("open_note_file"):
-		if OS.get_name() == "macOS":
-			OS.shell_open("file:" + Save.project_dir + "/config/notes.cfg")
-		else:
-			OS.shell_open(Save.project_dir + "/config/notes.cfg")
+		OS.shell_open(Save.project_dir + "/config/notes.cfg")
 	if event.is_action_pressed("open_keyframes_file"):
-		if OS.get_name() == "macOS":
-			OS.shell_open("file:" + Save.project_dir + "/config/keyframes.cfg")
-		else:
-			OS.shell_open(Save.project_dir + "/config/keyframes.cfg")
+		OS.shell_open(Save.project_dir + "/config/keyframes.cfg")
 
 func _notification(what):
 	if what == NOTIFICATION_WM_CLOSE_REQUEST:
