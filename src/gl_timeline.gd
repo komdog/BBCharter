@@ -104,7 +104,7 @@ func _input(event):
 					clamp_seek(inc_scale)
 				if event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
 					clamp_seek(-inc_scale)
-	elif event is InputEventPanGesture:
+	if event is InputEventPanGesture:
 		if get_viewport().get_mouse_position().y > 672:
 			
 			# Zooming
