@@ -38,6 +38,10 @@ window/stretch/mode="viewport"
 
 movie_writer/movie_file="D:/Mega/Projects/BunFan/Software/bb-charter/preview.avi"
 
+[global]
+
+debug_open_dir="D:/Mega/Projects/BunFan/Games/BeatBanger/_project/mods/example_modpack"
+
 [input]
 
 ui_control={
