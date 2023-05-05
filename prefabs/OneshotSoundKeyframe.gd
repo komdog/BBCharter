@@ -20,4 +20,5 @@ func _on_input_handler_gui_input(event) -> void:
 			MOUSE_BUTTON_MIDDLE:
 				print(Save.keyframes['sound_oneshot'].find(data))
 			MOUSE_BUTTON_RIGHT:
+				Global.project_saved = false
 				Timeline.delete_keyframe('sound_oneshot', self, Save.keyframes['sound_oneshot'].find(data))

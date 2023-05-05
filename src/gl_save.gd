@@ -13,17 +13,22 @@ var song_offset_default = 0.0
 var modifier_default = [{"bpm": 128.0, "timestamp": 0}]
 
 func save_project() -> void:
-	if Global.current_chart.is_empty(): return print('No Chart To Export')
+	var skip_notes = false
+	if Global.current_chart.is_empty(): skip_notes = true
 	
 	#Save keyframes
 	keyframes['loops'].sort_custom(func(a,b): return a['timestamp'] < b['timestamp'])
 	if save_cfg('keyframes.cfg', keyframes) == FAILED: return print('Could not save keyframes.cfg')
 	
 	#Save Notes
-	notes['charts'][Global.difficulty_index]['notes'] = Global.current_chart # Move chart to save cache
-	notes['charts'].sort_custom(func(a,b): return a['rating'] < b['rating'])
-	if save_cfg('notes.cfg', notes) == FAILED: return print('Could not save notes.cfg')
+	if skip_notes:
+		print('No Chart To Export')
+	else:
+		notes['charts'][Global.difficulty_index]['notes'] = Global.current_chart # Move chart to save cache
+		notes['charts'].sort_custom(func(a,b): return a['rating'] < b['rating'])
+		if save_cfg('notes.cfg', notes) == FAILED: return print('Could not save notes.cfg')
 	
+	Global.project_saved = true
 	Events.emit_signal('notify', 'Saved Project', meta['level_name'], project_dir + "/thumb.png")
 	
 	
@@ -39,9 +44,8 @@ func save_cfg(file_name: String, new_data) -> int:
 		
 func load_project(file_path):
 	
+	var old_project_dir = project_dir
 	project_dir = file_path
-	
-	Timeline.clear_timeline()
 	
 	asset = load_cfg('asset.cfg')
 	await get_tree().process_frame
@@ -55,27 +59,34 @@ func load_project(file_path):
 	settings = load_cfg('settings.cfg')
 	await get_tree().process_frame
 	
-	Assets.lib.clear()
-	Assets.load_images()
-	Assets.load_audio()
+	if asset != {} or keyframes != {} or meta != {} or settings != {} or load_cfg('notes.cfg') != {}:
+		Timeline.clear_timeline()
+		notes = {}
+		
+		Assets.lib.clear()
+		Assets.load_images()
+		Assets.load_audio()
+
+		load_chart()
+
+		# Order Matters
+		load_keyframes()
+		load_song()	
 	
-	load_chart()
-	
-	# Order Matters
-	load_keyframes()
-	load_song()	
-	
-	
-	Events.emit_signal('notify', 'Project Loaded', meta['level_name'], project_dir + "/thumb.png")
-	Events.emit_signal('project_loaded')
-	Global.project_loaded=true
+		Events.emit_signal('notify', 'Project Loaded', meta['level_name'], project_dir + "/thumb.png")
+		Events.emit_signal('project_loaded')
+		Global.project_loaded=true
+		Global.project_saved = true
+	else:
+		Events.emit_signal('notify', 'Error loading project', 'Invalid level: ' + project_dir.get_file(), project_dir + "/thumb.png")
+		project_dir = old_project_dir
 
 
 func load_cfg(file_name: String) -> Dictionary:
 	var path = project_dir + "/config/" + file_name
 	var config = ConfigFile.new()
 	if config.load(path) == OK:
-		return config.get_value('main', 'data', null)
+		return config.get_value('main', 'data', {})
 	else:
 		print("Could not open %s" % path)
 		return {}
@@ -97,15 +108,20 @@ func load_song():
 
 func load_chart(difficulty_index: int = 0) -> int:
 	Timeline.clear_notes_only()
-	notes = load_cfg('notes.cfg')
-	if notes.is_empty(): return FAILED
-	if notes['charts'].size() < 1: create_difficulty()
-	Global.current_chart = notes['charts'][difficulty_index]['notes'].duplicate(true)
-	Global.difficulty_index = difficulty_index
-	Events.emit_signal('chart_loaded')
-	return OK
+	if notes.is_empty():
+		notes = load_cfg('notes.cfg')
+	if notes != {}:
+		if notes['charts'].size() < 1:
+			create_difficulty()
+			save_cfg('notes.cfg', notes)
+		Global.current_chart = notes['charts'][difficulty_index]['notes'].duplicate(true)
+		Global.difficulty_index = difficulty_index
+		Events.emit_signal('chart_loaded')
+		return OK
+	else:
+		return FAILED
 
-func create_difficulty(diffcuilty_name: String = "Normal", rating: int = 1, chart: Array = []):
+func create_difficulty(diffcuilty_name: String = "Virgin", rating: int = 0, chart: Array = []):
 	print("Creating Difficuilty %s" % diffcuilty_name)
 	var new_difficulty: Dictionary = {
 		'name': diffcuilty_name,
@@ -116,11 +132,6 @@ func create_difficulty(diffcuilty_name: String = "Normal", rating: int = 1, char
 	
 func delete_difficulty() -> void:
 	Global.current_chart.clear()
-	#Save Notes
+	Events.emit_signal('difficulty_deleted', Global.difficulty_index)
 	notes['charts'].remove_at(Global.difficulty_index)
 	notes['charts'].sort_custom(func(a,b): return a['rating'] < b['rating'])
-	if save_cfg('notes.cfg', notes) == FAILED: return print('Could not save notes.cfg')
-	
-	Save.load_project(Save.project_dir)
-	
-	

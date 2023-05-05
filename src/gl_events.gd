@@ -4,11 +4,13 @@ signal project_loaded()
 signal song_loaded()
 signal chart_loaded()
 signal difficulty_created()
+signal difficulty_deleted(index)
 
 signal update_notespeed()
 signal update_snapping(index)
 
 signal notify()
+signal popups_opened()
 signal popups_closed()
 
 signal hit_note()

@@ -90,6 +90,7 @@ func _process(_delta):
 
 # Add Physical note to timeline
 func _on_note_created(new_note_data):
+	Global.project_saved = false
 	var new_note = Prefabs.note.instantiate()
 	new_note.setup(new_note_data)
 	$Notes.add_child(new_note)

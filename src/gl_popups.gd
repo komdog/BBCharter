@@ -1,6 +1,6 @@
 extends Node
 
-enum {NEWDIFFICULTY,PLACEANIMATION,QUIT}
+enum {NEWDIFFICULTY,RENAMEDIFFICULTY,PLACEANIMATION,CLEARCHART,QUIT}
 
 var popup: Control
 var open: bool
@@ -10,6 +10,7 @@ func reveal(index):
 	popup.show()
 	popup.get_children()[index].show()
 	open = true
+	Events.emit_signal('popups_opened')
 	
 func close():
 	popup.hide()

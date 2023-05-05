@@ -14,7 +14,7 @@ func _on_id_pressed(id: int):
 		DELETEDIFFICULTY:
 			Save.delete_difficulty()
 		RENAMEDIFFICULTY:
-			pass
+			Popups.reveal(Popups.RENAMEDIFFICULTY)
 			
 
 func _on_project_loaded():

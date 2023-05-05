@@ -1,4 +1,4 @@
-[gd_scene load_steps=52 format=3 uid="uid://bo2pso1k2xik8"]
+[gd_scene load_steps=54 format=3 uid="uid://bo2pso1k2xik8"]
 
 [ext_resource type="Theme" uid="uid://cehpee20dikgi" path="res://themes/main_theme.tres" id="1_71y40"]
 [ext_resource type="Script" path="res://src/cl_main.gd" id="2_ca1lw"]
@@ -24,10 +24,12 @@
 [ext_resource type="Script" path="res://src/cl_asset_manager.gd" id="14_eesym"]
 [ext_resource type="Script" path="res://src/cl_shutters.gd" id="15_kn5dq"]
 [ext_resource type="Script" path="res://src/cl_popup_new_difficulty.gd" id="18_iev55"]
+[ext_resource type="Script" path="res://src/cl_popup_rename_difficulty.gd" id="18_iev56"]
 [ext_resource type="Script" path="res://src/cl_popup_quit.gd" id="20_brhb6"]
 [ext_resource type="Script" path="res://src/cl_oneshot.gd" id="22_wed7f"]
 [ext_resource type="Script" path="res://src/cl_popups.gd" id="24_hyexw"]
 [ext_resource type="Script" path="res://src/cl_popup_place_animation.gd" id="26_6tqyk"]
+[ext_resource type="Script" path="res://src/cl_popup_clear_chart.gd" id="30_d6aoh"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_id34j"]
 bg_color = Color(0, 0, 0, 1)
@@ -233,6 +235,7 @@ item_1/text = "Open Project"
 item_1/id = 1
 item_2/text = "Save Project"
 item_2/id = 2
+item_2/disabled = true
 script = ExtResource("9_qoohm")
 
 [node name="Edit" type="PopupMenu" parent="Toolbar/MenuBar"]
@@ -246,6 +249,7 @@ item_1/id = 1
 item_1/disabled = true
 item_2/text = "Clear Chart"
 item_2/id = 2
+item_2/disabled = true
 script = ExtResource("8_yungy")
 
 [node name="Add" type="PopupMenu" parent="Toolbar/MenuBar"]
@@ -267,8 +271,10 @@ item_1/id = 1
 item_1/disabled = true
 item_2/text = "Delete Difficulty"
 item_2/id = 2
+item_2/disabled = true
 item_3/text = "Rename Difficulty"
 item_3/id = 3
+item_3/disabled = true
 script = ExtResource("5_577ur")
 
 [node name="Help" type="PopupMenu" parent="Toolbar/MenuBar"]
@@ -345,11 +351,10 @@ icon_alignment = 1
 texture_filter = 1
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
-tooltip_text = "Marquee Tool"
+tooltip_text = "Voice Tool"
 focus_mode = 0
 toggle_mode = true
 button_group = SubResource("ButtonGroup_xvp3s")
-shortcut = SubResource("Shortcut_4ufp1")
 icon = ExtResource("12_a3q0d")
 icon_alignment = 1
 
@@ -657,15 +662,12 @@ focus_mode = 1
 theme_override_font_sizes/font_size = 24
 placeholder_text = "Difficulty Name"
 
-[node name="DifficultyRatingField" type="SpinBox" parent="Popups/NewDifficultyPopup"]
+[node name="DifficultyCount" type="Label" parent="Popups/NewDifficultyPopup"]
 layout_mode = 0
 offset_left = 74.0
 offset_top = 142.0
 offset_right = 481.0
 offset_bottom = 173.0
-max_value = 10.0
-value = 1.0
-rounded = true
 
 [node name="Create" type="Button" parent="Popups/NewDifficultyPopup"]
 layout_mode = 2
@@ -678,6 +680,79 @@ theme_override_font_sizes/font_size = 18
 text = "Create"
 
 [node name="Cancel" type="Button" parent="Popups/NewDifficultyPopup"]
+layout_mode = 2
+offset_left = 284.0
+offset_top = 210.0
+offset_right = 356.0
+offset_bottom = 250.0
+theme_override_font_sizes/font_size = 18
+text = "Cancel"
+
+[node name="RenameDifficultyPopup" type="Panel" parent="Popups"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -276.0
+offset_top = -134.0
+offset_right = 276.0
+offset_bottom = 134.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_y543m")
+script = ExtResource("18_iev56")
+
+[node name="Label" type="Label" parent="Popups/RenameDifficultyPopup"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 58.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 20
+text = "Rename Difficulty"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DifficultyNameField" type="LineEdit" parent="Popups/RenameDifficultyPopup"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -203.0
+offset_top = -45.0
+offset_right = 205.0
+offset_bottom = -6.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 1
+theme_override_font_sizes/font_size = 24
+placeholder_text = "Difficulty Name"
+
+[node name="DifficultyRatingField" type="SpinBox" parent="Popups/RenameDifficultyPopup"]
+layout_mode = 0
+offset_left = 74.0
+offset_top = 142.0
+offset_right = 481.0
+offset_bottom = 173.0
+max_value = 10.0
+rounded = true
+
+[node name="Rename" type="Button" parent="Popups/RenameDifficultyPopup"]
+layout_mode = 2
+offset_left = 196.0
+offset_top = 210.0
+offset_right = 268.0
+offset_bottom = 250.0
+focus_mode = 0
+theme_override_font_sizes/font_size = 18
+text = "Rename"
+
+[node name="Cancel" type="Button" parent="Popups/RenameDifficultyPopup"]
 layout_mode = 2
 offset_left = 284.0
 offset_top = 210.0
@@ -760,6 +835,53 @@ offset_bottom = 571.0
 theme_override_font_sizes/font_size = 18
 text = "Cancel"
 
+[node name="ClearChartPopup" type="Panel" parent="Popups"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -276.0
+offset_top = -76.0
+offset_right = 276.0
+offset_bottom = 76.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_y543m")
+script = ExtResource("30_d6aoh")
+
+[node name="Label" type="Label" parent="Popups/ClearChartPopup"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 58.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 20
+text = "Are You Sure?"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Yes" type="Button" parent="Popups/ClearChartPopup"]
+layout_mode = 2
+offset_left = 196.0
+offset_top = 104.0
+offset_right = 268.0
+offset_bottom = 136.0
+focus_mode = 0
+theme_override_font_sizes/font_size = 18
+text = "Yes"
+
+[node name="No" type="Button" parent="Popups/ClearChartPopup"]
+layout_mode = 2
+offset_left = 284.0
+offset_top = 104.0
+offset_right = 356.0
+offset_bottom = 136.0
+theme_override_font_sizes/font_size = 18
+text = "Cancel"
+
 [node name="QuitPopup" type="Panel" parent="Popups"]
 visible = false
 layout_mode = 1
@@ -830,8 +952,12 @@ text = "Cancel"
 [connection signal="gui_input" from="Popups" to="Popups" method="_on_gui_input"]
 [connection signal="button_up" from="Popups/NewDifficultyPopup/Create" to="Popups/NewDifficultyPopup" method="_on_create_button_up"]
 [connection signal="button_up" from="Popups/NewDifficultyPopup/Cancel" to="Popups/NewDifficultyPopup" method="_on_cancel_button_up"]
+[connection signal="button_up" from="Popups/RenameDifficultyPopup/Rename" to="Popups/RenameDifficultyPopup" method="_on_rename_button_up"]
+[connection signal="button_up" from="Popups/RenameDifficultyPopup/Cancel" to="Popups/RenameDifficultyPopup" method="_on_cancel_button_up"]
 [connection signal="button_up" from="Popups/PlaceAnimation/Create" to="Popups/PlaceAnimation" method="_on_create_button_up"]
 [connection signal="button_up" from="Popups/PlaceAnimation/Cancel" to="Popups/PlaceAnimation" method="_on_cancel_button_up"]
+[connection signal="button_up" from="Popups/ClearChartPopup/Yes" to="Popups/ClearChartPopup" method="_on_yes_button_up"]
+[connection signal="button_up" from="Popups/ClearChartPopup/No" to="Popups/ClearChartPopup" method="_on_nol_button_up"]
 [connection signal="button_up" from="Popups/QuitPopup/Save" to="Popups/QuitPopup" method="_on_save_button_up"]
 [connection signal="button_up" from="Popups/QuitPopup/Discard" to="Popups/QuitPopup" method="_on_discard_button_up"]
 [connection signal="button_up" from="Popups/QuitPopup/Cancel" to="Popups/QuitPopup" method="_on_cancel_button_up"]

@@ -8,6 +8,8 @@ func _ready():
 	
 
 func _on_create_button_up() -> void:
+	Global.project_saved = false
+
 	var new_animation_key =	{
 		"timestamp": Global.get_timestamp_snapped(),
 		"sheet_data": {"h": $SheetH.value, "v": $SheetV.value, "total": $Total.value},

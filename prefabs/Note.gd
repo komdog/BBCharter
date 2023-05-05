@@ -40,6 +40,7 @@ func _on_input_handler_gui_input(event):
 						toggle_voice_trigger()
 				MOUSE_BUTTON_RIGHT:
 					if Global.current_tool == Enums.TOOL.SELECT:
+						Global.project_saved = false
 						Timeline.delete_note(self, Global.current_chart.find(data))
 
 func set_selected():

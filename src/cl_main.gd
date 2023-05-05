@@ -13,20 +13,31 @@ func _input(event):
 	
 	if Popups.open: return
 	
-	if event.is_action_pressed("project_open"):
-		Global.filedialog.open_project_dialog()	
-	if event.is_action_pressed("project_save"):
+	if event.is_action_pressed("project_new") and event.is_command_or_control_pressed():
+		Global.filedialog.new_project_dialog()
+	if event.is_action_pressed("project_open") and event.is_command_or_control_pressed():
+		Global.filedialog.open_project_dialog()
+	if event.is_action_pressed("project_save") and event.is_command_or_control_pressed():
 		Save.save_project()
 	if event.is_action_pressed("open_project_dir"):
-		OS.shell_open(Save.project_dir)
+		if OS.get_name() == "macOS":
+			OS.shell_open("file:" + Save.project_dir)
+		else:
+			OS.shell_open(Save.project_dir)
 	if event.is_action_pressed("open_note_file"):
-		OS.shell_open(Save.project_dir + "/config/notes.cfg")
+		if OS.get_name() == "macOS":
+			OS.shell_open("file:" + Save.project_dir + "/config/notes.cfg")
+		else:
+			OS.shell_open(Save.project_dir + "/config/notes.cfg")
 	if event.is_action_pressed("open_keyframes_file"):
-		OS.shell_open(Save.project_dir + "/config/keyframes.cfg")
+		if OS.get_name() == "macOS":
+			OS.shell_open("file:" + Save.project_dir + "/config/keyframes.cfg")
+		else:
+			OS.shell_open(Save.project_dir + "/config/keyframes.cfg")
 
 func _notification(what):
 	if what == NOTIFICATION_WM_CLOSE_REQUEST:
-		if Global.project_loaded:
+		if Global.project_loaded and !Global.project_saved:
 			Popups.reveal(Popups.QUIT)
 		else:
 			get_tree().quit()
