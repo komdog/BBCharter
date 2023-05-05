@@ -32,9 +32,10 @@ func get_file_list_of_type(path: String, type:String) -> Array:
 			if file.get_extension() != type:
 				files.remove_at(i)
 
-	print(files)
 	return files
 
+func load_single_image(filename: String) -> void:
+	Assets.lib[filename] = Global.load_texture(Save.project_dir + "/images/" + filename)
 
 func load_images() -> void:
 	for image in get_file_list_of_type(Save.project_dir + "/images", "png"):

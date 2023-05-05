@@ -1,6 +1,6 @@
 extends Control
 
-@onready var file_drop_parser = preload("res://src/cl_drag_and_drop.gd").new()
+@onready var file_drop_parser = preload("res://src/rf_drag_and_drop.gd").new()
 
 func _ready():
 	get_viewport().files_dropped.connect(on_files_dropped)
