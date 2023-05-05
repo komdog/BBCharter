@@ -72,7 +72,7 @@ func change_animation(idx: int) -> void:
 func _on_hit_note(data) -> void:
 
 	# Ignore Ghost Notes
-#	if data['note_modifier'] == Enums.MODIFIER.GHOST: return
+	if data['note_modifier'] == 2: return
 	var index = Global.current_chart.find(data)
 
 	current_note_timestamp = Global.current_chart[index]['timestamp']
