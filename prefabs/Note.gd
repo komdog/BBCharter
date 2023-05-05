@@ -25,10 +25,8 @@ func _process(_delta):
 		
 func update_visual():
 	$Voice.visible = data.has('trigger_voice')
-	if Clipboard.selected_notes.has(self):
-		$Visual.self_modulate = Color.ANTIQUE_WHITE
-	else:
-		$Visual.self_modulate = Global.note_colors[data['input_type']]
+	$Selected.visible = Clipboard.selected_notes.has(self)
+	$Visual.self_modulate = Global.note_colors[data['input_type']]
 	
 
 func _on_input_handler_gui_input(event):
