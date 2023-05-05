@@ -1,7 +1,12 @@
 extends Panel
 
 func _ready():
+	Events.popups_closed.connect(_on_popups_opened)
 	Events.popups_closed.connect(_on_popups_closed)
+
+func _on_popups_opened():
+	if !Save.notes.is_empty():
+		$DifficultyRatingField.max_value = Save.notes['charts'].size()-1
 
 func _on_rename_button_up() -> void:
 	Global.project_saved = false

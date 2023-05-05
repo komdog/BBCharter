@@ -10,7 +10,7 @@ func _on_popups_opened():
 		Popups.close()
 		Events.emit_signal('notify', 'Error creating difficulty', 'You\'ve reached the max amount!', Save.project_dir + "/thumb.png")
 	else:
-		$DifficultyCount.text = str(Save.notes['charts'].size()) + ' / ' + str(Global.difficulty_max+1)
+		$DifficultyCount.text = 'Your project has ' + str(Save.notes['charts'].size()) + ' / ' + str(Global.difficulty_max+1) + ' difficulties!'
 
 func _on_create_button_up() -> void:
 	Global.project_saved = false
