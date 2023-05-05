@@ -27,6 +27,7 @@ Timeline="*res://src/gl_timeline.gd"
 Popups="*res://src/gl_popups.gd"
 Clipboard="*res://src/gl_clipboard.gd"
 Prefabs="*res://src/gl_prefabs.gd"
+Media="*res://src/gl_ffmpeg.gd"
 
 [display]
 
