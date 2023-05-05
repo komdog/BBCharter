@@ -2,21 +2,11 @@ name: Feature request
 description: Suggest an idea
 title: "Feature: "
 labels: ["feature"]
-assignees:
-  - komdog
 body:
   - type: markdown
     attributes:
       value: |
         Thanks for taking the time to fill out this bug report!
-  - type: input
-    id: contact
-    attributes:
-      label: Discord ID
-      description: How can we get in touch with you if we need more info?
-      placeholder: ex. Name#0000
-    validations:
-      required: false
   - type: textarea
     id: feature-desc
     attributes:
@@ -25,14 +15,6 @@ body:
       placeholder: Add more Tits.
     validations:
       required: true
-  - type: textarea
-    id: feature-alt
-    attributes:
-      label: Describe alternatives you've considered
-      description: A clear and concise description of any alternative solutions
-      placeholder: Add more Ass.
-    validations:
-      required: false
   - type: textarea
     id: add-context
     attributes:

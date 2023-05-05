@@ -2,8 +2,6 @@ name: Bug Report
 description: File a bug report
 title: "Bug: "
 labels: ["bug"]
-assignees:
-  - komdog
 body:
   - type: markdown
     attributes:
@@ -22,7 +20,15 @@ body:
     attributes:
       label: What happened?
       description: Also tell us, what did you expect to happen?
-      placeholder: Tell us what you see!
+      placeholder: ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected_result
+    attributes:
+      label: What was the expected behvaior?
+      description: How is the program supposed to act?
+      placeholder: ...
     validations:
       required: true
   - type: dropdown
