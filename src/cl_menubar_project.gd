@@ -12,7 +12,10 @@ func _on_id_pressed(id: int):
 		NEWDIFFICULTY:
 			Popups.reveal(Popups.NEWDIFFICULTY)
 		DELETEDIFFICULTY:
-			Save.delete_difficulty()
+			if Save.notes['charts'].size() > 1:
+				Save.delete_difficulty()
+			else:
+				Events.emit_signal('notify', 'Error deleting difficulty', 'You can\'t delete the only one left!', Save.project_dir + "/thumb.png")
 		RENAMEDIFFICULTY:
 			Popups.reveal(Popups.RENAMEDIFFICULTY)
 			
