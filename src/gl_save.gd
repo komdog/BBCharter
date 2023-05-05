@@ -8,6 +8,10 @@ var meta: Dictionary
 var notes: Dictionary
 var settings: Dictionary
 
+# Default parameters
+var song_offset_default = 0.0
+var modifier_default = [{"bpm": 128.0, "timestamp": 0}]
+
 func save_project() -> void:
 	if Global.current_chart.is_empty(): return print('No Chart To Export')
 	
@@ -54,6 +58,7 @@ func load_project(file_path):
 	Assets.lib.clear()
 	Assets.load_images()
 	Assets.load_audio()
+	
 	load_chart()
 	
 	# Order Matters
@@ -75,26 +80,30 @@ func load_cfg(file_name: String) -> Dictionary:
 		print("Could not open %s" % path)
 		return {}
 		
+
+		
 func load_keyframes():
-	Global.bpm = Save.keyframes['modifiers'][0]['bpm']
-	Global.offset = Save.settings['song_offset']
+	Global.bpm = Save.keyframes.get('modifiers', modifier_default)[0]['bpm']
+	Global.offset = Save.settings.get('song_offset', song_offset_default)
 	Global.beat_length_msec = ( 60.0 / Global.bpm )
 	
 func load_song():
-	var path = project_dir + "/audio/" + asset['song_path']
+	var path = project_dir + "/audio/" + asset.get('song_path', "")
 	Global.music.stream = Global.load_mp3(path)
 	Global.song_length = Global.music.stream.get_length()
 	Global.song_beats_per_second = float(60.0/Global.bpm)
 	Global.song_beats_total = int(Global.song_length / Global.song_beats_per_second)
 	Events.emit_signal('song_loaded')
 
-func load_chart(difficulty_index: int = 0) -> void:
+func load_chart(difficulty_index: int = 0) -> int:
 	Timeline.clear_notes_only()
 	notes = load_cfg('notes.cfg')
+	if notes.is_empty(): return FAILED
 	if notes['charts'].size() < 1: create_difficulty()
 	Global.current_chart = notes['charts'][difficulty_index]['notes'].duplicate(true)
 	Global.difficulty_index = difficulty_index
 	Events.emit_signal('chart_loaded')
+	return OK
 
 func create_difficulty(diffcuilty_name: String = "Normal", rating: int = 1, chart: Array = []):
 	print("Creating Difficuilty %s" % diffcuilty_name)
