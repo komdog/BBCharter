@@ -1,4 +1,4 @@
-[gd_scene load_steps=52 format=3 uid="uid://bo2pso1k2xik8"]
+[gd_scene load_steps=58 format=3 uid="uid://bo2pso1k2xik8"]
 
 [ext_resource type="Theme" uid="uid://cehpee20dikgi" path="res://themes/main_theme.tres" id="1_71y40"]
 [ext_resource type="Script" path="res://src/cl_main.gd" id="2_ca1lw"]
@@ -19,9 +19,11 @@
 [ext_resource type="Script" path="res://src/cl_menubar_help.gd" id="10_p48ck"]
 [ext_resource type="Script" path="res://src/cl_timecode.gd" id="11_ycej5"]
 [ext_resource type="Texture2D" uid="uid://j7ypji0xwic6" path="res://assets/tool_audio.png" id="12_a3q0d"]
+[ext_resource type="Texture2D" uid="uid://c2ln38722il1n" path="res://assets/icon_ghost.png" id="13_b4yyq"]
 [ext_resource type="Script" path="res://src/cl_sfx.gd" id="13_i7gdi"]
 [ext_resource type="Script" path="res://src/cl_snapping.gd" id="13_oym2h"]
 [ext_resource type="Script" path="res://src/cl_asset_manager.gd" id="14_eesym"]
+[ext_resource type="Texture2D" uid="uid://bxh4vbpq7025g" path="res://assets/icon_handsfree.png" id="14_ifqub"]
 [ext_resource type="Script" path="res://src/cl_shutters.gd" id="15_kn5dq"]
 [ext_resource type="Script" path="res://src/cl_popup_new_difficulty.gd" id="18_iev55"]
 [ext_resource type="Script" path="res://src/cl_popup_quit.gd" id="20_brhb6"]
@@ -58,6 +60,22 @@ unicode = 116
 
 [sub_resource type="Shortcut" id="Shortcut_4ufp1"]
 events = [SubResource("InputEventKey_mmjiq")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_wk7lj"]
+device = -1
+keycode = 71
+unicode = 103
+
+[sub_resource type="Shortcut" id="Shortcut_lu0dt"]
+events = [SubResource("InputEventKey_wk7lj")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_ouc0w"]
+device = -1
+keycode = 72
+unicode = 104
+
+[sub_resource type="Shortcut" id="Shortcut_4noe4"]
+events = [SubResource("InputEventKey_ouc0w")]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bx0p2"]
 bg_color = Color(0.0823529, 0.0823529, 0.0823529, 1)
@@ -351,6 +369,30 @@ toggle_mode = true
 button_group = SubResource("ButtonGroup_xvp3s")
 shortcut = SubResource("Shortcut_4ufp1")
 icon = ExtResource("12_a3q0d")
+icon_alignment = 1
+
+[node name="Ghost" type="Button" parent="Toolbar/Tools"]
+texture_filter = 1
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+tooltip_text = "Ghost Tool"
+focus_mode = 0
+toggle_mode = true
+button_group = SubResource("ButtonGroup_xvp3s")
+shortcut = SubResource("Shortcut_lu0dt")
+icon = ExtResource("13_b4yyq")
+icon_alignment = 1
+
+[node name="Handsfree" type="Button" parent="Toolbar/Tools"]
+texture_filter = 1
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+tooltip_text = "Handsfree Tool"
+focus_mode = 0
+toggle_mode = true
+button_group = SubResource("ButtonGroup_xvp3s")
+shortcut = SubResource("Shortcut_4noe4")
+icon = ExtResource("14_ifqub")
 icon_alignment = 1
 
 [node name="Assets" type="Control" parent="."]

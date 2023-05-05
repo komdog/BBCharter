@@ -27,6 +27,18 @@ func update_visual():
 	$Voice.visible = data.has('trigger_voice')
 	$Selected.visible = Clipboard.selected_notes.has(self)
 	$Visual.self_modulate = Global.note_colors[data['input_type']]
+	if data["note_modifier"] == 1:
+		$Handsfree.visible = true
+		$Handsfree/Handsfreeinner.self_modulate = Global.note_colors[data['input_type']]
+		$Handsfree/Handsfreeinner.visible = !($Voice.visible)
+		$Voice.self_modulate = Global.note_colors[data['input_type']]
+	else:
+		$Handsfree.visible = false
+		$Voice.self_modulate = Color.ANTIQUE_WHITE
+	if data["note_modifier"] == 2:
+		$Visual.modulate = Color(1,1,1,0.7)
+	else:
+		$Visual.modulate = Color(1,1,1,1)
 	
 
 func _on_input_handler_gui_input(event):
@@ -38,9 +50,14 @@ func _on_input_handler_gui_input(event):
 						set_selected()
 					if Global.current_tool == Enums.TOOL.VOICE:
 						toggle_voice_trigger()
+					if Global.current_tool == Enums.TOOL.GHOST:
+						make_handsfree()
+					if Global.current_tool == Enums.TOOL.HANDSFREE:
+						make_ghost()
 				MOUSE_BUTTON_RIGHT:
 					if Global.current_tool == Enums.TOOL.SELECT:
 						Timeline.delete_note(self, Global.current_chart.find(data))
+					
 
 func set_selected():
 	if Clipboard.selected_notes.has(self):
@@ -57,3 +74,17 @@ func toggle_voice_trigger():
 	else:
 		data['trigger_voice'] = true
 	update_visual()
+func make_ghost():
+	if data["note_modifier"] == 1:
+		data["note_modifier"] = 0
+		update_visual()
+	else:
+		data["note_modifier"] = 1
+		update_visual()
+func make_handsfree():
+	if data["note_modifier"] == 2:
+		data["note_modifier"] = 0
+		update_visual()
+	else:
+		data["note_modifier"] = 2
+		update_visual()
