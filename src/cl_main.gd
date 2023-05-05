@@ -1,21 +1,13 @@
 extends Control
 
+@onready var file_drop_parser = preload("res://src/cl_drag_and_drop.gd").new()
+
 func _ready():
 	get_viewport().files_dropped.connect(on_files_dropped)
 
 func on_files_dropped(files):
-	print(files)
-	
-	if Save.project_dir != "":
-		var dir = DirAccess.open(Save.project_dir)
+	file_drop_parser.get_file_type(files)
 
-		for file in files:
-			if file.get_extension() == "mp3":
-				dir.copy(file, Save.project_dir + "/audio/" + file.get_file())
-			elif file.get_extension() == "png":
-				dir.copy(file, Save.project_dir + "/images/" + file.get_file())
-		
-		Events.emit_signal('project_loaded')
 
 func _input(event):
 	
