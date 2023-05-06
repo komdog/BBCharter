@@ -69,3 +69,5 @@ func find_lowest_factor(n: int) -> int:
 			return i  # return the lowest factor
 		i += 1  # increment i to check the next integer
 	return n  # if no factor is found, n is a prime number
+func round_to_dec(num, digit):
+	return round(num * pow(10.0, digit)) / pow(10.0, digit)

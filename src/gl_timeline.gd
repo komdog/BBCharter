@@ -24,7 +24,8 @@ func create_note(key: int):
 		note_creation_timestamp = Global.get_synced_song_pos()
 	# Check Note Exists
 	for note in Global.current_chart:
-		if note['timestamp'] == note_creation_timestamp:
+		if Global.round_to_dec(note['timestamp'], 3) == Global.round_to_dec(note_creation_timestamp, 3):
+			print(Global.round_to_dec(note_creation_timestamp, 3))
 			print('Note already exists at %s' % [Global.get_synced_song_pos()])
 			return
 	
