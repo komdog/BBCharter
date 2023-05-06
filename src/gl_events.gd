@@ -4,6 +4,7 @@ signal project_loaded()
 signal song_loaded()
 signal chart_loaded()
 signal difficulty_created()
+signal difficulty_renamed(stuff)
 signal difficulty_deleted(index)
 
 signal update_notespeed()

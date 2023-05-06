@@ -17,8 +17,9 @@ func _on_rename_button_up() -> void:
 	if Save.notes.is_empty(): return print('Error renaming difficulty')
 
 	if !difficulty_name.is_valid_filename(): return print('Invalid Filename')
+	var old_name = Save.notes['charts'][difficulty_rating]['name']
 	Save.notes['charts'][difficulty_rating]['name'] = difficulty_name
-	Events.emit_signal('difficulty_created')
+	Events.emit_signal('difficulty_renamed', [difficulty_rating, old_name])
 	Popups.close()
 
 func _on_cancel_button_up():
