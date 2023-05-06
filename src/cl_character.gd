@@ -1,6 +1,7 @@
 extends Node2D
 
 var init_scale: Vector2
+# var starting_anim_index = -1
 var total_sprite_frames: float
 var animation_time: float
 var manual_speed_multiplier: float
@@ -44,22 +45,34 @@ func change_animation(idx: int) -> void:
 
 	# Change Texture
 	$Visual.texture = Assets.get_asset(loop['animations']['normal'])
-	if loop.has('manual_speed_multiplier'): manual_speed_multiplier = loop['manual_speed_multiplier']
-	# Position Offset is more for the game itself, not the charter. So it's excluded here.
-	if loop.has('scale_multiplier'): $Visual.scale = Vector2(loop['scale_multiplier'], loop['scale_multiplier'])
 	$Visual.hframes = loop['sheet_data']["h"] # Get hframes from preset
 	$Visual.vframes = loop['sheet_data']["v"] # Get vframes from preset
 	total_sprite_frames = loop['sheet_data']["total"]
 	run_loop()
 
+	# Set Scale
+#	if Config.field_valid(loop, 'scale_multiplier') == OK:
+#		Game.stats['scale_multiplier'] = loop['scale_multiplier']
+
+	# Set Scale
+#	if Config.field_valid(loop, 'position_offset') == OK:
+#		position =  Vector2(960,540) + Vector2(loop['position_offset'].x, loop['position_offset'].y)
+#	else:
+#		position = Vector2(960,540)
+#
+
+	# Set Speed Multiplier
+#	if Config.field_valid(loop, 'manual_speed_multiplier') == OK:
+#		Game.stats['manual_speed_multiplier'] = loop['manual_speed_multiplier']
+
 
 #func _on_horny_mode() -> void:
-#	$Visual.texture = Assets.get_asset(loop['animations']['horny'])
+#	texture = Assets.get_asset(current_animations['horny'])
 
 func _on_hit_note(data) -> void:
 
 	# Ignore Ghost Notes
-	if data['note_modifier'] == 2: return
+#	if data['note_modifier'] == Enums.MODIFIER.GHOST: return
 	var index = Global.current_chart.find(data)
 
 	current_note_timestamp = Global.current_chart[index]['timestamp']
@@ -69,7 +82,8 @@ func _on_hit_note(data) -> void:
 
 	if !next_note_timestamp: return
 	
-	animation_time = (next_note_timestamp - current_note_timestamp) / manual_speed_multiplier
+#	animation_time = (next_note_timestamp - current_note_timestamp) / Game.stats['manual_speed_multiplier']
+	animation_time = (next_note_timestamp - current_note_timestamp)
 	
 	print("index: ", index, " : ", total_sprite_frames)
 	run_loop()
