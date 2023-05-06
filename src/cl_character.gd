@@ -1,10 +1,12 @@
 extends Node2D
 
 var init_scale: Vector2
-# var starting_anim_index = -1
 var total_sprite_frames: float
 var animation_time: float
 var manual_speed_multiplier: float
+
+var horny: bool
+var horny_notes: Array
 
 var loop_index: int
 var last_loop_index: int
@@ -14,15 +16,16 @@ var next_note_timestamp
 var tween
 
 func _ready() -> void:
-#	if Events.connect('horny_mode',self,'_on_horny_mode') == OK: pass
 	Events.chart_loaded.connect(_on_chart_loaded)
 	Events.hit_note.connect(_on_hit_note)
-	
+	Events.miss_note.connect(_on_miss_note)
 
 	
 func _on_chart_loaded():
 	loop_index = 0
 	change_animation(loop_index)
+	horny = false
+	horny_notes = []
 
 
 func _physics_process(_delta):
@@ -41,39 +44,48 @@ func change_animation(idx: int) -> void:
 	if Save.keyframes['loops'].size() <= 0: return
 		
 	var loop = Save.keyframes['loops'][idx]
-#	Game.stats['horny_notes_required'] = -1
 
 	# Change Texture
-	$Visual.texture = Assets.get_asset(loop['animations']['normal'])
+	if horny:
+		$Visual.texture = Assets.get_asset(loop['animations']['horny'])
+	else:
+		$Visual.texture = Assets.get_asset(loop['animations']['normal'])
+
+	if loop.has('manual_speed_multiplier'):
+		manual_speed_multiplier = loop['manual_speed_multiplier']
+	else:
+		manual_speed_multiplier = 1
+
+	if loop.has('scale_multiplier'):
+		$Visual.scale = Vector2(loop['scale_multiplier'], loop['scale_multiplier'])
+	else:
+		$Visual.scale = Vector2(1, 1)
+
 	$Visual.hframes = loop['sheet_data']["h"] # Get hframes from preset
 	$Visual.vframes = loop['sheet_data']["v"] # Get vframes from preset
 	total_sprite_frames = loop['sheet_data']["total"]
 	run_loop()
 
-	# Set Scale
-#	if Config.field_valid(loop, 'scale_multiplier') == OK:
-#		Game.stats['scale_multiplier'] = loop['scale_multiplier']
-
-	# Set Scale
-#	if Config.field_valid(loop, 'position_offset') == OK:
-#		position =  Vector2(960,540) + Vector2(loop['position_offset'].x, loop['position_offset'].y)
-#	else:
-#		position = Vector2(960,540)
-#
-
-	# Set Speed Multiplier
-#	if Config.field_valid(loop, 'manual_speed_multiplier') == OK:
-#		Game.stats['manual_speed_multiplier'] = loop['manual_speed_multiplier']
-
-
-#func _on_horny_mode() -> void:
-#	texture = Assets.get_asset(current_animations['horny'])
 
 func _on_hit_note(data) -> void:
 
 	# Ignore Ghost Notes
-#	if data['note_modifier'] == Enums.MODIFIER.GHOST: return
+	if data['note_modifier'] == 2: return
 	var index = Global.current_chart.find(data)
+
+	if data.has('horny'):
+		if data['horny'].has('required'):
+			if !horny_notes.has(index + data['horny']['required'] - 1):
+				horny_notes.append(index + data['horny']['required'] - 1)
+		else:
+			if !horny_notes.has(index):
+				horny_notes.append(index)
+
+	if horny_notes.has(index):
+		$Visual.texture = Assets.get_asset(Save.keyframes['loops'][loop_index-1]['animations']['horny'])
+		horny = true
+	else:
+		horny = false
 
 	current_note_timestamp = Global.current_chart[index]['timestamp']
 
@@ -82,12 +94,33 @@ func _on_hit_note(data) -> void:
 
 	if !next_note_timestamp: return
 	
-#	animation_time = (next_note_timestamp - current_note_timestamp) / Game.stats['manual_speed_multiplier']
-	animation_time = (next_note_timestamp - current_note_timestamp)
+	animation_time = (next_note_timestamp - current_note_timestamp) / manual_speed_multiplier
 	
 	print("index: ", index, " : ", total_sprite_frames)
 	run_loop()
 	
+func _on_miss_note(data) -> void:
+	var index = Global.current_chart.find(data)
+	var loop = Save.keyframes['loops'][loop_index-1]
+
+	for i in horny_notes.size():
+		if horny_notes.size() > 1 and i-1 > -1:
+			if index >= horny_notes[i] and index < horny_notes[i-1]:
+				horny = true
+				break
+			else:
+				horny = false
+		else:
+			if index >= horny_notes[i]:
+				horny = true
+				break
+			else:
+				horny = false
+
+	if horny_notes.has(index):
+		$Visual.texture = Assets.get_asset(loop['animations']['normal'])
+		run_loop()
+		horny = false
 
 
 func run_loop():

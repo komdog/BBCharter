@@ -12,6 +12,7 @@ signal notify()
 signal popups_closed()
 
 signal hit_note()
+signal miss_note()
 signal note_created()
 
 signal add_animation_to_timeline(asset_path)

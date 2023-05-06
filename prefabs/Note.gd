@@ -21,6 +21,7 @@ func _process(_delta):
 		Events.emit_signal('hit_note', data)
 		hit = true
 	elif global_position.x < 960 and hit:
+		Events.emit_signal('miss_note', data)
 		hit = false
 		
 func update_visual():
