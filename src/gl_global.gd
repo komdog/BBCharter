@@ -11,6 +11,7 @@ var bpm: float
 var offset: float
 var note_speed: float = 200
 var difficulty_index: int
+var difficulty_max: int = 10
 
 # Realtime Info
 var song_pos: float
@@ -25,6 +26,7 @@ var snapping_ratios = [1,2,4,8]
 var snapping_factor = 2
 var snapping_allowed = true
 var project_loaded = false
+var project_saved = false
 var current_tool = Enums.TOOL.SELECT
 
 

@@ -35,11 +35,13 @@ func create_note(key: int):
 	Events.emit_signal("note_created", new_note_data)
 	
 func delete_note(note: Node2D, idx: int):
+	Global.project_saved = false
 	print("Deleting note %s at %s (index %s)" % [note, note.data['timestamp'],idx])
 	Global.current_chart.remove_at(idx)
 	note.queue_free()
 	
 func delete_keyframe(section: String, node: Node2D, idx: int):
+	Global.project_saved = false
 	print("Deleting %s %s at %s (index %s)" % [section, node, node.data['timestamp'],idx])
 	Save.keyframes[section].remove_at(idx)
 	node.queue_free()
@@ -102,6 +104,20 @@ func _input(event):
 					clamp_seek(inc_scale)
 				if event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
 					clamp_seek(-inc_scale)
+	if event is InputEventPanGesture:
+		if get_viewport().get_mouse_position().y > 672:
+			
+			# Zooming
+			if Input.is_action_pressed("ui_control"):
+				
+				Global.note_speed = clampf(Global.note_speed + (10 * event.delta.y), 100, 1000 )
+				Events.emit_signal('update_notespeed')
+				
+			else:
+				
+			# Seeking
+				inc_scale = (Global.song_beats_per_second / 8) if !Input.is_action_pressed("ui_alt") else 0.005
+				clamp_seek(inc_scale * event.delta.y)
 			
 			
 	if event is InputEventKey:
@@ -111,16 +127,16 @@ func _input(event):
 		if event.is_action_pressed("ui_left"):
 			Global.music.pitch_scale = clampf(Global.music.pitch_scale - 0.1, 0.5, 2.0 )
 			
-		# Seek to beginning / End
-		if event.is_action_pressed("ui_home"):
-			reset()
-		if event.is_action_pressed("ui_end"):
-			seek(Global.song_length)
-			
-		# Fast Seek +10
-		if event.is_action_pressed("ui_page_down"):
-			clamp_seek(5.0)
-		if event.is_action_pressed("ui_page_up"):
-			clamp_seek(-5.0)
+		# Fast Seek +10 + Seek to beginning / End
+		if event.is_action_pressed("ui_down"):
+			if event.is_command_or_control_pressed():
+				seek(Global.song_length)
+			else:
+				clamp_seek(5.0)
+		if event.is_action_pressed("ui_up"):
+			if event.is_command_or_control_pressed():
+				reset()
+			else:
+				clamp_seek(-5.0)
 
 		

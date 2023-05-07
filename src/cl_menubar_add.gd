@@ -9,6 +9,7 @@ func _ready():
 func _on_id_pressed(id: int):
 	match id:
 		SHUTTER:
+			Global.project_saved = false
 			var new_shutter ={"timestamp": Global.get_timestamp_snapped()}
 			Save.keyframes['shutter'].append(new_shutter)
 			Save.keyframes['shutter'].sort_custom(func(a, b): return a['timestamp'] < b['timestamp'])

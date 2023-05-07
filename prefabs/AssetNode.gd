@@ -60,6 +60,8 @@ func preview_audio():
 		
 		
 func add_sound_oneshot_to_timeline():
+	Global.project_saved = false
+	
 	var new_sound_oneshot_key =	{
 		"timestamp": Global.get_timestamp_snapped(),
 		"path": asset_path
