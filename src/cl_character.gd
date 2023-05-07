@@ -60,7 +60,7 @@ func change_animation(idx: int) -> void:
 	if loop.has('scale_multiplier'):
 		$Visual.scale = Vector2(loop['scale_multiplier'], loop['scale_multiplier'])
 	else:
-		if idx == 0
+		if idx == 0:
 			$Visual.scale = Vector2(1, 1)
 
 	$Visual.hframes = loop['sheet_data']["h"] # Get hframes from preset
