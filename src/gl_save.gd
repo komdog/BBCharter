@@ -78,7 +78,7 @@ func load_project(file_path):
 		Global.project_loaded=true
 		Global.project_saved = true
 	else:
-		Events.emit_signal('notify', 'Error loading project', 'Invalid level: ' + project_dir.get_file(), project_dir + "/thumb.png")
+		Events.emit_signal('notify', 'Error loading project', 'Invalid level: ' + project_dir.get_file(), "")
 		project_dir = old_project_dir
 
 
