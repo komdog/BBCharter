@@ -54,12 +54,14 @@ func change_animation(idx: int) -> void:
 	if loop.has('manual_speed_multiplier'):
 		manual_speed_multiplier = loop['manual_speed_multiplier']
 	else:
-		manual_speed_multiplier = 1
+		if idx == 0:
+			manual_speed_multiplier = 1
 
 	if loop.has('scale_multiplier'):
 		$Visual.scale = Vector2(loop['scale_multiplier'], loop['scale_multiplier'])
 	else:
-		$Visual.scale = Vector2(1, 1)
+		if idx == 0
+			$Visual.scale = Vector2(1, 1)
 
 	$Visual.hframes = loop['sheet_data']["h"] # Get hframes from preset
 	$Visual.vframes = loop['sheet_data']["v"] # Get vframes from preset
