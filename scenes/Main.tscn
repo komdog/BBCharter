@@ -27,6 +27,7 @@
 [ext_resource type="Script" path="res://src/cl_popup_quit.gd" id="20_brhb6"]
 [ext_resource type="Script" path="res://src/cl_oneshot.gd" id="22_wed7f"]
 [ext_resource type="Script" path="res://src/cl_popups.gd" id="24_hyexw"]
+[ext_resource type="Script" path="res://src/cl_voice.gd" id="26_3mi6w"]
 [ext_resource type="Script" path="res://src/cl_popup_place_animation.gd" id="26_6tqyk"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_id34j"]
@@ -545,6 +546,9 @@ script = ExtResource("6_f3wwk")
 
 [node name="Sfx" type="AudioStreamPlayer" parent="."]
 script = ExtResource("13_i7gdi")
+
+[node name="Voice" type="AudioStreamPlayer" parent="."]
+script = ExtResource("26_3mi6w")
 
 [node name="OneShot" type="AudioStreamPlayer" parent="."]
 script = ExtResource("22_wed7f")
