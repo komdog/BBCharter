@@ -17,8 +17,6 @@ signal popups_closed()
 
 signal hit_note()
 signal note_created()
-signal tool_used_before(tool,note)
-signal tool_used_after(tool,note)
 
 signal add_animation_to_timeline(asset_path)
 
