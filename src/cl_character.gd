@@ -75,13 +75,12 @@ func _on_hit_note(data) -> void:
 	if data['note_modifier'] == 2: return
 	var index = Global.current_chart.find(data)
 
-	if data.has('horny'):
-		if data['horny'].has('required'):
-			if !horny_notes.has(index + data['horny']['required'] - 1):
-				horny_notes.append(index + data['horny']['required'] - 1)
-		else:
-			if !horny_notes.has(index):
-				horny_notes.append(index)
+	if data.has('horny') and data['horny'].has('required'):
+		var notes_left = 0
+		if data['horny']['required'] - 1 > 0:
+			notes_left = data['horny']['required'] - 1
+		if !horny_notes.has(index + notes_left):
+			horny_notes.append(index + notes_left)
 
 	if horny_notes.has(index):
 		$Visual.texture = Assets.get_asset(Save.keyframes['loops'][loop_index-1]['animations']['horny'])
@@ -105,6 +104,7 @@ func _on_miss_note(data) -> void:
 	var index = Global.current_chart.find(data)
 	var loop = Save.keyframes['loops'][loop_index-1]
 
+	var old = horny
 	for i in horny_notes.size():
 		if horny_notes.size() > 1 and i-1 > -1:
 			if index >= horny_notes[i] and index < horny_notes[i-1]:
@@ -118,6 +118,8 @@ func _on_miss_note(data) -> void:
 				break
 			else:
 				horny = false
+	if old != horny:
+		change_animation(loop_index-1)
 
 	if horny_notes.has(index):
 		$Visual.texture = Assets.get_asset(loop['animations']['normal'])
