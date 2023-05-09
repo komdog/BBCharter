@@ -25,6 +25,7 @@ func _physics_process(_delta):
 			change_bank(voice_bank_index-1)
 	
 func change_bank(idx):
+	if !Save.keyframes.has('voice_bank'): return
 	if Save.keyframes['voice_bank'].is_empty(): return
 	if Save.keyframes['voice_bank'].size() <= idx: return
 
