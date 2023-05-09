@@ -8,6 +8,7 @@ signal difficulty_renamed(stuff)
 signal difficulty_deleted(index)
 
 signal update_notespeed()
+signal update_selection(here)
 signal update_snapping(index)
 
 signal notify()
@@ -16,6 +17,8 @@ signal popups_closed()
 
 signal hit_note()
 signal note_created()
+signal tool_used_before(tool,note)
+signal tool_used_after(tool,note)
 
 signal add_animation_to_timeline(asset_path)
 
