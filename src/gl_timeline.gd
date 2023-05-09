@@ -4,6 +4,7 @@ var note_controller: Node2D
 
 var indicator_container: Node2D
 var note_container: Node2D
+var line_center: Node2D
 
 var animations_track: Node2D
 var oneshot_sound_track: Node2D
@@ -11,6 +12,9 @@ var shutter_track: Node2D
 
 var inc_scale: float
 var note_creation_timestamp: float
+
+var marquee_point_a: float = -1
+var marquee_point_b: float = -1
 
 func create_note(key: int):
 	
@@ -87,7 +91,7 @@ func _input(event):
 		if get_viewport().get_mouse_position().y > 672:
 			
 			# Zooming
-			if Input.is_action_pressed("ui_control"):
+			if event.is_command_or_control_pressed():
 				
 				if event.button_index == MOUSE_BUTTON_WHEEL_UP:
 					Global.note_speed = clampf(Global.note_speed + 10, 100, 1000 )
@@ -104,11 +108,29 @@ func _input(event):
 					clamp_seek(inc_scale)
 				if event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
 					clamp_seek(-inc_scale)
+
+			if event.pressed:
+				match event.button_index:
+					MOUSE_BUTTON_LEFT:
+						if Global.current_tool == Enums.TOOL.MARQUEE:
+							if marquee_point_a < 0:
+								marquee_point_a = Global.music.song_position_raw
+								line_center.set_default_color(Color(1,1,1,1))
+			else:
+				match event.button_index:
+					MOUSE_BUTTON_LEFT:
+						if Global.current_tool == Enums.TOOL.MARQUEE and marquee_point_a >= 0:
+							marquee_point_b = Global.music.song_position_raw
+							line_center.set_default_color(Color(0.61,0.02,0.26,1))
+							Events.emit_signal('update_selection', marquee_point_a, marquee_point_b)
+							marquee_point_a = -1
+							marquee_point_b = -1
+
 	if event is InputEventPanGesture:
 		if get_viewport().get_mouse_position().y > 672:
 			
 			# Zooming
-			if Input.is_action_pressed("ui_control"):
+			if event.is_command_or_control_pressed():
 				
 				Global.note_speed = clampf(Global.note_speed + (10 * event.delta.y), 100, 1000 )
 				Events.emit_signal('update_notespeed')
@@ -117,7 +139,7 @@ func _input(event):
 				
 			# Seeking
 				inc_scale = (Global.song_beats_per_second / 8) if !Input.is_action_pressed("ui_alt") else 0.005
-				clamp_seek(inc_scale * event.delta.y)
+				clamp_seek(inc_scale * event.delta.x)
 			
 			
 	if event is InputEventKey:

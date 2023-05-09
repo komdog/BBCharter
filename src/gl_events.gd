@@ -8,6 +8,7 @@ signal difficulty_renamed(stuff)
 signal difficulty_deleted(index)
 
 signal update_notespeed()
+signal update_selection(here)
 signal update_snapping(index)
 
 signal notify()
