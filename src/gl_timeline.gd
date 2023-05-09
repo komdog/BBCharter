@@ -103,7 +103,7 @@ func _input(event):
 			else:
 				
 			# Seeking
-				inc_scale = (Global.song_beats_per_second / 8) if !Input.is_action_pressed("ui_alt") else 0.005
+				inc_scale = (Global.song_beats_per_second / 8) if !event.alt_pressed else 0.005
 				if event.button_index == MOUSE_BUTTON_WHEEL_UP:
 					clamp_seek(inc_scale)
 				if event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
@@ -138,7 +138,7 @@ func _input(event):
 			else:
 				
 			# Seeking
-				inc_scale = (Global.song_beats_per_second / 8) if !Input.is_action_pressed("ui_alt") else 0.005
+				inc_scale = (Global.song_beats_per_second / 8) if !event.alt_pressed else 0.005
 				clamp_seek(inc_scale * event.delta.x)
 			
 			
