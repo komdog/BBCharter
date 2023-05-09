@@ -5,6 +5,7 @@ var data: Dictionary
 
 func _ready():
 	Events.update_notespeed.connect(update_position)
+	Events.update_selection.connect(update_selection)
 
 func setup(note_data):
 	data = note_data
@@ -13,6 +14,14 @@ func setup(note_data):
 
 func update_position():
 	position.x = -(data['timestamp'] * Global.note_speed)
+
+func update_selection(a,b):
+	if b >= a:
+		if data['timestamp'] + Global.offset >= a and data['timestamp'] + Global.offset <= b:
+			set_selected()
+	elif a >= b:
+		if data['timestamp'] + Global.offset >= b and data['timestamp'] + Global.offset <= a:
+			set_selected()
 	
 func _process(_delta):
 	visible = global_position.x >= Global.note_culling_bounds.x and global_position.x < Global.note_culling_bounds.y
@@ -49,6 +58,10 @@ func _on_input_handler_gui_input(event):
 				MOUSE_BUTTON_LEFT:
 					if Global.current_tool == Enums.TOOL.SELECT:
 						set_selected()
+					elif Global.current_tool == Enums.TOOL.MARQUEE:
+						pass
+					else:
+						Global.project_saved = false
 					if Global.current_tool == Enums.TOOL.VOICE:
 						toggle_voice_trigger()
 					if Global.current_tool == Enums.TOOL.GHOST:
@@ -56,8 +69,8 @@ func _on_input_handler_gui_input(event):
 					if Global.current_tool == Enums.TOOL.HANDSFREE:
 						make_ghost()
 				MOUSE_BUTTON_RIGHT:
+					Global.project_saved = false
 					if Global.current_tool == Enums.TOOL.SELECT:
-						Global.project_saved = false
 						Timeline.delete_note(self, Global.current_chart.find(data))
 					
 
