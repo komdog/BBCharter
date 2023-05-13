@@ -1,9 +1,10 @@
 extends Node
 
-enum {NEWDIFFICULTY,RENAMEDIFFICULTY,PLACEANIMATION,CLEARCHART,QUIT}
+enum {NEWDIFFICULTY,RENAMEDIFFICULTY,PLACEANIMATION,CLEAR,QUIT}
 
 var popup: Control
 var open: bool
+var id: int = -1
 
 func reveal(index):
 	close()
