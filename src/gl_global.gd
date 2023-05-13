@@ -53,7 +53,7 @@ func load_texture(path) -> ImageTexture:
 	return tex
 
 func get_timestamp_snapped() -> float:
-	return snappedf(Global.song_pos, (Global.song_beats_per_second / Global.snapping_factor)) - (Global.offset + 0.005)
+	return snappedf(Global.song_pos, (Global.song_beats_per_second / Global.snapping_factor)) - Global.offset
 
 func get_synced_song_pos() -> float:
 	return Global.song_pos - Global.offset

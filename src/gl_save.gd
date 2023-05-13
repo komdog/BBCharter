@@ -107,9 +107,13 @@ func load_song():
 	Events.emit_signal('song_loaded')
 
 func load_chart(difficulty_index: int = 0) -> int:
-	Timeline.clear_notes_only()
 	if notes.is_empty():
 		notes = load_cfg('notes.cfg')
+		print('Loading from config')
+	else:
+		notes['charts'][Global.difficulty_index]['notes'] = Global.current_chart.duplicate(true)
+		print('Storing previous chart')
+	Timeline.clear_notes_only()
 	if notes != {}:
 		if notes['charts'].size() < 1:
 			create_difficulty()
