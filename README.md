@@ -22,8 +22,9 @@ To create a new project, click on File and select New Project. Then, select a di
 | ------ | ------ |
 |P|Pointer Tool|
 |T|Marquee Tool|
-|G|Ghost Tool|
-|H|Handsfree Tool|
+|A|Voice Tool|
+|H|Horny Tool|
+|M|Modifier Tool|
 ### Charting Shortcuts
 | Hotkey | Function |
 | ------ | ------ |

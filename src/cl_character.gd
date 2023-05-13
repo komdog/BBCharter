@@ -19,6 +19,8 @@ func _ready() -> void:
 	Events.chart_loaded.connect(_on_chart_loaded)
 	Events.hit_note.connect(_on_hit_note)
 	Events.miss_note.connect(_on_miss_note)
+	Events.tool_used_before.connect(_on_tool_used_before)
+	Events.tool_used_after.connect(_on_tool_used_after)
 
 	
 func _on_chart_loaded():
@@ -37,6 +39,60 @@ func _physics_process(_delta):
 			change_animation(loop_index-1)
 
 
+func _on_tool_used_before(data):
+	if Global.current_tool == Enums.TOOL.HORNY:
+		if data.has('horny') and data['horny'].has('required'):
+			var index = Global.current_chart.find(data)
+			var notes_left = 0
+			if data['horny']['required'] - 1 > 0:
+				notes_left = data['horny']['required'] - 1
+			if horny_notes.has(index + notes_left):
+				horny_notes.remove_at(horny_notes.find(index + notes_left))
+
+func _on_tool_used_after(data):
+	if Global.current_tool == Enums.TOOL.HORNY:
+		var idx
+		var index = Global.current_chart.find(data)
+		if data.has('horny') and data['horny'].has('required'):
+			var notes_left = 0
+			if data['horny']['required'] - 1 > 0:
+				notes_left = data['horny']['required'] - 1
+			if !horny_notes.has(index + notes_left):
+				horny_notes.append(index + notes_left)
+			idx = index + notes_left
+		else:
+			idx = index
+
+		if Global.current_chart.size() > idx and Global.get_synced_song_pos() >= Global.current_chart[idx]['timestamp']:
+			for i in horny_notes.size():
+				if horny_notes.size() > 1 and !i-1 < 0:
+					if idx >= horny_notes[i] and idx < horny_notes[i-1]:
+						horny = true
+						break
+					else:
+						horny = false
+				else:
+					if idx >= horny_notes[i]:
+						horny = true
+						break
+					else:
+						horny = false
+			
+			if Save.keyframes['loops'].is_empty():
+				return
+			else:
+				var old = $Visual.texture
+				var loop = Save.keyframes['loops'][loop_index-1]
+				if horny_notes.has(idx):
+					$Visual.texture = Assets.get_asset(loop['animations']['horny'])
+					horny = true
+					if old != $Visual.texture:
+						run_loop()
+				else:
+					$Visual.texture = Assets.get_asset(loop['animations']['normal'])
+					horny = false
+					if old != $Visual.texture:
+						run_loop()
 
 func change_animation(idx: int) -> void:
 	

@@ -37,7 +37,9 @@ func update_visual():
 	$Voice.visible = data.has('trigger_voice')
 	$Selected.visible = Clipboard.selected_notes.has(self)
 	$Visual.self_modulate = Global.note_colors[data['input_type']]
-	if data["note_modifier"] == 1:
+	$Glow.self_modulate = Global.note_colors[data['input_type']]
+	$Label.add_theme_constant_override('outline_size', 8)
+	if data['note_modifier'] == 1:
 		$Handsfree.visible = true
 		$Handsfree/Handsfreeinner.self_modulate = Global.note_colors[data['input_type']]
 		$Handsfree/Handsfreeinner.visible = !($Voice.visible)
@@ -45,11 +47,32 @@ func update_visual():
 	else:
 		$Handsfree.visible = false
 		$Voice.self_modulate = Color.ANTIQUE_WHITE
-	if data["note_modifier"] == 2:
+	if data['note_modifier'] == 2:
 		$Visual.modulate = Color(1,1,1,0.7)
+		$Glow.modulate = Color(1,1,1,0.7)
 	else:
-		$Visual.modulate = Color(1,1,1,1)
-	
+		$Visual.modulate = Color.WHITE
+		$Glow.modulate = Color.WHITE
+	if data.has('horny') and data['horny'].has('required') and data['horny']['required'] >= 0:
+		$Glow.visible = true
+		$Label.text = str(data['horny']['required'])
+		$Voice.scale = Vector2(0.666,0.666)
+		$Handsfree/Handsfreeinner.scale = Vector2(0.5,0.5)
+		if data.has('trigger_voice'):
+			if data['note_modifier'] != 1:
+				$Label.add_theme_color_override('font_color', Color.WHITE)
+				$Label.add_theme_color_override('font_outline_color', $Visual.self_modulate)
+			else:
+				$Label.add_theme_color_override('font_color', $Visual.self_modulate)
+				$Label.add_theme_color_override('font_outline_color', Color.WHITE)
+		else:
+			$Label.remove_theme_color_override('font_color')
+			$Label.add_theme_color_override('font_outline_color', $Visual.self_modulate)
+	else:
+		$Glow.visible = false
+		$Label.text = ''
+		$Voice.scale = Vector2(0.444,0.444)
+		$Handsfree/Handsfreeinner.scale = Vector2(0.2,0.2)
 
 func _on_input_handler_gui_input(event):
 	if event is InputEventMouseButton:
@@ -64,15 +87,18 @@ func _on_input_handler_gui_input(event):
 						Global.project_saved = false
 					if Global.current_tool == Enums.TOOL.VOICE:
 						toggle_voice_trigger()
-					if Global.current_tool == Enums.TOOL.GHOST:
-						make_handsfree()
-					if Global.current_tool == Enums.TOOL.HANDSFREE:
-						make_ghost()
+					if Global.current_tool == Enums.TOOL.HORNY:
+						horny_add()
+					if Global.current_tool == Enums.TOOL.MODIFY:
+						modify_cycle(1)
 				MOUSE_BUTTON_RIGHT:
 					Global.project_saved = false
 					if Global.current_tool == Enums.TOOL.SELECT:
 						Timeline.delete_note(self, Global.current_chart.find(data))
-					
+					if Global.current_tool == Enums.TOOL.HORNY:
+						horny_remove()
+					if Global.current_tool == Enums.TOOL.MODIFY:
+						modify_cycle(-1)
 
 func set_selected():
 	if Clipboard.selected_notes.has(self):
@@ -83,23 +109,33 @@ func set_selected():
 	
 	print(Clipboard.selected_notes)
 	
+func horny_add():
+	Events.emit_signal('tool_used_before', data)
+	if !data.has('horny') or !data['horny'].has('required'):
+		data['horny'] = {'required': 0}
+	else:
+		data['horny']['required'] += 1
+	update_visual()
+	Events.emit_signal('tool_used_after', data)
+func horny_remove():
+	Events.emit_signal('tool_used_before', data)
+	if data.has('horny') and data['horny'].has('required'):
+		if data['horny']['required'] == 0:
+			data.erase('horny')
+		else:
+			data['horny']['required'] -= 1
+	update_visual()
+	Events.emit_signal('tool_used_after', data)
 func toggle_voice_trigger():
+	Events.emit_signal('tool_used_before', data)
 	if data.has('trigger_voice'):
 		data.erase('trigger_voice')
 	else:
 		data['trigger_voice'] = true
 	update_visual()
-func make_ghost():
-	if data["note_modifier"] == 1:
-		data["note_modifier"] = 0
-		update_visual()
-	else:
-		data["note_modifier"] = 1
-		update_visual()
-func make_handsfree():
-	if data["note_modifier"] == 2:
-		data["note_modifier"] = 0
-		update_visual()
-	else:
-		data["note_modifier"] = 2
-		update_visual()
+	Events.emit_signal('tool_used_after', data)
+func modify_cycle(i):
+	Events.emit_signal('tool_used_before', data)
+	data['note_modifier'] = wrapi(data['note_modifier'] + i, 0, 3)
+	update_visual()
+	Events.emit_signal('tool_used_after', data)
