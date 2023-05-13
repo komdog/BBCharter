@@ -13,14 +13,13 @@ func _on_popups_opened():
 		$DifficultyCount.text = 'Your project has ' + str(Save.notes['charts'].size()) + ' / ' + str(Global.difficulty_max+1) + ' difficulties!'
 
 func _on_create_button_up() -> void:
-	Global.project_saved = false
-	
 	var difficulty_name = $DifficultyNameField.text
 	var difficulty_rating = Save.notes['charts'].size()
 	
 	if Save.notes.is_empty(): return print('Error creating difficulty')
-
 	if !difficulty_name.is_valid_filename(): return print('Invalid Filename')
+
+	Global.project_saved = false
 	Save.create_difficulty(difficulty_name, difficulty_rating)
 	Save.load_chart(Save.notes['charts'].size()-1)
 	Events.emit_signal('difficulty_created')

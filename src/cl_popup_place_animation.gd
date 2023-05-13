@@ -8,8 +8,6 @@ func _ready():
 	
 
 func _on_create_button_up() -> void:
-	Global.project_saved = false
-
 	var new_animation_key =	{
 		"timestamp": Global.get_timestamp_snapped(),
 		"sheet_data": {"h": $SheetH.value, "v": $SheetV.value, "total": $Total.value},
@@ -21,6 +19,12 @@ func _on_create_button_up() -> void:
 			}
 		}
 
+	for animation in Timeline.animations_track.get_children():
+		if Global.round_to_dec(animation['data']['timestamp'], 3) == Global.round_to_dec(new_animation_key['timestamp'], 3):
+			print('Animation already exists at %s' % [Global.get_synced_song_pos()])
+			return
+
+	Global.project_saved = false
 	Save.keyframes['loops'].append(new_animation_key)
 	Save.keyframes['loops'].sort_custom(func(a, b): return a['timestamp'] < b['timestamp'])
 	Timeline.note_controller.spawn_single_keyframe(new_animation_key, Prefabs.animation_keyframe, Timeline.animations_track)

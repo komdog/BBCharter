@@ -60,13 +60,17 @@ func preview_audio():
 		
 		
 func add_sound_oneshot_to_timeline():
-	Global.project_saved = false
-	
 	var new_sound_oneshot_key =	{
 		"timestamp": Global.get_timestamp_snapped(),
 		"path": asset_path
 	}
-		
+
+	for oneshot in Timeline.oneshot_sound_track.get_children():
+		if Global.round_to_dec(oneshot['data']['timestamp'], 3) == Global.round_to_dec(new_sound_oneshot_key['timestamp'], 3):
+			print('Oneshot already exists at %s' % [Global.get_synced_song_pos()])
+			return
+			
+	Global.project_saved = false
 	print(new_sound_oneshot_key)
 	Save.keyframes['sound_oneshot'].append(new_sound_oneshot_key)
 	Save.keyframes['sound_oneshot'].sort_custom(func(a, b): return a['timestamp'] < b['timestamp'])
@@ -75,23 +79,3 @@ func add_sound_oneshot_to_timeline():
 # TODO: FIND A WAY TO STORE ASSETS WITH DATA
 func show_animation_prompt():
 	Events.emit_signal('add_animation_to_timeline', asset_path)
-	
-	
-#func add_animation_to_timeline()
-#	var new_animation_key =	{
-#		"timestamp": Global.get_timestamp_snapped(),
-#		"sheet_data": {"h": 2, "v": 3, "total": 6},
-#		"scale_multiplier": 1.0,
-#		"position_offset": {"x": 0 ,"y": 0},
-#		"animations": {
-#			"normal": asset_path,
-#			"horny": asset_path
-#			}
-#		}
-#
-#	Save.keyframes['loops'].append(new_animation_key)
-#	Save.keyframes['loops'].sort_custom(func(a, b): return a['timestamp'] < b['timestamp'])
-#	Timeline.note_controller.spawn_single_keyframe(new_animation_key, Prefabs.animation_keyframe, Timeline.animations_track)
-#
-#
-	
