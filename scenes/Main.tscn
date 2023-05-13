@@ -1,4 +1,4 @@
-[gd_scene load_steps=54 format=3 uid="uid://bo2pso1k2xik8"]
+[gd_scene load_steps=55 format=3 uid="uid://bo2pso1k2xik8"]
 
 [ext_resource type="Theme" uid="uid://cehpee20dikgi" path="res://themes/main_theme.tres" id="1_71y40"]
 [ext_resource type="Script" path="res://src/cl_main.gd" id="2_ca1lw"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://src/cl_filedialog.gd" id="5_qvt2c"]
 [ext_resource type="Texture2D" uid="uid://cfg72q00eldnt" path="res://assets/Checker.png" id="6_bp6ey"]
 [ext_resource type="Script" path="res://src/cl_music.gd" id="6_f3wwk"]
+[ext_resource type="Script" path="res://src/cl_menubar_clear.gd" id="6_pgban"]
 [ext_resource type="Script" path="res://src/cl_difficulty.gd" id="7_alc5b"]
 [ext_resource type="PackedScene" uid="uid://c3m8f3aiheycv" path="res://prefabs/Notification.tscn" id="8_vyifj"]
 [ext_resource type="Script" path="res://src/cl_tools.gd" id="8_waaxy"]
@@ -29,7 +30,7 @@
 [ext_resource type="Script" path="res://src/cl_oneshot.gd" id="22_wed7f"]
 [ext_resource type="Script" path="res://src/cl_popups.gd" id="24_hyexw"]
 [ext_resource type="Script" path="res://src/cl_popup_place_animation.gd" id="26_6tqyk"]
-[ext_resource type="Script" path="res://src/cl_popup_clear_chart.gd" id="30_d6aoh"]
+[ext_resource type="Script" path="res://src/cl_popup_clear.gd" id="34_pacga"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_id34j"]
 bg_color = Color(0, 0, 0, 1)
@@ -240,16 +241,13 @@ script = ExtResource("9_qoohm")
 
 [node name="Edit" type="PopupMenu" parent="Toolbar/MenuBar"]
 theme_override_font_sizes/font_size = 20
-item_count = 3
-item_0/text = "<temp>"
+item_count = 2
+item_0/text = "Undo"
 item_0/id = 0
 item_0/disabled = true
-item_1/text = "<temp>"
+item_1/text = "Redo"
 item_1/id = 1
 item_1/disabled = true
-item_2/text = "Clear Chart"
-item_2/id = 2
-item_2/disabled = true
 script = ExtResource("8_yungy")
 
 [node name="Add" type="PopupMenu" parent="Toolbar/MenuBar"]
@@ -259,6 +257,26 @@ item_0/text = "Add Shutter"
 item_0/id = 0
 item_0/disabled = true
 script = ExtResource("5_2p0vi")
+
+[node name="Clear" type="PopupMenu" parent="Toolbar/MenuBar"]
+theme_override_font_sizes/font_size = 20
+item_count = 5
+item_0/text = "Clear Chart"
+item_0/id = 0
+item_0/disabled = true
+item_1/text = "Clear Animations"
+item_1/id = 1
+item_1/disabled = true
+item_2/text = "Clear Oneshots"
+item_2/id = 2
+item_2/disabled = true
+item_3/text = "Clear Shutters"
+item_3/id = 3
+item_3/disabled = true
+item_4/text = "Clear Timeline"
+item_4/id = 4
+item_4/disabled = true
+script = ExtResource("6_pgban")
 
 [node name="Project" type="PopupMenu" parent="Toolbar/MenuBar"]
 theme_override_font_sizes/font_size = 20
@@ -834,7 +852,7 @@ offset_bottom = 571.0
 theme_override_font_sizes/font_size = 18
 text = "Cancel"
 
-[node name="ClearChartPopup" type="Panel" parent="Popups"]
+[node name="ClearPopup" type="Panel" parent="Popups"]
 visible = false
 layout_mode = 1
 anchors_preset = 8
@@ -849,9 +867,9 @@ offset_bottom = 76.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_y543m")
-script = ExtResource("30_d6aoh")
+script = ExtResource("34_pacga")
 
-[node name="Label" type="Label" parent="Popups/ClearChartPopup"]
+[node name="Label" type="Label" parent="Popups/ClearPopup"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -862,7 +880,7 @@ text = "Are You Sure?"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Yes" type="Button" parent="Popups/ClearChartPopup"]
+[node name="Yes" type="Button" parent="Popups/ClearPopup"]
 layout_mode = 2
 offset_left = 196.0
 offset_top = 104.0
@@ -872,14 +890,14 @@ focus_mode = 0
 theme_override_font_sizes/font_size = 18
 text = "Yes"
 
-[node name="No" type="Button" parent="Popups/ClearChartPopup"]
+[node name="No" type="Button" parent="Popups/ClearPopup"]
 layout_mode = 2
 offset_left = 284.0
 offset_top = 104.0
 offset_right = 356.0
 offset_bottom = 136.0
 theme_override_font_sizes/font_size = 18
-text = "Cancel"
+text = "No"
 
 [node name="QuitPopup" type="Panel" parent="Popups"]
 visible = false
@@ -941,6 +959,7 @@ text = "Cancel"
 [connection signal="id_pressed" from="Toolbar/MenuBar/File" to="Toolbar/MenuBar/File" method="_on_id_pressed"]
 [connection signal="id_pressed" from="Toolbar/MenuBar/Edit" to="Toolbar/MenuBar/Edit" method="_on_id_pressed"]
 [connection signal="id_pressed" from="Toolbar/MenuBar/Add" to="Toolbar/MenuBar/Add" method="_on_id_pressed"]
+[connection signal="id_pressed" from="Toolbar/MenuBar/Clear" to="Toolbar/MenuBar/Clear" method="_on_id_pressed"]
 [connection signal="id_pressed" from="Toolbar/MenuBar/Project" to="Toolbar/MenuBar/Project" method="_on_id_pressed"]
 [connection signal="id_pressed" from="Toolbar/MenuBar/Help" to="Toolbar/MenuBar/Help" method="_on_id_pressed"]
 [connection signal="item_selected" from="Toolbar/Difficulty" to="Toolbar/Difficulty" method="_on_item_selected"]
@@ -955,8 +974,8 @@ text = "Cancel"
 [connection signal="button_up" from="Popups/RenameDifficultyPopup/Cancel" to="Popups/RenameDifficultyPopup" method="_on_cancel_button_up"]
 [connection signal="button_up" from="Popups/PlaceAnimation/Create" to="Popups/PlaceAnimation" method="_on_create_button_up"]
 [connection signal="button_up" from="Popups/PlaceAnimation/Cancel" to="Popups/PlaceAnimation" method="_on_cancel_button_up"]
-[connection signal="button_up" from="Popups/ClearChartPopup/Yes" to="Popups/ClearChartPopup" method="_on_yes_button_up"]
-[connection signal="button_up" from="Popups/ClearChartPopup/No" to="Popups/ClearChartPopup" method="_on_nol_button_up"]
+[connection signal="button_up" from="Popups/ClearPopup/Yes" to="Popups/ClearPopup" method="_on_yes_button_up"]
+[connection signal="button_up" from="Popups/ClearPopup/No" to="Popups/ClearPopup" method="_on_no_button_up"]
 [connection signal="button_up" from="Popups/QuitPopup/Save" to="Popups/QuitPopup" method="_on_save_button_up"]
 [connection signal="button_up" from="Popups/QuitPopup/Discard" to="Popups/QuitPopup" method="_on_discard_button_up"]
 [connection signal="button_up" from="Popups/QuitPopup/Cancel" to="Popups/QuitPopup" method="_on_cancel_button_up"]
