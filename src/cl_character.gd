@@ -101,12 +101,14 @@ func _on_hit_note(data) -> void:
 	run_loop()
 	
 func _on_miss_note(data) -> void:
+	var loop
+	if !loop_index-1 < 0:
+		loop = Save.keyframes['loops'][loop_index-1]
 	var index = Global.current_chart.find(data)
-	var loop = Save.keyframes['loops'][loop_index-1]
 
 	var old = horny
 	for i in horny_notes.size():
-		if horny_notes.size() > 1 and i-1 > -1:
+		if horny_notes.size() > 1 and !i-1 < 0:
 			if index >= horny_notes[i] and index < horny_notes[i-1]:
 				horny = true
 				break
