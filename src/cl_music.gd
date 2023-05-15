@@ -5,11 +5,7 @@ var pause_pos: float
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	Events.chart_loaded.connect(_on_chart_loaded)
 	Global.music = self
-	
-func _on_chart_loaded():
-	Timeline.reset()
 	
 func _input(event):
 	
