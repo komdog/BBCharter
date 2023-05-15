@@ -32,7 +32,7 @@ To create a new project, click on File and select New Project. Then, select a di
 |X|Spawn A Orange note|
 |C|Spawn A Red note|
 |V|Spawn A Purple note|
-|Backspace|Delete Selected notes|
+|Delete or Backspace|Delete Selected notes|
 ### Timeline Shortcuts
 | Hotkey | Function |
 | ------ | ------ |
@@ -40,9 +40,10 @@ To create a new project, click on File and select New Project. Then, select a di
 |Alt + Mouse Scroll| Slow Scrub timeline|
 |Ctrl/Cmd + Mouse Scroll| Zoom|
 |Spacebar|Play / Pause|
-|Up Arrow| Scrub -5.0 seconds|
-|Down Arrow| Scrub 5.0 seconds|
-|Ctrl/Cmd + Up Arrow|Go to Beginning|
-|Ctrl/Cmd + Down Arrow|Go to end|
-|Right Arrow|Speed Up Song|
-|Left Arrow|Slow Down Song|
+|Right Arrow| Scrub -5.0 seconds|
+|Left Arrow| Scrub 5.0 seconds|
+|Home|Go to Beginning|
+|End|Go to end|
+|Up Arrow|Speed Up Song|
+|Down Arrow|Slow Down Song|
+*Home and End functions are reversed on macOS
