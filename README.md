@@ -46,4 +46,5 @@ To create a new project, click on File and select New Project. Then, select a di
 |End|Go to end|
 |Up Arrow|Speed Up Song|
 |Down Arrow|Slow Down Song|
+
 *Home and End functions are reversed on macOS
