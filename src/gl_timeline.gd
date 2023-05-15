@@ -144,21 +144,35 @@ func _input(event):
 			
 	if event is InputEventKey:
 		# Speed up / Slow down song	
-		if event.is_action_pressed("ui_right"):
-			Global.music.pitch_scale = clampf(Global.music.pitch_scale + 0.1, 0.5, 2.0 )
-		if event.is_action_pressed("ui_left"):
-			Global.music.pitch_scale = clampf(Global.music.pitch_scale - 0.1, 0.5, 2.0 )
-			
-		# Fast Seek +10 + Seek to beginning / End
-		if event.is_action_pressed("ui_down"):
-			if event.is_command_or_control_pressed():
-				seek(Global.song_length)
-			else:
-				clamp_seek(5.0)
 		if event.is_action_pressed("ui_up"):
-			if event.is_command_or_control_pressed():
+			Global.music.pitch_scale = clampf(Global.music.pitch_scale + 0.1, 0.5, 2.0 )
+		if event.is_action_pressed("ui_down"):
+			Global.music.pitch_scale = clampf(Global.music.pitch_scale - 0.1, 0.5, 2.0 )
+		
+		# Seek to beginning / End
+		if OS.get_name() == "macOS":
+			if event.is_action_pressed("ui_end"):
+				reset()
+		else:
+			if event.is_action_pressed("ui_home"):
+				reset()
+		if OS.get_name() == "macOS":
+			if event.is_action_pressed("ui_home"):
+				seek(Global.song_length)
+		else:
+			if event.is_action_pressed("ui_end"):
+				seek(Global.song_length)
+				
+		# Fast Seek +5 AND Seek to beginning / End
+		if event.is_action_pressed("ui_right"):
+			if OS.get_name() == "macOS" and event.is_meta_pressed():
 				reset()
 			else:
 				clamp_seek(-5.0)
+		if event.is_action_pressed("ui_left"):
+			if OS.get_name() == "macOS" and event.is_meta_pressed():
+				seek(Global.song_length)
+			else:
+				clamp_seek(5.0)
 
 		
