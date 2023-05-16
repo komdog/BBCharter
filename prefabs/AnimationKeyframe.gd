@@ -31,6 +31,5 @@ func _on_input_handler_gui_input(event) -> void:
 			MOUSE_BUTTON_MIDDLE:
 				print(Save.keyframes['loops'].find(data))
 			MOUSE_BUTTON_RIGHT:
-				if data['timestamp'] == 0.0: return print('Cannot delete first animation')
 				Global.project_saved = false
 				Timeline.delete_keyframe('loops', self, Save.keyframes['loops'].find(data))

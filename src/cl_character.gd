@@ -32,11 +32,18 @@ func _on_chart_loaded():
 
 func _physics_process(_delta):
 	if Save.keyframes.has('loops') and Save.keyframes['loops'].size() > 0:
-		var arr = Save.keyframes['loops'].filter(func(loop): return Global.get_synced_song_pos() > loop['timestamp'])
+		var arr = Save.keyframes['loops'].filter(func(loop): return Global.get_synced_song_pos() >= loop['timestamp'])
 		loop_index = arr.size()
 		if loop_index != last_loop_index:
 			last_loop_index = loop_index
 			change_animation(loop_index-1)
+		if Global.get_synced_song_pos() < Save.keyframes['loops'][0]['timestamp']:
+			change_animation(loop_index-1)
+	else:
+		$Visual.texture = null
+		$Visual.hframes = 1
+		$Visual.vframes = 1
+		$Visual.frame = 0
 
 
 func _on_tool_used_before(data):
@@ -96,7 +103,7 @@ func _on_tool_used_after(data):
 
 func change_animation(idx: int) -> void:
 	
-	if idx < 0: return
+	if idx < 0: idx = 0
 	if Save.keyframes['loops'].size() <= 0: return
 		
 	var loop = Save.keyframes['loops'][idx]
@@ -122,7 +129,7 @@ func change_animation(idx: int) -> void:
 	$Visual.hframes = loop['sheet_data']["h"] # Get hframes from preset
 	$Visual.vframes = loop['sheet_data']["v"] # Get vframes from preset
 	total_sprite_frames = loop['sheet_data']["total"]
-	run_loop()
+	if Global.get_synced_song_pos() >= Save.keyframes['loops'][0]['timestamp']: run_loop()
 
 
 func _on_hit_note(data) -> void:
