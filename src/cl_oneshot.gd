@@ -15,7 +15,7 @@ func _on_chart_loaded():
 
 func _physics_process(_delta):
 	if Save.keyframes.has('sound_oneshot') and Save.keyframes['sound_oneshot'].size() > 0:
-		var arr = Save.keyframes['sound_oneshot'].filter(func(sound): return Global.get_synced_song_pos() > sound['timestamp'])
+		var arr = Save.keyframes['sound_oneshot'].filter(func(sound): return Global.get_synced_song_pos() >= sound['timestamp'])
 		sound_index = arr.size()
 		if sound_index != last_sound_index:
 			last_sound_index = sound_index

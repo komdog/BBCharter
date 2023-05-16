@@ -12,7 +12,7 @@ func _on_chart_loaded():
 
 func _process(_delta):
 	if Save.keyframes.has('shutter') and Save.keyframes['shutter'].size() > 0:
-		var arr = Save.keyframes['shutter'].filter(func(shutter): return Global.get_synced_song_pos() > shutter['timestamp'])
+		var arr = Save.keyframes['shutter'].filter(func(shutter): return Global.get_synced_song_pos() >= shutter['timestamp'])
 		shutter_index = arr.size()
 		if shutter_index != last_shutter_index:
 			last_shutter_index = shutter_index
