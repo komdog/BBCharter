@@ -42,24 +42,40 @@ func save_cfg(file_name: String, new_data) -> int:
 		return FAILED
 		
 		
+func valid_project():
+	if load_cfg('asset.cfg') == {}:
+		print("Could not load 'asset.cfg'")
+		return false
+	if load_cfg('keyframes.cfg') == {}:
+		print("Could not load 'keyframes.cfg'")
+		return false
+	if load_cfg('meta.cfg') == {}:
+		print("Could not load 'meta.cfg'")
+		return false
+	if load_cfg('settings.cfg') == {}:
+		print("Could not load 'settings.cfg'")
+		return false
+	if load_cfg('notes.cfg') == {}:
+		print("Could not load 'notes.cfg'")
+		return false
+	if !FileAccess.file_exists(project_dir + "/audio/" + load_cfg('asset.cfg').get('song_path', "")):
+		print("Could not load '%s'" % load_cfg('asset.cfg').get('song_path', "song_path"))
+		return false
+	return true
+
+
 func load_project(file_path):
 	
 	var old_project_dir = project_dir
 	project_dir = file_path
 	
-	asset = load_cfg('asset.cfg')
-	await get_tree().process_frame
+	if valid_project():
+		asset = load_cfg('asset.cfg')
+		keyframes = load_cfg('keyframes.cfg')
+		meta = load_cfg('meta.cfg')
+		settings = load_cfg('settings.cfg')
+		await get_tree().process_frame
 	
-	keyframes = load_cfg('keyframes.cfg')
-	await get_tree().process_frame
-	
-	meta = load_cfg('meta.cfg')
-	await get_tree().process_frame
-	
-	settings = load_cfg('settings.cfg')
-	await get_tree().process_frame
-	
-	if asset != {} or keyframes != {} or meta != {} or settings != {} or load_cfg('notes.cfg') != {}:
 		Timeline.clear_timeline()
 		notes = {}
 		
@@ -68,6 +84,7 @@ func load_project(file_path):
 		Assets.load_audio()
 
 		load_chart()
+		Timeline.reset()
 
 		# Order Matters
 		load_keyframes()
@@ -76,7 +93,7 @@ func load_project(file_path):
 		Events.emit_signal('notify', 'Project Loaded', meta['level_name'], project_dir + "/thumb.png")
 		Events.emit_signal('project_loaded')
 		Global.project_loaded=true
-		Global.project_saved = true
+		Global.project_saved=true
 	else:
 		Events.emit_signal('notify', 'Error loading project', 'Invalid level: ' + project_dir.get_file(), "")
 		project_dir = old_project_dir
