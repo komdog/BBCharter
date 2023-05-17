@@ -22,10 +22,10 @@ func _ready() -> void:
 
 	
 func _on_chart_loaded():
-	loop_index = 0
-	change_animation(loop_index)
 	horny = false
 	horny_notes = []
+	loop_index = 0
+	change_animation(loop_index)
 
 
 func _physics_process(_delta):
@@ -41,7 +41,7 @@ func _physics_process(_delta):
 		$Visual.texture = null
 		$Visual.hframes = 1
 		$Visual.vframes = 1
-		$Visual.frame = 0
+		$Visual.frame = $Visual.hframes * $Visual.vframes - 1
 
 
 
@@ -130,7 +130,7 @@ func _on_miss_note(data) -> void:
 	if old != horny:
 		change_animation(loop_index-1)
 
-	if horny_notes.has(index):
+	if horny_notes.has(index) and horny:
 		$Visual.texture = Assets.get_asset(loop['animations']['normal'])
 		run_loop()
 		horny = false

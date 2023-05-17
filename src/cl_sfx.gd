@@ -13,10 +13,10 @@ func _on_chart_loaded():
 	change_sound(sound_loop_index)
 
 func _physics_process(_delta):
-	if Save.keyframes.has('sound_loop') and Save.keyframes['sound_loop'].size() > 0:
+	if Save.keyframes.has('sound_loop') and Save.keyframes['sound_loop'].size() > 0 and Global.project_loaded:
 		var arr = Save.keyframes['sound_loop'].filter(func(loop): return Global.get_synced_song_pos() >= loop['timestamp'])
 		sound_loop_index = arr.size()
-		if sound_loop_index != last_sound_loop_index:
+		if sound_loop_index != last_sound_loop_index and Global.get_synced_song_pos() >= Save.keyframes['sound_loop'][0]['timestamp']:
 			last_sound_loop_index = sound_loop_index
 			change_sound(sound_loop_index-1)
 	
