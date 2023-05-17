@@ -70,30 +70,32 @@ func load_project(file_path):
 	project_dir = file_path
 	
 	if valid_project():
+		# Order Matters
+		Global.project_loaded=false
+		Timeline.clear_timeline()
+		Timeline.reset()
+		notes = {}
+
 		asset = load_cfg('asset.cfg')
 		keyframes = load_cfg('keyframes.cfg')
 		meta = load_cfg('meta.cfg')
 		settings = load_cfg('settings.cfg')
+
 		await get_tree().process_frame
-	
-		Timeline.clear_timeline()
-		notes = {}
+		await get_tree().physics_frame
 		
 		Assets.lib.clear()
 		Assets.load_images()
 		Assets.load_audio()
 
 		load_chart()
-		Timeline.reset()
-
-		# Order Matters
 		load_keyframes()
 		load_song()	
 	
 		Events.emit_signal('notify', 'Project Loaded', meta['level_name'], project_dir + "/thumb.png")
 		Events.emit_signal('project_loaded')
-		Global.project_loaded=true
 		Global.project_saved=true
+		Global.project_loaded=true
 	else:
 		Events.emit_signal('notify', 'Error loading project', 'Invalid level: ' + project_dir.get_file(), "")
 		project_dir = old_project_dir
