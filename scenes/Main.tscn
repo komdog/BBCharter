@@ -308,19 +308,22 @@ script = ExtResource("6_pgban")
 
 [node name="Project" type="PopupMenu" parent="Toolbar/MenuBar"]
 theme_override_font_sizes/font_size = 20
-item_count = 4
+item_count = 5
 item_0/text = "Reload Project"
 item_0/id = 0
 item_0/disabled = true
-item_1/text = "Create New Difficulty"
+item_1/text = ""
 item_1/id = 1
-item_1/disabled = true
-item_2/text = "Delete Difficulty"
-item_2/id = 2
+item_1/separator = true
+item_2/text = "Create New Difficulty"
+item_2/id = 1
 item_2/disabled = true
-item_3/text = "Rename Difficulty"
-item_3/id = 3
+item_3/text = "Delete Difficulty"
+item_3/id = 2
 item_3/disabled = true
+item_4/text = "Rename Difficulty"
+item_4/id = 3
+item_4/disabled = true
 script = ExtResource("5_577ur")
 
 [node name="Help" type="PopupMenu" parent="Toolbar/MenuBar"]
@@ -806,7 +809,6 @@ grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 1
 theme_override_font_sizes/font_size = 24
-placeholder_text = "Difficulty Name"
 
 [node name="DifficultyRatingField" type="SpinBox" parent="Popups/RenameDifficultyPopup"]
 layout_mode = 0
@@ -1065,6 +1067,7 @@ text = "Cancel"
 [connection signal="gui_input" from="Popups" to="Popups" method="_on_gui_input"]
 [connection signal="button_up" from="Popups/NewDifficultyPopup/Create" to="Popups/NewDifficultyPopup" method="_on_create_button_up"]
 [connection signal="button_up" from="Popups/NewDifficultyPopup/Cancel" to="Popups/NewDifficultyPopup" method="_on_cancel_button_up"]
+[connection signal="value_changed" from="Popups/RenameDifficultyPopup/DifficultyRatingField" to="Popups/RenameDifficultyPopup" method="_on_value_changed"]
 [connection signal="button_up" from="Popups/RenameDifficultyPopup/Rename" to="Popups/RenameDifficultyPopup" method="_on_rename_button_up"]
 [connection signal="button_up" from="Popups/RenameDifficultyPopup/Cancel" to="Popups/RenameDifficultyPopup" method="_on_cancel_button_up"]
 [connection signal="button_up" from="Popups/PlaceAnimation/Create" to="Popups/PlaceAnimation" method="_on_create_button_up"]
