@@ -11,7 +11,7 @@ func _on_id_pressed(id: int):
 		SHUTTER:
 			var new_shutter = {'timestamp': Global.get_timestamp_snapped()}
 			for shutter in Timeline.shutter_track.get_children():
-				if Global.round_to_dec(shutter['data']['timestamp'], 3) == Global.round_to_dec(new_shutter['timestamp'], 3):
+				if snappedf(shutter['data']['timestamp'], 0.001) == snappedf(new_shutter['timestamp'], 0.001):
 					print('Shutter already exists at %s' % [Global.get_synced_song_pos()])
 					return
 	

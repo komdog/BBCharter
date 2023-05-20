@@ -66,7 +66,7 @@ func add_sound_oneshot_to_timeline():
 	}
 
 	for oneshot in Timeline.oneshot_sound_track.get_children():
-		if Global.round_to_dec(oneshot['data']['timestamp'], 3) == Global.round_to_dec(new_sound_oneshot_key['timestamp'], 3):
+		if snappedf(oneshot['data']['timestamp'], 0.001) == snappedf(new_sound_oneshot_key['timestamp'], 0.001):
 			print('Oneshot already exists at %s' % [Global.get_synced_song_pos()])
 			return
 			

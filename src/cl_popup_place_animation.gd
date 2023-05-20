@@ -20,7 +20,7 @@ func _on_create_button_up() -> void:
 		}
 
 	for animation in Timeline.animations_track.get_children():
-		if Global.round_to_dec(animation['data']['timestamp'], 3) == Global.round_to_dec(new_animation_key['timestamp'], 3):
+		if snappedf(animation['data']['timestamp'], 0.001) == snappedf(new_animation_key['timestamp'], 0.001):
 			print('Animation already exists at %s' % [Global.get_synced_song_pos()])
 			return
 
