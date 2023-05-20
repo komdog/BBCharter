@@ -7,6 +7,10 @@ func _ready():
 func _on_popups_opened():
 	if !Save.notes.is_empty():
 		$DifficultyRatingField.max_value = Save.notes['charts'].size()-1
+		$DifficultyNameField.placeholder_text = Save.notes['charts'][$DifficultyRatingField.value]['name']
+
+func _on_value_changed(value):
+	$DifficultyNameField.placeholder_text = Save.notes['charts'][value]['name']
 
 func _on_rename_button_up() -> void:
 	Global.project_saved = false
