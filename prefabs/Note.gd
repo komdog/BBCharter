@@ -137,6 +137,5 @@ func toggle_voice_trigger():
 func modify_cycle(i):
 	Events.emit_signal('tool_used_before', data)
 	data['note_modifier'] = wrapi(data['note_modifier'] + i, 0, 3)
-	if data['note_modifier'] == 1: data['note_modifier'] += 1 # Remove once Auto Notes are implemented
 	update_visual()
 	Events.emit_signal('tool_used_after', data)
