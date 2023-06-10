@@ -706,6 +706,7 @@ theme_override_font_sizes/font_size = 18
 text = "SHUTTER"
 
 [node name="Popups" type="Panel" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -858,6 +859,7 @@ theme_override_font_sizes/font_size = 18
 text = "Cancel"
 
 [node name="PlaceAnimation" type="Panel" parent="Popups"]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
