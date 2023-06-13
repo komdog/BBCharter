@@ -10,6 +10,7 @@ To create a new project, click on File and select New Project. Then, select a di
 | ------ | ------ |
 |Ctrl/Cmd + S|Save the current mod.|
 |Ctrl/Cmd + O|Open an existing mod.|
+|Ctrl/Cmd + R|Reload the current mod.|
 |Alt + S|Toggle snapping|
 ### Directory Shortcuts
 | Hotkey | Function |

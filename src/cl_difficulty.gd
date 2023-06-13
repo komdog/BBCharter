@@ -31,12 +31,22 @@ func _on_difficulty_renamed(stuff):
 	Events.emit_signal('notify', 'Renamed Difficulty', stuff[1] + ' → ' + difficulty['name'], Save.project_dir + "/thumb.png")
 
 func _on_difficulty_deleted(index):
+	Global.project_saved=false
+
 	var old_difficulty = get_item_text(index)
 	remove_item(index)
 
 	selected = index
 	if index >= item_count:
 		selected = item_count-1
+		Save.load_chart(selected)
+	else:
+		Save.load_chart(index+1)
+		Global.difficulty_index -= 1
+
+	Save.notes['charts'].remove_at(index)
+	for i in Save.notes['charts'].size():
+		Save.notes['charts'][i]['rating'] = i
+	Save.notes['charts'].sort_custom(func(a,b): return a['rating'] < b['rating'])
 	
-	Save.load_chart(index)
 	Events.emit_signal('notify', 'Removed Difficulty', old_difficulty, Save.project_dir + "/thumb.png")

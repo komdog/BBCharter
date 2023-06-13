@@ -13,20 +13,14 @@ var song_offset_default = 0.0
 var modifier_default = [{"bpm": 128.0, "timestamp": 0}]
 
 func save_project() -> void:
-	var skip_notes = false
-	if Global.current_chart.is_empty(): skip_notes = true
-	
 	#Save keyframes
 	keyframes['loops'].sort_custom(func(a,b): return a['timestamp'] < b['timestamp'])
 	if save_cfg('keyframes.cfg', keyframes) == FAILED: return print('Could not save keyframes.cfg')
 	
 	#Save Notes
-	if skip_notes:
-		print('No Chart To Export')
-	else:
-		notes['charts'][Global.difficulty_index]['notes'] = Global.current_chart # Move chart to save cache
-		notes['charts'].sort_custom(func(a,b): return a['rating'] < b['rating'])
-		if save_cfg('notes.cfg', notes) == FAILED: return print('Could not save notes.cfg')
+	notes['charts'][Global.difficulty_index]['notes'] = Global.current_chart # Move chart to save cache
+	notes['charts'].sort_custom(func(a,b): return a['rating'] < b['rating'])
+	if save_cfg('notes.cfg', notes) == FAILED: return print('Could not save notes.cfg')
 	
 	Global.project_saved = true
 	Events.emit_signal('notify', 'Saved Project', meta['level_name'], project_dir + "/thumb.png")
@@ -153,8 +147,3 @@ func create_difficulty(diffcuilty_name: String = "Virgin", rating: int = 0, char
 	}
 	notes['charts'].append(new_difficulty) 
 	
-func delete_difficulty() -> void:
-	Global.current_chart.clear()
-	Events.emit_signal('difficulty_deleted', Global.difficulty_index)
-	notes['charts'].remove_at(Global.difficulty_index)
-	notes['charts'].sort_custom(func(a,b): return a['rating'] < b['rating'])

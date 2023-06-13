@@ -13,7 +13,7 @@ func _on_id_pressed(id: int):
 			Popups.reveal(Popups.NEWDIFFICULTY)
 		DELETEDIFFICULTY:
 			if Save.notes['charts'].size() > 1:
-				Save.delete_difficulty()
+				Popups.reveal(Popups.DELETEDIFFICULTY)
 			else:
 				Events.emit_signal('notify', 'Error deleting difficulty', 'You can\'t delete the only one left!', "")
 		RENAMEDIFFICULTY:

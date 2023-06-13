@@ -1,4 +1,4 @@
-[gd_scene load_steps=65 format=3 uid="uid://bo2pso1k2xik8"]
+[gd_scene load_steps=66 format=3 uid="uid://bo2pso1k2xik8"]
 
 [ext_resource type="Theme" uid="uid://cehpee20dikgi" path="res://themes/main_theme.tres" id="1_71y40"]
 [ext_resource type="Script" path="res://src/cl_main.gd" id="2_ca1lw"]
@@ -34,6 +34,7 @@
 [ext_resource type="Script" path="res://src/cl_popups.gd" id="24_hyexw"]
 [ext_resource type="Script" path="res://src/cl_voice.gd" id="26_3mi6w"]
 [ext_resource type="Script" path="res://src/cl_popup_place_animation.gd" id="26_6tqyk"]
+[ext_resource type="Script" path="res://src/cl_popup_delete_difficulty.gd" id="32_m4kvt"]
 [ext_resource type="Script" path="res://src/cl_popup_clear.gd" id="34_pacga"]
 
 [sub_resource type="Animation" id="Animation_jfjoc"]
@@ -787,6 +788,53 @@ offset_bottom = 250.0
 theme_override_font_sizes/font_size = 18
 text = "Cancel"
 
+[node name="DeleteDifficultyPopup" type="Panel" parent="Popups"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -276.0
+offset_top = -76.0
+offset_right = 276.0
+offset_bottom = 76.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_y543m")
+script = ExtResource("32_m4kvt")
+
+[node name="Label" type="Label" parent="Popups/DeleteDifficultyPopup"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 58.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 20
+text = "Are You Sure?"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Yes" type="Button" parent="Popups/DeleteDifficultyPopup"]
+layout_mode = 2
+offset_left = 196.0
+offset_top = 104.0
+offset_right = 268.0
+offset_bottom = 136.0
+focus_mode = 0
+theme_override_font_sizes/font_size = 18
+text = "Yes"
+
+[node name="No" type="Button" parent="Popups/DeleteDifficultyPopup"]
+layout_mode = 2
+offset_left = 284.0
+offset_top = 104.0
+offset_right = 356.0
+offset_bottom = 136.0
+theme_override_font_sizes/font_size = 18
+text = "No"
+
 [node name="RenameDifficultyPopup" type="Panel" parent="Popups"]
 visible = false
 layout_mode = 1
@@ -1172,6 +1220,8 @@ text = "Cancel"
 [connection signal="gui_input" from="Popups" to="Popups" method="_on_gui_input"]
 [connection signal="button_up" from="Popups/NewDifficultyPopup/Create" to="Popups/NewDifficultyPopup" method="_on_create_button_up"]
 [connection signal="button_up" from="Popups/NewDifficultyPopup/Cancel" to="Popups/NewDifficultyPopup" method="_on_cancel_button_up"]
+[connection signal="button_up" from="Popups/DeleteDifficultyPopup/Yes" to="Popups/DeleteDifficultyPopup" method="_on_yes_button_up"]
+[connection signal="button_up" from="Popups/DeleteDifficultyPopup/No" to="Popups/DeleteDifficultyPopup" method="_on_no_button_up"]
 [connection signal="value_changed" from="Popups/RenameDifficultyPopup/DifficultyRatingField" to="Popups/RenameDifficultyPopup" method="_on_value_changed"]
 [connection signal="button_up" from="Popups/RenameDifficultyPopup/Rename" to="Popups/RenameDifficultyPopup" method="_on_rename_button_up"]
 [connection signal="button_up" from="Popups/RenameDifficultyPopup/Cancel" to="Popups/RenameDifficultyPopup" method="_on_cancel_button_up"]

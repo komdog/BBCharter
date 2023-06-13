@@ -17,6 +17,8 @@ func _input(event):
 		Global.filedialog.new_project_dialog()
 	if event.is_action_pressed("project_open") and event.is_command_or_control_pressed():
 		Global.filedialog.open_project_dialog()
+	if event.is_action_pressed("project_reload") and event.is_command_or_control_pressed() and Save.project_dir != "":
+		Save.load_project(Save.project_dir)
 	if event.is_action_pressed("project_save") and event.is_command_or_control_pressed():
 		Save.save_project()
 	if event.is_action_pressed("open_project_dir"):
