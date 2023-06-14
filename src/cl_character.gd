@@ -11,27 +11,42 @@ var horny_notes: Array
 var loop_index: int
 var last_loop_index: int
 
+var bg_index: int
+var last_bg_index: int
+var bg_type: int
+
 var current_note_timestamp
 var next_note_timestamp
 var tween
 
 func _ready() -> void:
+	Events.project_loaded.connect(_on_project_loaded)
 	Events.chart_loaded.connect(_on_chart_loaded)
 	Events.hit_note.connect(_on_hit_note)
 	Events.miss_note.connect(_on_miss_note)
 	Events.tool_used_before.connect(_on_tool_used_before)
 	Events.tool_used_after.connect(_on_tool_used_after)
 
+func _on_project_loaded():
+	if Save.settings.has('background_type'):
+		bg_type = Save.settings['background_type']
+		if bg_type == 0:
+			$Pattern.visible = true; $Static.visible = false
+		else:
+			$Pattern.visible = false; $Static.visible = true
+	else:
+		$Pattern.visible = true; $Static.visible = false
 	
 func _on_chart_loaded():
 	horny = false
 	horny_notes = []
 	loop_index = 0
 	change_animation(loop_index)
+	$Visual.frame = total_sprite_frames-1
 
 
 func _physics_process(_delta):
-	if Save.keyframes.has('loops') and Save.keyframes['loops'].size() > 0:
+	if Save.keyframes.has('loops') and Save.keyframes['loops'].size() > 0 and Timeline.animations_track.get_child_count() > 0:
 		var arr = Save.keyframes['loops'].filter(func(loop): return Global.get_synced_song_pos() >= loop['timestamp'])
 		loop_index = arr.size()
 		if loop_index != last_loop_index:
@@ -44,6 +59,18 @@ func _physics_process(_delta):
 		$Visual.hframes = 1
 		$Visual.vframes = 1
 		$Visual.frame = $Visual.hframes * $Visual.vframes - 1
+	
+	if Save.keyframes.has('background') and Save.keyframes['background'].size() > 0 and Global.project_loaded:
+		var arr = Save.keyframes['background'].filter(func(bg): return Global.get_synced_song_pos() >= bg['timestamp'])
+		bg_index = arr.size()
+		if bg_index != last_bg_index:
+			last_bg_index = bg_index
+			change_background(bg_index-1)
+		if Global.get_synced_song_pos() < Save.keyframes['background'][0]['timestamp']:
+			change_background(loop_index-1)
+	else:
+		if Global.project_loaded:
+			$Pattern.texture = preload("res://assets/Pattern.png")
 
 
 func _on_tool_used_before(data):
@@ -75,12 +102,14 @@ func _on_tool_used_after(data):
 				if horny_notes.size() > 1 and !i-1 < 0:
 					if idx >= horny_notes[i] and idx < horny_notes[i-1]:
 						horny = true
+						Events.emit_signal('horny_mode')
 						break
 					else:
 						horny = false
 				else:
 					if idx >= horny_notes[i]:
 						horny = true
+						Events.emit_signal('horny_mode')
 						break
 					else:
 						horny = false
@@ -93,6 +122,7 @@ func _on_tool_used_after(data):
 				if horny_notes.has(idx):
 					$Visual.texture = Assets.get_asset(loop['animations']['horny'])
 					horny = true
+					Events.emit_signal('horny_mode')
 					if old != $Visual.texture:
 						run_loop()
 				else:
@@ -148,6 +178,7 @@ func _on_hit_note(data) -> void:
 	if horny_notes.has(index):
 		$Visual.texture = Assets.get_asset(Save.keyframes['loops'][loop_index-1]['animations']['horny'])
 		horny = true
+		Events.emit_signal('horny_mode')
 	else:
 		horny = false
 
@@ -199,3 +230,25 @@ func run_loop():
 	tween = create_tween()
 	tween.tween_property($Visual, "frame", total_sprite_frames-1, animation_time / Global.music.pitch_scale)
 	tween.play()
+
+func change_background(idx: int) -> void:
+	if idx < 0: idx = 0
+	if Save.keyframes['background'].size() <= 0: return
+	var bg = Save.keyframes['background'][idx]
+
+	# Change Texture
+	if bg_type == 0:
+		$Pattern.texture = Assets.get_asset(bg['path'])
+	else:
+		$Static.texture = Assets.get_asset(bg['path'])
+
+	if bg.has('background_scale_multiplier'):
+		if bg_type == 0:
+			$Pattern.scale = Vector2(bg['background_scale_multiplier'] * 0.278, bg['background_scale_multiplier'] * 0.281)
+		else:
+			$Static.scale = Vector2(bg['background_scale_multiplier'] * 2/3, bg['background_scale_multiplier'] * 2/3)
+	else:
+		if idx == 0:
+			$Pattern.scale = Vector2(0.278, 0.281)
+		else:
+			$Static.scale = Vector2(2/3, 2/3)

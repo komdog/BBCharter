@@ -1,4 +1,4 @@
-[gd_scene load_steps=66 format=3 uid="uid://bo2pso1k2xik8"]
+[gd_scene load_steps=69 format=3 uid="uid://bo2pso1k2xik8"]
 
 [ext_resource type="Theme" uid="uid://cehpee20dikgi" path="res://themes/main_theme.tres" id="1_71y40"]
 [ext_resource type="Script" path="res://src/cl_main.gd" id="2_ca1lw"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://src/cl_menubar_project.gd" id="5_577ur"]
 [ext_resource type="Script" path="res://src/cl_character.gd" id="5_in5ur"]
 [ext_resource type="Script" path="res://src/cl_filedialog.gd" id="5_qvt2c"]
+[ext_resource type="Texture2D" uid="uid://cod8x65epafno" path="res://assets/Pattern.png" id="5_v7o4k"]
 [ext_resource type="Texture2D" uid="uid://cfg72q00eldnt" path="res://assets/Checker.png" id="6_bp6ey"]
 [ext_resource type="Script" path="res://src/cl_music.gd" id="6_f3wwk"]
 [ext_resource type="Script" path="res://src/cl_menubar_clear.gd" id="6_pgban"]
@@ -34,8 +35,12 @@
 [ext_resource type="Script" path="res://src/cl_popups.gd" id="24_hyexw"]
 [ext_resource type="Script" path="res://src/cl_voice.gd" id="26_3mi6w"]
 [ext_resource type="Script" path="res://src/cl_popup_place_animation.gd" id="26_6tqyk"]
+[ext_resource type="Script" path="res://src/cl_horny.gd" id="31_rybx7"]
 [ext_resource type="Script" path="res://src/cl_popup_delete_difficulty.gd" id="32_m4kvt"]
 [ext_resource type="Script" path="res://src/cl_popup_clear.gd" id="34_pacga"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x5vw1"]
+bg_color = Color(0.0862745, 0.0862745, 0.0862745, 1)
 
 [sub_resource type="Animation" id="Animation_jfjoc"]
 length = 0.001
@@ -218,9 +223,28 @@ scale = Vector2(0.778, 0.778)
 script = ExtResource("5_in5ur")
 metadata/_edit_group_ = true
 
-[node name="Checkers" type="Sprite2D" parent="Character"]
-texture = ExtResource("6_bp6ey")
+[node name="Panel" type="Panel" parent="Character"]
+offset_left = -640.0
+offset_top = -360.0
+offset_right = 640.0
+offset_bottom = 360.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_x5vw1")
 metadata/_edit_lock_ = true
+
+[node name="Pattern" type="Sprite2D" parent="Character"]
+texture_repeat = 2
+position = Vector2(-640, -360)
+scale = Vector2(0.278, 0.281)
+texture = ExtResource("5_v7o4k")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 4604.4, 2562.3)
+region_filter_clip_enabled = true
+
+[node name="Static" type="Sprite2D" parent="Character"]
+visible = false
+scale = Vector2(0.667, 0.667)
+texture = ExtResource("6_bp6ey")
 
 [node name="Visual" type="Sprite2D" parent="Character"]
 
@@ -653,6 +677,9 @@ script = ExtResource("26_3mi6w")
 
 [node name="OneShot" type="AudioStreamPlayer" parent="."]
 script = ExtResource("22_wed7f")
+
+[node name="Horny" type="AudioStreamPlayer" parent="."]
+script = ExtResource("31_rybx7")
 
 [node name="Background5" type="Panel" parent="."]
 layout_mode = 1
