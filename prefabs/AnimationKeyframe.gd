@@ -29,7 +29,7 @@ func _on_input_handler_gui_input(event) -> void:
 	if event is InputEventMouseButton and event.pressed:
 		match event.button_index:
 			MOUSE_BUTTON_LEFT:
-				Popups.id = 1
+				Popups.type = 1
 				Events.emit_signal('add_animation_to_timeline', data)
 			MOUSE_BUTTON_MIDDLE:
 				print(Save.keyframes['loops'].find(data))

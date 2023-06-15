@@ -4,6 +4,7 @@ enum {NEWDIFFICULTY,DELETEDIFFICULTY,RENAMEDIFFICULTY,ICONDIFFICULTY,PLACEANIMAT
 
 var popup: Control
 var open: bool
+var type: int = 0
 var id: int = -1
 
 func reveal(index):
@@ -17,7 +18,7 @@ func close():
 	popup.hide()
 	for child in popup.get_children():
 		child.hide()
-		
+	
 	open = false
 	Events.emit_signal('popups_closed')
 	
