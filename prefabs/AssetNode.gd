@@ -78,4 +78,5 @@ func add_sound_oneshot_to_timeline():
 	
 # TODO: FIND A WAY TO STORE ASSETS WITH DATA
 func show_animation_prompt():
+	Popups.id = 0
 	Events.emit_signal('add_animation_to_timeline', asset_path)

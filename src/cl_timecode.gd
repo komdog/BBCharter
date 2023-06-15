@@ -39,11 +39,12 @@ func _process(_delta):
 		text = text + " : "
 		
 		if total_time_msec - offset_time_msec < 0:
-			total_time_msec = total_time_msec - offset_time_msec + 1000
+			total_time_msec -= offset_time_msec + 1000
 			total_time_sec -= 1
 		if total_time_sec - offset_time_sec < 0:
-			total_time_sec = total_time_sec - offset_time_sec + 60
+			total_time_sec -= offset_time_sec + 60
 			total_time_min -= 1
+		total_time_min -= offset_time_min
 		
 		var total_array = [
 			total_time_min, 
