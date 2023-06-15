@@ -1,6 +1,6 @@
 extends PopupMenu
 
-enum {RELOADPROJECT,NEWDIFFICULTY,DELETEDIFFICULTY,RENAMEDIFFICULTY}
+enum {RELOADPROJECT,NEWDIFFICULTY,DELETEDIFFICULTY,RENAMEDIFFICULTY,ICONDIFFICULTY}
 
 func _ready():
 	Events.project_loaded.connect(_on_project_loaded)
@@ -18,7 +18,8 @@ func _on_id_pressed(id: int):
 				Events.emit_signal('notify', 'Error deleting difficulty', 'You can\'t delete the only one left!', "")
 		RENAMEDIFFICULTY:
 			Popups.reveal(Popups.RENAMEDIFFICULTY)
-			
+		ICONDIFFICULTY:
+			Popups.reveal(Popups.ICONDIFFICULTY)
 
 func _on_project_loaded():
 	for i in item_count:

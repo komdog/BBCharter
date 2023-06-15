@@ -13,7 +13,7 @@ func setup(note_data):
 	update_position()
 
 func update_position():
-	position.x = -(data['timestamp'] * Global.note_speed)
+	position.x = -((data['timestamp'] - Global.offset) * Global.note_speed)
 
 func update_selection(a,b):
 	if b >= a:

@@ -22,7 +22,7 @@ func setup(keyframe_data):
 		update_position()
 
 func update_position():
-	position.x = -(data['timestamp'] * Global.note_speed)
+	position.x = -((data['timestamp'] - Global.offset) * Global.note_speed)
 
 
 func _on_input_handler_gui_input(event) -> void:

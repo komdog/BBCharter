@@ -29,4 +29,4 @@ func _process(_delta):
 				- AudioServer.get_output_latency()
 			)
 
-		Global.song_pos = song_position_raw
+		Global.song_pos = song_position_raw - Global.offset

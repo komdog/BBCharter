@@ -32,13 +32,13 @@ func setup(i, type):
 func update_position():
 	match indicator_type:
 		Enums.UI_INDICATOR_TYPE.BEAT:
-			position.x = (-(indicator_index * Global.beat_length_msec) * Global.note_speed)
+			position.x = -(indicator_index * Global.beat_length_msec - Global.offset) * Global.note_speed
 		Enums.UI_INDICATOR_TYPE.HALF_BEAT:
-			position.x = (-(indicator_index * Global.beat_length_msec/2) * Global.note_speed)
+			position.x = -(indicator_index * Global.beat_length_msec/2 - Global.offset) * Global.note_speed
 		Enums.UI_INDICATOR_TYPE.QUARTER_BEAT:
-			position.x = (-(indicator_index * Global.beat_length_msec/4) * Global.note_speed)
+			position.x = -(indicator_index * Global.beat_length_msec/4 - Global.offset) * Global.note_speed
 		Enums.UI_INDICATOR_TYPE.EIGHTH_BEAT:
-			position.x = (-(indicator_index * Global.beat_length_msec/8) * Global.note_speed)
+			position.x = -(indicator_index * Global.beat_length_msec/8 - Global.offset) * Global.note_speed
 	
 func _on_update_snapping(index):
 	if index >= indicator_type:

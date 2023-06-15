@@ -47,12 +47,12 @@ func _on_chart_loaded():
 
 func _physics_process(_delta):
 	if Save.keyframes.has('loops') and Save.keyframes['loops'].size() > 0 and Timeline.animations_track.get_child_count() > 0 and Global.project_loaded:
-		var arr = Save.keyframes['loops'].filter(func(loop): return Global.get_synced_song_pos() >= loop['timestamp'])
+		var arr = Save.keyframes['loops'].filter(func(loop): return Global.get_synced_song_pos() > loop['timestamp'])
 		loop_index = arr.size()
 		if loop_index != last_loop_index:
 			last_loop_index = loop_index
 			change_animation(loop_index-1)
-		if Global.get_synced_song_pos() < Save.keyframes['loops'][0]['timestamp']:
+		if Global.get_synced_song_pos() <= Save.keyframes['loops'][0]['timestamp']:
 			change_animation(loop_index-1)
 	else:
 		if Global.project_loaded:
@@ -62,12 +62,12 @@ func _physics_process(_delta):
 			$Visual.frame = $Visual.hframes * $Visual.vframes - 1
 	
 	if Save.keyframes.has('background') and Save.keyframes['background'].size() > 0 and Global.project_loaded:
-		var arr = Save.keyframes['background'].filter(func(bg): return Global.get_synced_song_pos() >= bg['timestamp'])
+		var arr = Save.keyframes['background'].filter(func(bg): return Global.get_synced_song_pos() > bg['timestamp'])
 		bg_index = arr.size()
 		if bg_index != last_bg_index:
 			last_bg_index = bg_index
 			change_background(bg_index-1)
-		if Global.get_synced_song_pos() < Save.keyframes['background'][0]['timestamp']:
+		if Global.get_synced_song_pos() <= Save.keyframes['background'][0]['timestamp']:
 			change_background(loop_index-1)
 	else:
 		if Global.project_loaded:

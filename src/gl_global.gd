@@ -53,10 +53,10 @@ func load_texture(path) -> ImageTexture:
 	return tex
 
 func get_timestamp_snapped() -> float:
-	return snappedf(Global.song_pos, (Global.song_beats_per_second / Global.snapping_factor)) - Global.offset
+	return snappedf(song_pos, (song_beats_per_second / snapping_factor))
 
 func get_synced_song_pos() -> float:
-	return Global.song_pos - Global.offset
+	return song_pos
 	
 func clear_children(parent: Node):
 	print("Cleaning %s's children" % parent.name)

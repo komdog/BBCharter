@@ -74,6 +74,7 @@ func load_project(file_path):
 		keyframes = load_cfg('keyframes.cfg')
 		meta = load_cfg('meta.cfg')
 		settings = load_cfg('settings.cfg')
+		Global.offset = settings.get('song_offset', song_offset_default)
 
 		await get_tree().process_frame
 		await get_tree().physics_frame
@@ -107,8 +108,7 @@ func load_cfg(file_name: String) -> Dictionary:
 
 		
 func load_keyframes():
-	Global.bpm = Save.keyframes.get('modifiers', modifier_default)[0]['bpm']
-	Global.offset = Save.settings.get('song_offset', song_offset_default)
+	Global.bpm = keyframes.get('modifiers', modifier_default)[0]['bpm']
 	Global.beat_length_msec = ( 60.0 / Global.bpm )
 	
 func load_song():
@@ -116,7 +116,7 @@ func load_song():
 	Global.music.stream = Global.load_mp3(path)
 	Global.song_length = Global.music.stream.get_length()
 	Global.song_beats_per_second = float(60.0/Global.bpm)
-	Global.song_beats_total = int(Global.song_length / Global.song_beats_per_second)
+	Global.song_beats_total = int((Global.song_length - Global.offset) / Global.song_beats_per_second)
 	Events.emit_signal('song_loaded')
 
 func load_chart(difficulty_index: int = 0) -> int:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=69 format=3 uid="uid://bo2pso1k2xik8"]
+[gd_scene load_steps=71 format=3 uid="uid://bo2pso1k2xik8"]
 
 [ext_resource type="Theme" uid="uid://cehpee20dikgi" path="res://themes/main_theme.tres" id="1_71y40"]
 [ext_resource type="Script" path="res://src/cl_main.gd" id="2_ca1lw"]
@@ -38,6 +38,8 @@
 [ext_resource type="Script" path="res://src/cl_horny.gd" id="31_rybx7"]
 [ext_resource type="Script" path="res://src/cl_popup_delete_difficulty.gd" id="32_m4kvt"]
 [ext_resource type="Script" path="res://src/cl_popup_clear.gd" id="34_pacga"]
+[ext_resource type="Script" path="res://src/cl_popup_icon_difficulty.gd" id="36_j4s2r"]
+[ext_resource type="Texture2D" uid="uid://f5ooa0gle4sk" path="res://assets/icon_difficulty.png" id="37_8v42t"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x5vw1"]
 bg_color = Color(0.0862745, 0.0862745, 0.0862745, 1)
@@ -394,7 +396,7 @@ script = ExtResource("6_pgban")
 
 [node name="Project" type="PopupMenu" parent="Toolbar/MenuBar"]
 theme_override_font_sizes/font_size = 20
-item_count = 5
+item_count = 6
 item_0/text = "Reload Project"
 item_0/id = 0
 item_0/disabled = true
@@ -410,6 +412,9 @@ item_3/disabled = true
 item_4/text = "Rename Difficulty"
 item_4/id = 3
 item_4/disabled = true
+item_5/text = "Set Difficulty Icon"
+item_5/id = 4
+item_5/disabled = true
 script = ExtResource("5_577ur")
 
 [node name="Help" type="PopupMenu" parent="Toolbar/MenuBar"]
@@ -933,6 +938,74 @@ offset_bottom = 250.0
 theme_override_font_sizes/font_size = 18
 text = "Cancel"
 
+[node name="IconDifficultyPopup" type="Panel" parent="Popups"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -276.0
+offset_top = -134.0
+offset_right = 276.0
+offset_bottom = 134.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_y543m")
+script = ExtResource("36_j4s2r")
+
+[node name="Label" type="Label" parent="Popups/IconDifficultyPopup"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 58.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 20
+text = "Set Difficulty Icon"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="File" type="LineEdit" parent="Popups/IconDifficultyPopup"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -203.0
+offset_top = -45.0
+offset_right = 123.0
+offset_bottom = -6.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 1
+theme_override_font_sizes/font_size = 24
+placeholder_text = "File Name"
+
+[node name="Icon" type="Sprite2D" parent="Popups/IconDifficultyPopup"]
+position = Vector2(440, 111)
+texture = ExtResource("37_8v42t")
+
+[node name="Set" type="Button" parent="Popups/IconDifficultyPopup"]
+layout_mode = 0
+offset_left = 196.0
+offset_top = 210.0
+offset_right = 268.0
+offset_bottom = 250.0
+focus_mode = 0
+theme_override_font_sizes/font_size = 18
+text = "Set"
+
+[node name="Cancel" type="Button" parent="Popups/IconDifficultyPopup"]
+layout_mode = 0
+offset_left = 284.0
+offset_top = 210.0
+offset_right = 356.0
+offset_bottom = 250.0
+theme_override_font_sizes/font_size = 18
+text = "Cancel"
+
 [node name="PlaceAnimation" type="Panel" parent="Popups"]
 visible = false
 layout_mode = 1
@@ -1252,6 +1325,9 @@ text = "Cancel"
 [connection signal="value_changed" from="Popups/RenameDifficultyPopup/DifficultyRatingField" to="Popups/RenameDifficultyPopup" method="_on_value_changed"]
 [connection signal="button_up" from="Popups/RenameDifficultyPopup/Rename" to="Popups/RenameDifficultyPopup" method="_on_rename_button_up"]
 [connection signal="button_up" from="Popups/RenameDifficultyPopup/Cancel" to="Popups/RenameDifficultyPopup" method="_on_cancel_button_up"]
+[connection signal="text_changed" from="Popups/IconDifficultyPopup/File" to="Popups/IconDifficultyPopup" method="_on_file_text_changed"]
+[connection signal="button_up" from="Popups/IconDifficultyPopup/Set" to="Popups/IconDifficultyPopup" method="_on_set_button_up"]
+[connection signal="button_up" from="Popups/IconDifficultyPopup/Cancel" to="Popups/RenameDifficultyPopup" method="_on_cancel_button_up"]
 [connection signal="button_up" from="Popups/PlaceAnimation/Create" to="Popups/PlaceAnimation" method="_on_create_button_up"]
 [connection signal="button_up" from="Popups/PlaceAnimation/Cancel" to="Popups/PlaceAnimation" method="_on_cancel_button_up"]
 [connection signal="button_up" from="Popups/ClearPopup/Yes" to="Popups/ClearPopup" method="_on_yes_button_up"]
