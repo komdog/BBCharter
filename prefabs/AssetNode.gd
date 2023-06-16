@@ -74,7 +74,7 @@ func add_sound_oneshot_to_timeline():
 	print(new_sound_oneshot_key)
 	Save.keyframes['sound_oneshot'].append(new_sound_oneshot_key)
 	Save.keyframes['sound_oneshot'].sort_custom(func(a, b): return a['timestamp'] < b['timestamp'])
-	Timeline.note_controller.spawn_single_keyframe(new_sound_oneshot_key, Prefabs.oneshot_keyframe, Timeline.oneshot_sound_track)
+	Timeline.key_controller.spawn_single_keyframe(new_sound_oneshot_key, Prefabs.oneshot_keyframe, Timeline.oneshot_sound_track)
 	
 # TODO: FIND A WAY TO STORE ASSETS WITH DATA
 func show_animation_prompt():

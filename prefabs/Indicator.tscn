@@ -15,18 +15,3 @@ offset_right = 83.0
 offset_bottom = -72.0
 size_flags_horizontal = 0
 text = "0"
-
-[node name="Animation" type="Line2D" parent="."]
-points = PackedVector2Array(0, -104, 0, -208)
-width = 3.0
-default_color = Color(0.952941, 0, 0.164706, 0.196078)
-
-[node name="OneShot" type="Line2D" parent="."]
-points = PackedVector2Array(0, -208, 0, -256)
-width = 3.0
-default_color = Color(0.803922, 0.498039, 0, 0.196078)
-
-[node name="Shutter" type="Line2D" parent="."]
-points = PackedVector2Array(0, -256, 0, -304)
-width = 3.0
-default_color = Color(0.654902, 0.513726, 0.00784314, 0.196078)

@@ -2,6 +2,7 @@ extends Node
 
 # Timeline Prefabs
 const beat_indicator = preload("res://prefabs/Indicator.tscn")
+const key_indicator = preload("res://prefabs/Guideline.tscn")
 const note = preload("res://prefabs/Note.tscn")
 
 # Keyframe Prefabs

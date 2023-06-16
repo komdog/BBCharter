@@ -24,7 +24,7 @@ func update_selection(a,b):
 			set_selected()
 	
 func _process(_delta):
-	visible = global_position.x >= Global.note_culling_bounds.x and global_position.x < Global.note_culling_bounds.y
+	visible = global_position.x >= Global.note_culling_bounds.x - 50 and global_position.x < Global.note_culling_bounds.y + 50
 	
 	if global_position.x >= 960 and !hit:
 		Events.emit_signal('hit_note', data)

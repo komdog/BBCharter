@@ -1,8 +1,10 @@
 extends Node
 
 var note_controller: Node2D
+var key_controller: Node2D
 
 var indicator_container: Node2D
+var guideline_container: Node2D
 var note_container: Node2D
 var line_center: Node2D
 
@@ -59,7 +61,10 @@ func seek(value):
 	Global.music.song_position_raw = value
 	Global.music.seek(Global.music.song_position_raw)
 	Global.music.pause_pos = Global.music.song_position_raw
-	
+
+func scroll(value):
+	Events.emit_signal('update_scrolling', 10*value)
+
 func reset():
 	seek(0.0)
 	
@@ -77,7 +82,6 @@ func clear_notes_only():
 		note.queue_free()
 
 func _input(event):
-	
 	if event.is_action_pressed("key_0"):
 		create_note(Enums.NOTE.Z)	
 	if event.is_action_pressed("key_1"):
@@ -89,59 +93,57 @@ func _input(event):
 	
 	if event is InputEventMouseButton:
 		if get_viewport().get_mouse_position().y > 672:
-			
 			# Zooming
 			if event.is_command_or_control_pressed():
-				
 				if event.button_index == MOUSE_BUTTON_WHEEL_UP:
 					Global.note_speed = clampf(Global.note_speed + 10, 100, 1000 )
 				if event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
 					Global.note_speed = clampf(Global.note_speed - 10, 100, 1000 )
-					
+				
 				Events.emit_signal('update_notespeed')
-				
 			else:
-				
-			# Seeking
-				inc_scale = (Global.song_beats_per_second / 8) if !event.alt_pressed else 0.005
-				if event.button_index == MOUSE_BUTTON_WHEEL_UP:
-					clamp_seek(inc_scale)
-				if event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
-					clamp_seek(-inc_scale)
-
-			if event.pressed:
-				match event.button_index:
-					MOUSE_BUTTON_LEFT:
-						if Global.current_tool == Enums.TOOL.MARQUEE:
-							if marquee_point_a < 0:
-								marquee_point_a = Global.music.song_position_raw
-								line_center.set_default_color(Color(1,1,1,1))
-			else:
-				match event.button_index:
-					MOUSE_BUTTON_LEFT:
-						if Global.current_tool == Enums.TOOL.MARQUEE and marquee_point_a >= 0:
-							marquee_point_b = Global.music.song_position_raw
-							line_center.set_default_color(Color(0.61,0.02,0.26,1))
-							Events.emit_signal('update_selection', marquee_point_a, marquee_point_b)
-							marquee_point_a = -1
-							marquee_point_b = -1
-
+				if get_viewport().get_mouse_position().y > 872:
+					# Seeking
+					inc_scale = (Global.song_beats_per_second / 8) if !event.alt_pressed else 0.005
+					if event.button_index == MOUSE_BUTTON_WHEEL_UP:
+						clamp_seek(inc_scale)
+					if event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+						clamp_seek(-inc_scale)
+					
+					if event.pressed:
+						match event.button_index:
+							MOUSE_BUTTON_LEFT:
+								if Global.current_tool == Enums.TOOL.MARQUEE:
+									if marquee_point_a < 0:
+										marquee_point_a = Global.music.song_position_raw
+										line_center.set_default_color(Color(1,1,1,1))
+					else:
+						match event.button_index:
+							MOUSE_BUTTON_LEFT:
+								if Global.current_tool == Enums.TOOL.MARQUEE and marquee_point_a >= 0:
+									marquee_point_b = Global.music.song_position_raw
+									line_center.set_default_color(Color(0.61,0.02,0.26,1))
+									Events.emit_signal('update_selection', marquee_point_a, marquee_point_b)
+									marquee_point_a = -1
+									marquee_point_b = -1
+				else:
+					if event.button_index == MOUSE_BUTTON_WHEEL_UP:
+						scroll(-1)
+					if event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+						scroll(1)
+	
 	if event is InputEventPanGesture:
 		if get_viewport().get_mouse_position().y > 672:
-			
 			# Zooming
 			if event.is_command_or_control_pressed():
-				
 				Global.note_speed = clampf(Global.note_speed + (10 * event.delta.y), 100, 1000 )
 				Events.emit_signal('update_notespeed')
-				
 			else:
-				
-			# Seeking
+				# Seeking
 				inc_scale = (Global.song_beats_per_second / 8) if !event.alt_pressed else 0.005
 				clamp_seek(inc_scale * event.delta.x)
-			
-			
+				scroll(-event.delta.y)
+	
 	if event is InputEventKey:
 		# Speed up / Slow down song	
 		if event.is_action_pressed("ui_up"):
@@ -174,5 +176,3 @@ func _input(event):
 				seek(Global.song_length)
 			else:
 				clamp_seek(5.0)
-
-		

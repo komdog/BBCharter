@@ -10,23 +10,6 @@ func _ready():
 func setup(i, type):
 	indicator_index = i
 	indicator_type = type
-	var point_0 = get("points")[0]
-	var point_1 = get("points")[1]
-	match type:
-		Enums.UI_INDICATOR_TYPE.BEAT:
-			default_color = Color(1,1,1,1)
-			$BeatNum.text = str(i)
-			$BeatNum.show()
-		Enums.UI_INDICATOR_TYPE.HALF_BEAT:
-			set("points", [point_0 * 0.8, point_1 * 0.8] )
-			default_color = Color(1,1,1,0.5)
-		Enums.UI_INDICATOR_TYPE.QUARTER_BEAT:
-			set("points", [point_0 * 0.6, point_1 * 0.6] )
-			default_color = Color(1,1,1,0.25)
-		Enums.UI_INDICATOR_TYPE.EIGHTH_BEAT:
-			set("points", [point_0 * 0.4, point_1 * 0.4] )
-			default_color = Color(1,0,0,0.25)
-			
 	update_position()
 
 func update_position():

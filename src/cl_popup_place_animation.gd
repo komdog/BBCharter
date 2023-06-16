@@ -41,7 +41,7 @@ func _on_create_button_up() -> void:
 	Global.project_saved = false
 	Save.keyframes['loops'].append(new_animation_key)
 	Save.keyframes['loops'].sort_custom(func(a, b): return a['timestamp'] < b['timestamp'])
-	Timeline.note_controller.spawn_single_keyframe(new_animation_key, Prefabs.animation_keyframe, Timeline.animations_track)
+	Timeline.key_controller.spawn_single_keyframe(new_animation_key, Prefabs.animation_keyframe, Timeline.animations_track)
 	Popups.close()
 	Popups.type = 0
 	print(new_animation_key)

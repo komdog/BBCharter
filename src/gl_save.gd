@@ -15,12 +15,13 @@ var modifier_default = [{"bpm": 128.0, "timestamp": 0}]
 func save_project() -> void:
 	#Save keyframes
 	keyframes['loops'].sort_custom(func(a,b): return a['timestamp'] < b['timestamp'])
-	if save_cfg('keyframes.cfg', keyframes) == FAILED: return print('Could not save keyframes.cfg')
+	print('Could not save keyframes.cfg') if save_cfg('keyframes.cfg', keyframes) == FAILED else print('Saved keyframes.cfg')
 	
 	#Save Notes
 	notes['charts'][Global.difficulty_index]['notes'] = Global.current_chart # Move chart to save cache
 	notes['charts'].sort_custom(func(a,b): return a['rating'] < b['rating'])
 	if save_cfg('notes.cfg', notes) == FAILED: return print('Could not save notes.cfg')
+	else: print('Saved notes.cfg')
 	
 	Global.project_saved = true
 	Events.emit_signal('notify', 'Saved Project', meta['level_name'], project_dir + "/thumb.png")

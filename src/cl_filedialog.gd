@@ -4,35 +4,37 @@ var create:bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	if OS.get_name() == "macOS":
+		var dir = OS.get_executable_path().get_basename()
+		print(dir)
+		if dir.get_slice("/", dir.get_slice_count("/")-1) != "Godot":
+			var app = dir.get_slice("/", dir.get_slice_count("/")-4)
+			print(app)
+			dir = OS.get_executable_path().get_base_dir().trim_suffix("/" + app + "/Contents/MacOS")
+			current_dir = dir
+			print(current_dir)
+	else:
+		if !OS.is_debug_build():
+			current_dir = OS.get_executable_path().get_base_dir()
+	
 	Global.filedialog = self
-	
+
 func open_project_dialog():
-	
 	print('Opening New Project...')
 	create = false
 	
-	# DELETE THIS ON RELEASE
-	if OS.is_debug_build():
-		Global.filedialog.current_dir = ProjectSettings.get_setting("global/debug_open_dir")
-	
-	Global.filedialog.title = "Select Project Folder"
-	Global.filedialog.file_mode = FileDialog.FILE_MODE_OPEN_DIR
-	Global.filedialog.popup()
-	
-	
+	title = "Select Project Folder"
+	file_mode = FileDialog.FILE_MODE_OPEN_DIR
+	popup()
+
 func new_project_dialog():
-	
 	print('Creating New Project...')
 	create = true
+	
+	title = "Select Folder"
+	file_mode = FileDialog.FILE_MODE_OPEN_DIR
+	popup()
 
-	# DELETE THIS ON RELEASE
-	if OS.is_debug_build():
-		Global.filedialog.current_dir = ProjectSettings.get_setting("global/debug_open_dir")
-	
-	Global.filedialog.title = "Select Folder"
-	Global.filedialog.file_mode = FileDialog.FILE_MODE_OPEN_DIR
-	Global.filedialog.popup()
-	
 func _on_dir_selected(path: String):
 	if create:
 		var dir = DirAccess.open(path)

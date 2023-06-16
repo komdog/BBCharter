@@ -18,7 +18,7 @@ func _on_id_pressed(id: int):
 			Global.project_saved = false
 			Save.keyframes['shutter'].append(new_shutter)
 			Save.keyframes['shutter'].sort_custom(func(a, b): return a['timestamp'] < b['timestamp'])
-			Timeline.note_controller.spawn_single_keyframe(new_shutter, Prefabs.shutter_keyframe, Timeline.shutter_track)
+			Timeline.key_controller.spawn_single_keyframe(new_shutter, Prefabs.shutter_keyframe, Timeline.shutter_track)
 
 func _on_project_loaded():
 	for i in item_count:

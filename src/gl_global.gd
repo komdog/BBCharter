@@ -11,7 +11,6 @@ var bpm: float
 var offset: float
 var note_speed: float = 200
 var difficulty_index: int
-var difficulty_max: int = 10
 
 # Realtime Info
 var song_pos: float
