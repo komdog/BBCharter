@@ -22,7 +22,6 @@ var tween
 func _ready() -> void:
 	Events.project_loaded.connect(_on_project_loaded)
 	Events.chart_loaded.connect(_on_chart_loaded)
-	Events.popups_closed.connect(_on_popups_closed)
 	Events.hit_note.connect(_on_hit_note)
 	Events.miss_note.connect(_on_miss_note)
 	Events.tool_used_before.connect(_on_tool_used_before)
@@ -51,6 +50,7 @@ func _physics_process(_delta):
 		loop_index = arr.size()
 		if loop_index != last_loop_index:
 			last_loop_index = loop_index
+			await get_tree().physics_frame
 			change_animation(loop_index-1)
 		if Global.get_synced_song_pos() <= Save.keyframes['loops'][0]['timestamp']:
 			change_animation(loop_index-1)
@@ -263,9 +263,6 @@ func change_background(idx: int) -> void:
 		else:
 			$Static.scale = Vector2(2/3, 2/3)
 
-func _on_popups_closed():
-	set_animation(loop_index-1)
-
 func _on_panel_gui_input(event):
 	if event is InputEventMouseButton:
 		if event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
@@ -276,3 +273,7 @@ func _on_panel_gui_input(event):
 				if Global.get_synced_song_pos() <= Save.keyframes['loops'][0]['timestamp']:
 					data = Save.keyframes['loops'][0]
 				Events.emit_signal('add_animation_to_timeline', data)
+
+func _on_create_button_up():
+	await get_tree().process_frame
+	set_animation(loop_index-1)

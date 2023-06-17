@@ -7,7 +7,7 @@ var last_shutter_index: int
 func _ready() -> void:
 	Events.chart_loaded.connect(_on_chart_loaded)
 	Events.project_loaded.connect(_on_project_loaded)
-	
+
 func _on_chart_loaded():
 	print(Save.keyframes['shutter'])
 
@@ -21,5 +21,5 @@ func _process(_delta):
 		shutter_index = arr.size()
 		if shutter_index != last_shutter_index:
 			last_shutter_index = shutter_index
+			$AnimationPlayer.stop()
 			$AnimationPlayer.play("Shutters")
-
