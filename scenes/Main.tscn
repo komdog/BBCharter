@@ -44,23 +44,6 @@
 [ext_resource type="Script" path="res://src/cl_popup_icon_difficulty.gd" id="36_j4s2r"]
 [ext_resource type="Texture2D" uid="uid://f5ooa0gle4sk" path="res://assets/icon_difficulty.png" id="37_8v42t"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_aht3f"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_id34j"]
-bg_color = Color(0, 0, 0, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ritwt"]
-bg_color = Color(0.0588235, 0.0588235, 0.0588235, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4kvjm"]
-bg_color = Color(0.137255, 0.137255, 0.137255, 1)
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_x3vgy"]
-texture = ExtResource("5_dqdvp")
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_awqg8"]
-texture = ExtResource("5_dqdvp")
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x5vw1"]
 bg_color = Color(0.0862745, 0.0862745, 0.0862745, 1)
 
@@ -125,6 +108,23 @@ _data = {
 "RESET": SubResource("Animation_jfjoc"),
 "Shutters": SubResource("Animation_0h03h")
 }
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_aht3f"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_id34j"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ritwt"]
+bg_color = Color(0.0588235, 0.0588235, 0.0588235, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4kvjm"]
+bg_color = Color(0.137255, 0.137255, 0.137255, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_x3vgy"]
+texture = ExtResource("5_dqdvp")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_awqg8"]
+texture = ExtResource("5_dqdvp")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fxxnx"]
 bg_color = Color(0.0627451, 0.0627451, 0.0627451, 1)
@@ -225,6 +225,64 @@ z_index = -1
 position = Vector2(960, 820)
 texture = ExtResource("3_0gij1")
 
+[node name="Character" type="Node2D" parent="."]
+position = Vector2(992, 336)
+scale = Vector2(0.778, 0.778)
+script = ExtResource("5_in5ur")
+
+[node name="Panel" type="Panel" parent="Character"]
+offset_left = -640.0
+offset_top = -360.0
+offset_right = 640.0
+offset_bottom = 360.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_x5vw1")
+metadata/_edit_lock_ = true
+
+[node name="Pattern" type="Sprite2D" parent="Character"]
+texture_repeat = 2
+position = Vector2(-640, -360)
+scale = Vector2(0.278, 0.281)
+texture = ExtResource("5_v7o4k")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 4604.4, 2562.3)
+region_filter_clip_enabled = true
+
+[node name="Static" type="Sprite2D" parent="Character"]
+visible = false
+scale = Vector2(0.667, 0.667)
+texture = ExtResource("6_bp6ey")
+
+[node name="Visual" type="Sprite2D" parent="Character"]
+
+[node name="Shutters" type="Node2D" parent="Character"]
+script = ExtResource("15_kn5dq")
+
+[node name="Top" type="Polygon2D" parent="Character/Shutters"]
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-640, -360, -640, -360, 640, -360, 640, -360)
+
+[node name="Bottom" type="Polygon2D" parent="Character/Shutters"]
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-640, 360, 640, 360, 640, 360, -640, 360)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Character/Shutters"]
+libraries = {
+"": SubResource("AnimationLibrary_0k37x")
+}
+
+[node name="Hud" type="Node2D" parent="Character"]
+
+[node name="Polygon2D" type="Polygon2D" parent="Character/Hud"]
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-640, -360, 80, -360, -640, -210)
+
+[node name="Polygon2D2" type="Polygon2D" parent="Character/Hud"]
+position = Vector2(-1200, -450)
+scale = Vector2(1.25, 1.25)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(1472, 648, 896, 648, 1472, 520)
+
 [node name="KeyTimeline" type="Panel" parent="."]
 layout_mode = 1
 anchors_preset = 15
@@ -237,7 +295,6 @@ grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_aht3f")
 
 [node name="KeyController" type="Node2D" parent="KeyTimeline"]
-z_index = -1
 position = Vector2(960, 348)
 script = ExtResource("3_5l1uq")
 
@@ -353,64 +410,6 @@ offset_bottom = -111.0
 theme_override_colors/font_color = Color(1, 1, 1, 0.737255)
 theme_override_font_sizes/font_size = 18
 text = "SHUTTER"
-
-[node name="Character" type="Node2D" parent="."]
-position = Vector2(992, 336)
-scale = Vector2(0.778, 0.778)
-script = ExtResource("5_in5ur")
-
-[node name="Panel" type="Panel" parent="Character"]
-offset_left = -640.0
-offset_top = -360.0
-offset_right = 640.0
-offset_bottom = 360.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_x5vw1")
-metadata/_edit_lock_ = true
-
-[node name="Pattern" type="Sprite2D" parent="Character"]
-texture_repeat = 2
-position = Vector2(-640, -360)
-scale = Vector2(0.278, 0.281)
-texture = ExtResource("5_v7o4k")
-centered = false
-region_enabled = true
-region_rect = Rect2(0, 0, 4604.4, 2562.3)
-region_filter_clip_enabled = true
-
-[node name="Static" type="Sprite2D" parent="Character"]
-visible = false
-scale = Vector2(0.667, 0.667)
-texture = ExtResource("6_bp6ey")
-
-[node name="Visual" type="Sprite2D" parent="Character"]
-
-[node name="Shutters" type="Node2D" parent="Character"]
-script = ExtResource("15_kn5dq")
-
-[node name="Top" type="Polygon2D" parent="Character/Shutters"]
-color = Color(0, 0, 0, 1)
-polygon = PackedVector2Array(-640, -360, -640, -360, 640, -360, 640, -360)
-
-[node name="Bottom" type="Polygon2D" parent="Character/Shutters"]
-color = Color(0, 0, 0, 1)
-polygon = PackedVector2Array(-640, 360, 640, 360, 640, 360, -640, 360)
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Character/Shutters"]
-libraries = {
-"": SubResource("AnimationLibrary_0k37x")
-}
-
-[node name="Hud" type="Node2D" parent="Character"]
-
-[node name="Polygon2D" type="Polygon2D" parent="Character/Hud"]
-color = Color(0, 0, 0, 1)
-polygon = PackedVector2Array(-640, -360, 80, -360, -640, -210)
-
-[node name="Polygon2D2" type="Polygon2D" parent="Character/Hud"]
-position = Vector2(-1200, -450)
-scale = Vector2(1.25, 1.25)
-color = Color(0, 0, 0, 1)
-polygon = PackedVector2Array(1472, 648, 896, 648, 1472, 520)
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 1
@@ -1394,6 +1393,7 @@ text = "Cancel"
 [connection signal="text_changed" from="Popups/IconDifficultyPopup/File" to="Popups/IconDifficultyPopup" method="_on_file_text_changed"]
 [connection signal="button_up" from="Popups/IconDifficultyPopup/Set" to="Popups/IconDifficultyPopup" method="_on_set_button_up"]
 [connection signal="button_up" from="Popups/IconDifficultyPopup/Cancel" to="Popups/RenameDifficultyPopup" method="_on_cancel_button_up"]
+[connection signal="button_up" from="Popups/PlaceAnimation/Create" to="Character" method="_on_create_button_up"]
 [connection signal="button_up" from="Popups/PlaceAnimation/Create" to="Popups/PlaceAnimation" method="_on_create_button_up"]
 [connection signal="button_up" from="Popups/PlaceAnimation/Cancel" to="Popups/PlaceAnimation" method="_on_cancel_button_up"]
 [connection signal="button_up" from="Popups/ClearPopup/Yes" to="Popups/ClearPopup" method="_on_yes_button_up"]

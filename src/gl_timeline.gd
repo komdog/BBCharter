@@ -67,14 +67,14 @@ func scroll(value):
 
 func reset():
 	seek(0.0)
-	
+
 func clear_timeline():
 	Global.current_chart.clear()
 	Global.clear_children(note_container)
 	Global.clear_children(animations_track)
 	Global.clear_children(oneshot_sound_track)
 	Global.clear_children(shutter_track)
-	
+
 func clear_notes_only():
 	print('Cleaning Notes Only')
 	Global.current_chart.clear()
@@ -82,6 +82,8 @@ func clear_notes_only():
 		note.queue_free()
 
 func _input(event):
+	if Popups.open: return
+	
 	if event.is_action_pressed("key_0"):
 		create_note(Enums.NOTE.Z)	
 	if event.is_action_pressed("key_1"):
@@ -164,7 +166,7 @@ func _input(event):
 		else:
 			if event.is_action_pressed("ui_end"):
 				seek(Global.song_length)
-				
+		
 		# Fast Seek +5 AND Seek to beginning / End
 		if event.is_action_pressed("ui_right"):
 			if OS.get_name() == "macOS" and event.is_meta_pressed():

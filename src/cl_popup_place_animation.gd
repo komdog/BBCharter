@@ -5,7 +5,6 @@ var timestamp: float
 
 func _ready():
 	Events.popups_opened.connect(_on_popups_opened)
-	Events.popups_closed.connect(_on_popups_closed)
 	Events.add_animation_to_timeline.connect(_on_add_animation_to_timeline)
 
 func _on_popups_opened():
@@ -42,16 +41,14 @@ func _on_create_button_up() -> void:
 	Save.keyframes['loops'].append(new_animation_key)
 	Save.keyframes['loops'].sort_custom(func(a, b): return a['timestamp'] < b['timestamp'])
 	Timeline.key_controller.spawn_single_keyframe(new_animation_key, Prefabs.animation_keyframe, Timeline.animations_track)
-	Popups.close()
-	Popups.type = 0
-	print(new_animation_key)
-
+	_on_cancel_button_up()
 
 func _on_cancel_button_up():
 	Popups.close()
 	Popups.type = 0
+	reset()
 
-func _on_popups_closed():
+func reset():
 	$Horny.clear()
 	$SheetH.value = 2
 	$SheetV.value = 3
@@ -59,7 +56,7 @@ func _on_popups_closed():
 	$OffsetX.value = 0
 	$OffsetY.value = 0
 	$Scale.value = 1
-	
+
 func _on_add_animation_to_timeline(asset_path):
 	if Popups.type > 0:
 		animation_name = asset_path['animations']['normal']
@@ -68,12 +65,25 @@ func _on_add_animation_to_timeline(asset_path):
 		$SheetV.value = asset_path['sheet_data']['v']
 		$Total.value = asset_path['sheet_data']['total']
 		
-		if !asset_path['animations'].has('horny'):
+		if asset_path['animations'].has('horny'):
+			$Horny.text = asset_path['animations']['horny']
+		else:
 			$Horny.text = animation_name
-		if !asset_path.has('position_offset'):
+		if asset_path.has('position_offset'):
+			if asset_path['position_offset'].has('x'):
+				$OffsetX.value = asset_path['position_offset']['x']
+			else:
+				$OffsetX.value = 0
+			if asset_path['position_offset'].has('y'):
+				$OffsetY.value = asset_path['position_offset']['y']
+			else:
+				$OffsetY.value = 0
+		else:
 			$OffsetX.value = 0
 			$OffsetY.value = 0
-		if !asset_path.has('scale_multiplier'):
+		if asset_path.has('scale_multiplier'):
+			$Scale.value = asset_path['scale_multiplier']
+		else:
 			$Scale.value = 1
 	else:
 		var time = 0
@@ -83,7 +93,6 @@ func _on_add_animation_to_timeline(asset_path):
 			if snappedf(animation['data']['timestamp'], 0.001) == snappedf(time, 0.001):
 				print('Animation already exists at %s' % [time])
 				return
-		
 		animation_name = asset_path
 	
 	Popups.reveal(Popups.PLACEANIMATION)
