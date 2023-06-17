@@ -20,7 +20,7 @@ func _on_create_button_up() -> void:
 	if Global.get_timestamp_snapped() > 0:
 		time = Global.get_timestamp_snapped()
 	
-	var new_animation_key =	{
+	var new_animation_key = {
 		"timestamp": time,
 		"sheet_data": {"h": $SheetH.value, "v": $SheetV.value, "total": $Total.value},
 		"scale_multiplier": $Scale.value,

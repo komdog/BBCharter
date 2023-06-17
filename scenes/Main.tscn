@@ -1371,6 +1371,7 @@ offset_bottom = 136.0
 theme_override_font_sizes/font_size = 18
 text = "Cancel"
 
+[connection signal="gui_input" from="Character/Panel" to="Character" method="_on_panel_gui_input"]
 [connection signal="id_pressed" from="Toolbar/MenuBar/File" to="Toolbar/MenuBar/File" method="_on_id_pressed"]
 [connection signal="id_pressed" from="Toolbar/MenuBar/Edit" to="Toolbar/MenuBar/Edit" method="_on_id_pressed"]
 [connection signal="id_pressed" from="Toolbar/MenuBar/Add" to="Toolbar/MenuBar/Add" method="_on_id_pressed"]
@@ -1393,7 +1394,6 @@ text = "Cancel"
 [connection signal="text_changed" from="Popups/IconDifficultyPopup/File" to="Popups/IconDifficultyPopup" method="_on_file_text_changed"]
 [connection signal="button_up" from="Popups/IconDifficultyPopup/Set" to="Popups/IconDifficultyPopup" method="_on_set_button_up"]
 [connection signal="button_up" from="Popups/IconDifficultyPopup/Cancel" to="Popups/RenameDifficultyPopup" method="_on_cancel_button_up"]
-[connection signal="button_up" from="Popups/PlaceAnimation/Create" to="Character" method="_on_create_button_up"]
 [connection signal="button_up" from="Popups/PlaceAnimation/Create" to="Popups/PlaceAnimation" method="_on_create_button_up"]
 [connection signal="button_up" from="Popups/PlaceAnimation/Cancel" to="Popups/PlaceAnimation" method="_on_cancel_button_up"]
 [connection signal="button_up" from="Popups/ClearPopup/Yes" to="Popups/ClearPopup" method="_on_yes_button_up"]

@@ -156,11 +156,11 @@ func set_animation(idx: int) -> void:
 	
 	if loop.has('position_offset'):
 		if loop['position_offset'].has('x'):
-			$Visual.offset.x = loop['position_offset']['x']
+			$Visual.offset.x = loop['position_offset']['x']/2
 		else:
 			$Visual.offset.x = 0
 		if loop['position_offset'].has('y'):
-			$Visual.offset.y = loop['position_offset']['y']
+			$Visual.offset.y = loop['position_offset']['y']/2
 		else:
 			$Visual.offset.y = 0
 	else:
@@ -173,7 +173,8 @@ func set_animation(idx: int) -> void:
 
 func change_animation(idx: int) -> void:
 	set_animation(idx)
-	if Global.get_synced_song_pos() >= Save.keyframes['loops'][0]['timestamp']: run_loop()
+	if Save.keyframes.has('loops') and Save.keyframes['loops'].size() > 0:
+		if Global.get_synced_song_pos() > Save.keyframes['loops'][0]['timestamp']: run_loop()
 
 func _on_hit_note(data) -> void:
 	# Ignore Ghost Notes
@@ -264,3 +265,14 @@ func change_background(idx: int) -> void:
 
 func _on_popups_closed():
 	set_animation(loop_index-1)
+
+func _on_panel_gui_input(event):
+	if event is InputEventMouseButton:
+		if event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+			Popups.type = 1
+			var data
+			if Save.keyframes.has('loops') and Save.keyframes['loops'].size() > 0:
+				data = Save.keyframes['loops'][loop_index-1]
+				if Global.get_synced_song_pos() <= Save.keyframes['loops'][0]['timestamp']:
+					data = Save.keyframes['loops'][0]
+				Events.emit_signal('add_animation_to_timeline', data)
