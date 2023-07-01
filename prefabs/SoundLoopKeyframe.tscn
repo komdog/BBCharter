@@ -1,14 +1,15 @@
-[gd_scene load_steps=3 format=3 uid="uid://bcwocxkuf6q5b"]
+[gd_scene load_steps=3 format=3 uid="uid://goxcsw65mq0i"]
 
-[ext_resource type="Script" path="res://prefabs/ShutterKeyframe.gd" id="1_smxwl"]
-[ext_resource type="Texture2D" uid="uid://crepyud1dot2s" path="res://assets/icon_shutter.png" id="2_bdml5"]
+[ext_resource type="Script" path="res://prefabs/SoundLoopKeyframe.gd" id="1_84a6l"]
+[ext_resource type="Texture2D" uid="uid://c8qntv7mcufiy" path="res://assets/icon_sfx.png" id="2_qdocg"]
 
-[node name="ShutterKeyframe" type="Node2D"]
-script = ExtResource("1_smxwl")
+[node name="SoundLoopKeyframe" type="Node2D"]
+script = ExtResource("1_84a6l")
+metadata/_edit_vertical_guides_ = []
 
 [node name="Visual" type="Sprite2D" parent="."]
 scale = Vector2(0.7, 0.7)
-texture = ExtResource("2_bdml5")
+texture = ExtResource("2_qdocg")
 
 [node name="InputHandler" type="Control" parent="."]
 layout_mode = 3

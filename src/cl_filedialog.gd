@@ -51,7 +51,7 @@ func _on_dir_selected(path: String):
 			dir.copy(res + "asset.cfg", path + "/config/asset.cfg")
 			dir.copy(res + "meta.cfg", path + "/config/meta.cfg")
 			dir.copy(res + "settings.cfg", path + "/config/settings.cfg")
-
+		
 		var config = ConfigFile.new()
 		if !dir.file_exists(path + "/config/keyframes.cfg"):
 			config.set_value("main", "data", {
@@ -62,10 +62,7 @@ func _on_dir_selected(path: String):
 					"bpm": 128.0,
 					"timestamp": 0
 				}],
-				"sound_loop": [{
-					"path": "sfx_squish.mp3",
-					"timestamp": 0
-				}],
+				"sound_loop": [],
 				"sound_oneshot": [],
 				"shutter": [],
 				"voice_bank": []

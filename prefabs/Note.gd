@@ -3,28 +3,38 @@ extends Node2D
 var hit: bool
 var data: Dictionary
 
+var move_pos: bool
+var mouse_pos: float
+var mouse_pos_start: float
+var mouse_pos_end: float
+var clear_clipboard: bool
+var selected_note: Node2D
+
 func _ready():
 	Events.update_notespeed.connect(update_position)
-	Events.update_selection.connect(update_selection)
 
 func setup(note_data):
 	data = note_data
+	move_pos = false
+	clear_clipboard = false
 	update_visual()
 	update_position()
 
 func update_position():
-	position.x = -((data['timestamp'] - Global.offset) * Global.note_speed)
+	position.x = -((data['timestamp'] - Global.offset - Global.bpm_offset) * Global.note_speed)
 
-func update_selection(a,b):
-	if b >= a:
-		if data['timestamp'] + Global.offset >= a and data['timestamp'] + Global.offset <= b:
-			set_selected()
-	elif a >= b:
-		if data['timestamp'] + Global.offset >= b and data['timestamp'] + Global.offset <= a:
-			set_selected()
-	
+func _input(event):
+	clear_clipboard = !event.is_command_or_control_pressed()
+	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+		if (get_viewport().get_mouse_position().x < $InputHandler.global_position.x
+		or get_viewport().get_mouse_position().x > $InputHandler.global_position.x + $InputHandler.size.x
+		and clear_clipboard):
+			Clipboard.selected_notes.clear()
+			update_visual()
+
 func _process(_delta):
-	visible = global_position.x >= Global.note_culling_bounds.x - 50 and global_position.x < Global.note_culling_bounds.y + 50
+	visible = global_position.x >= Global.note_culling_bounds.x and global_position.x < Global.note_culling_bounds.y
+	$Selected.visible = Clipboard.selected_notes.has(self)
 	
 	if global_position.x >= 960 and !hit:
 		Events.emit_signal('hit_note', data)
@@ -32,10 +42,24 @@ func _process(_delta):
 	elif global_position.x < 960 and hit:
 		Events.emit_signal('miss_note', data)
 		hit = false
+	
+	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+		if Global.snapping_allowed: mouse_pos = Global.get_mouse_timestamp_snapped()
+		else: mouse_pos = Global.get_mouse_timestamp()
+		if mouse_pos < 0: mouse_pos = 0
 		
+		if selected_note != null:
+			if clear_clipboard: Clipboard.selected_notes.clear()
+			else: Clipboard.selected_notes.append(selected_note)
+			update_visual()
+			
+			if move_pos:
+				selected_note['data']['timestamp'] = mouse_pos
+				Global.current_chart.sort_custom(func(a, b): return a['timestamp'] < b['timestamp'])
+				update_position()
+
 func update_visual():
 	$Voice.visible = data.has('trigger_voice')
-	$Selected.visible = Clipboard.selected_notes.has(self)
 	$Visual.self_modulate = Global.note_colors[data['input_type']]
 	$Glow.self_modulate = Global.note_colors[data['input_type']]
 	$Label.add_theme_constant_override('outline_size', 8)
@@ -74,13 +98,14 @@ func update_visual():
 		$Voice.scale = Vector2(0.444,0.444)
 		$Handsfree/Handsfreeinner.scale = Vector2(0.2,0.2)
 
-func _on_input_handler_gui_input(event):
+func _on_gui_input(event):
 	if event is InputEventMouseButton:
 		if event.pressed:
 			match event.button_index:
 				MOUSE_BUTTON_LEFT:
 					if Global.current_tool == Enums.TOOL.SELECT:
-						set_selected()
+						selected_note = self
+						mouse_pos_start = self['data']['timestamp']
 					elif Global.current_tool == Enums.TOOL.MARQUEE:
 						pass
 					else:
@@ -99,20 +124,26 @@ func _on_input_handler_gui_input(event):
 						horny_remove()
 					if Global.current_tool == Enums.TOOL.MODIFY:
 						modify_cycle(-1)
+		else:
+			match event.button_index:
+				MOUSE_BUTTON_LEFT:
+					if Global.current_tool == Enums.TOOL.SELECT:
+						mouse_pos_end = mouse_pos
+						for note in Timeline.note_container.get_children(): if note != selected_note: if snappedf(note['data']['timestamp'], 0.001) == snappedf(selected_note['data']['timestamp'], 0.001):
+							if Global.replacing_allowed:
+								Timeline.delete_note(note, Save.notes['data']['charts'][Global.difficulty_index]['notes'].find(note['data']))
+							else:
+								print('Note already exists at %s' % [snappedf(mouse_pos_end, 0.001)])
+								selected_note['data']['timestamp'] = mouse_pos_start
+								break
+						Global.current_chart.sort_custom(func(a, b): return a['timestamp'] < b['timestamp']); update_position()
+						if mouse_pos_start != selected_note['data']['timestamp']: Global.project_saved = false
+						selected_note = null; mouse_pos_start = 0; mouse_pos_end = 0; move_pos = false
 
-func set_selected():
-	if Clipboard.selected_notes.has(self):
-		Clipboard.selected_notes.erase(self)
-	else:
-		Clipboard.selected_notes.append(self)			
-	update_visual()
-	
-	print(Clipboard.selected_notes)
-	
 func horny_add():
 	Events.emit_signal('tool_used_before', data)
 	if !data.has('horny') or !data['horny'].has('required'):
-		data['horny'] = {'required': 0}
+		data['horny'] = {'required': 1}
 	else:
 		data['horny']['required'] += 1
 	update_visual()
@@ -120,7 +151,7 @@ func horny_add():
 func horny_remove():
 	Events.emit_signal('tool_used_before', data)
 	if data.has('horny') and data['horny'].has('required'):
-		if data['horny']['required'] == 0:
+		if data['horny']['required'] == 1:
 			data.erase('horny')
 		else:
 			data['horny']['required'] -= 1
@@ -139,3 +170,6 @@ func modify_cycle(i):
 	data['note_modifier'] = wrapi(data['note_modifier'] + i, 0, 3)
 	update_visual()
 	Events.emit_signal('tool_used_after', data)
+
+func _on_mouse_exited():
+	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) and Global.current_tool == Enums.TOOL.SELECT: move_pos = true

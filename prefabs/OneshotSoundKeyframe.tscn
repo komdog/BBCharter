@@ -18,3 +18,4 @@ offset_right = 24.0
 offset_bottom = 20.0
 
 [connection signal="gui_input" from="InputHandler" to="." method="_on_input_handler_gui_input"]
+[connection signal="mouse_exited" from="InputHandler" to="." method="_on_mouse_exited"]

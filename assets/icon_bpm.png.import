@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b6fv7l1bor2gm"
-path="res://.godot/imported/berd.png-1cf3e1e4dbb6a14f1b52046048140e0c.ctex"
+uid="uid://cjdi4qj6ylxiv"
+path="res://.godot/imported/icon_bpm.png-d09498422182e30a7fc4980d9acdc9f5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/berd.png"
-dest_files=["res://.godot/imported/berd.png-1cf3e1e4dbb6a14f1b52046048140e0c.ctex"]
+source_file="res://assets/icon_bpm.png"
+dest_files=["res://.godot/imported/icon_bpm.png-d09498422182e30a7fc4980d9acdc9f5.ctex"]
 
 [params]
 

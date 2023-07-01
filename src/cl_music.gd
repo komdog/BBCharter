@@ -8,7 +8,7 @@ func _ready():
 	Global.music = self
 
 func _input(event):
-	if Popups.open: return
+	if Popups.open or Global.lock_timeline: return
 	
 	if event.is_action_pressed("ui_accept"):
 		if playing:

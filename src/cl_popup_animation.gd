@@ -7,18 +7,18 @@ func _ready():
 	Events.popups_opened.connect(_on_popups_opened)
 	Events.add_animation_to_timeline.connect(_on_add_animation_to_timeline)
 
-func _on_popups_opened():
-	if Popups.type > 0:
+func _on_popups_opened(_index):
+	if Popups.id > 0:
 		$Label.text = "Edit Animation"
 		$Create.text = "Edit"
 	else:
 		$Label.text = "Place New Animation"
 		$Create.text = "Create"
 
-func _on_create_button_up() -> void:
-	var time = 0
-	if Global.get_timestamp_snapped() > 0:
-		time = Global.get_timestamp_snapped()
+func _on_create_button_up():
+	var time: float
+	if Global.snapping_allowed: time = Global.get_timestamp_snapped()
+	else: time = Global.song_pos
 	
 	var new_animation_key = {
 		"timestamp": time,
@@ -31,10 +31,10 @@ func _on_create_button_up() -> void:
 			}
 		}
 	
-	if Popups.type > 0:
-		new_animation_key['timestamp'] = timestamp
+	if Popups.id > 0 or Global.replacing_allowed:
+		if Popups.id > 0: new_animation_key['timestamp'] = timestamp
 		for animation in Timeline.animations_track.get_children():
-			if snappedf(animation['data']['timestamp'], 0.001) == snappedf(new_animation_key['timestamp'], 0.001):
+			if snappedf(animation['data']['timestamp'], 0.001) == snappedf(time, 0.001):
 				Timeline.delete_keyframe('loops', animation, Save.keyframes['loops'].find(animation['data']))
 	
 	Global.project_saved = false
@@ -45,7 +45,7 @@ func _on_create_button_up() -> void:
 
 func _on_cancel_button_up():
 	Popups.close()
-	Popups.type = 0
+	Popups.id = -1
 	reset()
 
 func reset():
@@ -55,10 +55,10 @@ func reset():
 	$Total.value = 6
 	$OffsetX.value = 0
 	$OffsetY.value = 0
-	$Scale.value = 1
+	$Scale.value = 1.0
 
 func _on_add_animation_to_timeline(asset_path):
-	if Popups.type > 0:
+	if Popups.id > 0:
 		animation_name = asset_path['animations']['normal']
 		timestamp = asset_path['timestamp']
 		$SheetH.value = asset_path['sheet_data']['h']
@@ -81,18 +81,20 @@ func _on_add_animation_to_timeline(asset_path):
 		else:
 			$OffsetX.value = 0
 			$OffsetY.value = 0
-		if asset_path.has('scale_multiplier'):
-			$Scale.value = asset_path['scale_multiplier']
-		else:
-			$Scale.value = 1
+		
+		if asset_path.has('scale_multiplier'): $Scale.value = asset_path['scale_multiplier']
+		else: $Scale.value = 1.0
 	else:
-		var time = 0
-		if Global.get_timestamp_snapped() > 0:
-			time = Global.get_timestamp_snapped()
-		for animation in Timeline.animations_track.get_children():
+		var time: float
+		if Global.snapping_allowed: time = Global.get_timestamp_snapped()
+		else: time = Global.song_pos
+		if time < 0: time = 0
+		
+		for animation in Timeline.effects_track.get_children():
 			if snappedf(animation['data']['timestamp'], 0.001) == snappedf(time, 0.001):
-				print('Animation already exists at %s' % [time])
-				return
+				if !Global.replacing_allowed:
+					Events.emit_signal('notify', 'Animation Already Exists', 'Timestamp: ' + str(snappedf(time, 0.001)))
+					return
 		animation_name = asset_path
 	
-	Popups.reveal(Popups.PLACEANIMATION)
+	Popups.reveal(Popups.ANIMATION)

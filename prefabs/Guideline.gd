@@ -6,6 +6,7 @@ var indicator_type: int
 func _ready():
 	Events.update_notespeed.connect(update_position)
 	Events.update_snapping.connect(_on_update_snapping)
+	Events.update_bpm.connect(update_indicator)
 
 func setup(i, type):
 	indicator_index = i
@@ -15,19 +16,28 @@ func setup(i, type):
 func update_position():
 	match indicator_type:
 		Enums.UI_INDICATOR_TYPE.BEAT:
-			position.x = -(indicator_index * Global.beat_length_msec - Global.offset) * Global.note_speed
+			if Save.keyframes['modifiers'].size() > 1: position.x = -(indicator_index * Global.beat_length_msec - Global.offset + Global.beat_offset) * Global.note_speed
+			else: position.x = -(indicator_index * Global.beat_length_msec - Global.offset) * Global.note_speed
 		Enums.UI_INDICATOR_TYPE.HALF_BEAT:
-			position.x = -(indicator_index * Global.beat_length_msec/2 - Global.offset) * Global.note_speed
+			if Save.keyframes['modifiers'].size() > 1: position.x = -(indicator_index * Global.beat_length_msec/2 - Global.offset + Global.beat_offset) * Global.note_speed
+			else: position.x = -(indicator_index * Global.beat_length_msec/2 - Global.offset) * Global.note_speed
 		Enums.UI_INDICATOR_TYPE.QUARTER_BEAT:
-			position.x = -(indicator_index * Global.beat_length_msec/4 - Global.offset) * Global.note_speed
+			if Save.keyframes['modifiers'].size() > 1: position.x = -(indicator_index * Global.beat_length_msec/4 - Global.offset + Global.beat_offset) * Global.note_speed
+			else: position.x = -(indicator_index * Global.beat_length_msec/4 - Global.offset) * Global.note_speed
 		Enums.UI_INDICATOR_TYPE.EIGHTH_BEAT:
-			position.x = -(indicator_index * Global.beat_length_msec/8 - Global.offset) * Global.note_speed
-	
+			if Save.keyframes['modifiers'].size() > 1: position.x = -(indicator_index * Global.beat_length_msec/8 - Global.offset + Global.beat_offset) * Global.note_speed
+			else: position.x = -(indicator_index * Global.beat_length_msec/8 - Global.offset) * Global.note_speed
+
 func _on_update_snapping(index):
-	if index >= indicator_type:
-		modulate = Color(1,1,1,1)
-	else:
-		modulate = Color(1,1,1,0)
-	
+	if index >= indicator_type: modulate = Color(1,1,1,1)
+	else: modulate = Color(1,1,1,0)
+	update_indicator()
+
 func _process(_delta):
-	visible = global_position.x >= Global.note_culling_bounds.x - width/2 and global_position.x < Global.note_culling_bounds.y + width/2
+	visible = global_position.x >= Global.note_culling_bounds.x and global_position.x < Global.note_culling_bounds.y
+
+func update_indicator():
+	if Save.keyframes['modifiers'].size() > 1:
+		var idx = Global.bpm_index; if idx < 1: idx = 1
+		if idx < Save.keyframes['modifiers'].size(): if position.x < Timeline.modifier_track.get_child(idx).position.x: modulate = Color(1,1,1,0)
+		else: idx = Save.keyframes['modifiers'].size()-1

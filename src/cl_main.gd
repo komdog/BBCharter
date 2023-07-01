@@ -21,7 +21,7 @@ func on_files_dropped(files):
 	file_drop_parser.get_file_type(files)
 
 func _input(event):
-	if Popups.open: return
+	if Popups.open or Global.lock_timeline: return
 	
 	if event.is_action_pressed("project_new"):
 		Global.filedialog.new_project_dialog()

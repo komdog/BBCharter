@@ -18,7 +18,7 @@ func _on_chart_loaded():
 
 func _physics_process(_delta):
 	if Save.keyframes.has('voice_bank') and Save.keyframes['voice_bank'].size() > 0:
-		var arr = Save.keyframes['voice_bank'].filter(func(loop): return Global.get_synced_song_pos() > loop['timestamp'])
+		var arr = Save.keyframes['voice_bank'].filter(func(loop): return Global.song_pos >= loop['timestamp'])
 		voice_bank_index = arr.size()
 		if voice_bank_index != last_voice_bank_index:
 			last_voice_bank_index = voice_bank_index

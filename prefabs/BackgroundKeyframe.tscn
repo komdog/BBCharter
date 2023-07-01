@@ -1,9 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://xvh2guyikco"]
+[gd_scene load_steps=2 format=3 uid="uid://bmq1ykyypfng6"]
 
-[ext_resource type="Script" path="res://prefabs/AnimationKeyframe.gd" id="1_mt25u"]
+[ext_resource type="Script" path="res://prefabs/BackgroundKeyframe.gd" id="1_yf4ej"]
 
 [node name="Keyframe" type="Node2D"]
-script = ExtResource("1_mt25u")
+script = ExtResource("1_yf4ej")
 
 [node name="Thumb" type="Sprite2D" parent="."]
 modulate = Color(0.647395, 0.647395, 0.647395, 1)

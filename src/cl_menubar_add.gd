@@ -1,25 +1,60 @@
 extends PopupMenu
 
-enum {SHUTTER}
+enum {SHUTTER,MODIFIER,SOUNDLOOP,VOICEBANK}
 
 func _ready():
 	Events.project_loaded.connect(_on_project_loaded)
 
-
 func _on_id_pressed(id: int):
+	var time: float
+	if Global.snapping_allowed: time = Global.get_timestamp_snapped()
+	else: time = Global.song_pos
+	
 	match id:
 		SHUTTER:
-			var new_shutter = {'timestamp': Global.get_timestamp_snapped()}
+			var new_shutter = {'timestamp': time}
 			for shutter in Timeline.shutter_track.get_children():
-				if snappedf(shutter['data']['timestamp'], 0.001) == snappedf(new_shutter['timestamp'], 0.001):
-					print('Shutter already exists at %s' % [Global.get_synced_song_pos()])
-					return
-	
-			Global.project_saved = false
+				if snappedf(shutter['data']['timestamp'], 0.001) == snappedf(time, 0.001):
+					if Global.replacing_allowed:
+						Timeline.delete_keyframe('shutter', shutter, Save.keyframes['shutter'].find(shutter['data']))
+					else:
+						Events.emit_signal('notify', 'Shutter Already Exists', 'Timestamp: ' + str(snappedf(time, 0.001)))
+						return
 			Save.keyframes['shutter'].append(new_shutter)
 			Save.keyframes['shutter'].sort_custom(func(a, b): return a['timestamp'] < b['timestamp'])
 			Timeline.key_controller.spawn_single_keyframe(new_shutter, Prefabs.shutter_keyframe, Timeline.shutter_track)
+			Global.project_saved = false
+		MODIFIER:
+			if time < 0: time = 0
+			var new_bpm = {'bpm': Global.bpm, 'timestamp': time}
+			for bpm in Timeline.modifier_track.get_children():
+				if snappedf(bpm['data']['timestamp'], 0.001) == snappedf(time, 0.001):
+					if Global.replacing_allowed:
+						Timeline.delete_keyframe('shutter', bpm, Save.keyframes['shutter'].find(bpm['data']))
+					else:
+						Events.emit_signal('notify', 'Modifier Already Exists', 'Timestamp: ' + str(snappedf(time, 0.001)))
+						return
+			Save.keyframes['modifiers'].append(new_bpm)
+			Save.keyframes['modifiers'].sort_custom(func(a, b): return a['timestamp'] < b['timestamp'])
+			Timeline.key_controller.spawn_single_keyframe(new_bpm, Prefabs.modifier_keyframe, Timeline.modifier_track)
+			Global.reload_bpm()
+			Global.project_saved = false
+		SOUNDLOOP:
+			var new_sfx = {'path': '', 'timestamp': time}
+			for sfx in Timeline.sfx_track.get_children():
+				if snappedf(sfx['data']['timestamp'], 0.001) == snappedf(time, 0.001):
+					if Global.replacing_allowed:
+						Timeline.delete_keyframe('sound_loop', sfx, Save.keyframes['sound_loop'].find(sfx['data']))
+					else:
+						Events.emit_signal('notify', 'Sound Loop Already Exists', 'Timestamp: ' + str(snappedf(time, 0.001)))
+						return
+			Save.keyframes['sound_loop'].append(new_sfx)
+			Save.keyframes['sound_loop'].sort_custom(func(a, b): return a['timestamp'] < b['timestamp'])
+			Timeline.key_controller.spawn_single_keyframe(new_sfx, Prefabs.sfx_keyframe, Timeline.sfx_track)
+			Global.project_saved = false
+		VOICEBANK:
+			pass
 
 func _on_project_loaded():
-	for i in item_count:
+	for i in item_count-1:
 		set_item_disabled(i,false)

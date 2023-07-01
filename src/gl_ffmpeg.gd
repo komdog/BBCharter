@@ -7,7 +7,7 @@ func make_sprite_sheet(file, dest):
 		
 	# Define Directories for command
 	var folder = file.get_file().get_basename()
-	var output_filename = "%s.png" % file.get_file().get_basename()
+	var _output_filename = "%s.png" % file.get_file().get_basename()
 	
 	# Make Image Sequence
 	var sequence_destination =  dest + "temp_" + folder

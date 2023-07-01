@@ -1,8 +1,7 @@
-[gd_scene load_steps=76 format=3 uid="uid://bo2pso1k2xik8"]
+[gd_scene load_steps=79 format=3 uid="uid://bo2pso1k2xik8"]
 
 [ext_resource type="Theme" uid="uid://cehpee20dikgi" path="res://themes/main_theme.tres" id="1_71y40"]
 [ext_resource type="Script" path="res://src/cl_main.gd" id="2_ca1lw"]
-[ext_resource type="Texture2D" uid="uid://b6fv7l1bor2gm" path="res://assets/berd.png" id="3_0gij1"]
 [ext_resource type="Script" path="res://src/cl_keycontroller.gd" id="3_5l1uq"]
 [ext_resource type="Script" path="res://src/cl_notecontroller.gd" id="3_t55vn"]
 [ext_resource type="Script" path="res://src/cl_menubar_add.gd" id="5_2p0vi"]
@@ -34,15 +33,38 @@
 [ext_resource type="Script" path="res://src/cl_popup_rename_difficulty.gd" id="18_iev56"]
 [ext_resource type="Script" path="res://src/cl_popup_quit.gd" id="20_brhb6"]
 [ext_resource type="Script" path="res://src/cl_linecenter.gd" id="21_ckpwo"]
+[ext_resource type="Script" path="res://src/cl_menu_image.gd" id="22_btaqb"]
 [ext_resource type="Script" path="res://src/cl_oneshot.gd" id="22_wed7f"]
 [ext_resource type="Script" path="res://src/cl_popups.gd" id="24_hyexw"]
 [ext_resource type="Script" path="res://src/cl_voice.gd" id="26_3mi6w"]
-[ext_resource type="Script" path="res://src/cl_popup_place_animation.gd" id="26_6tqyk"]
 [ext_resource type="Script" path="res://src/cl_horny.gd" id="31_rybx7"]
 [ext_resource type="Script" path="res://src/cl_popup_delete_difficulty.gd" id="32_m4kvt"]
+[ext_resource type="Script" path="res://src/cl_menu_audio.gd" id="34_8buew"]
 [ext_resource type="Script" path="res://src/cl_popup_clear.gd" id="34_pacga"]
 [ext_resource type="Script" path="res://src/cl_popup_icon_difficulty.gd" id="36_j4s2r"]
 [ext_resource type="Texture2D" uid="uid://f5ooa0gle4sk" path="res://assets/icon_difficulty.png" id="37_8v42t"]
+[ext_resource type="Script" path="res://src/cl_popup_animation.gd" id="42_u4042"]
+[ext_resource type="Script" path="res://src/cl_popup_effect.gd" id="43_cm3wp"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_aht3f"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4kvjm"]
+bg_color = Color(0.137255, 0.137255, 0.137255, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ritwt"]
+bg_color = Color(0.0588235, 0.0588235, 0.0588235, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_id34j"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_awqg8"]
+texture = ExtResource("5_dqdvp")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_x3vgy"]
+texture = ExtResource("5_dqdvp")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2f5is"]
+bg_color = Color(0, 0, 0, 0.752941)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x5vw1"]
 bg_color = Color(0.0862745, 0.0862745, 0.0862745, 1)
@@ -108,23 +130,6 @@ _data = {
 "RESET": SubResource("Animation_jfjoc"),
 "Shutters": SubResource("Animation_0h03h")
 }
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_aht3f"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_id34j"]
-bg_color = Color(0, 0, 0, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ritwt"]
-bg_color = Color(0.0588235, 0.0588235, 0.0588235, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4kvjm"]
-bg_color = Color(0.137255, 0.137255, 0.137255, 1)
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_x3vgy"]
-texture = ExtResource("5_dqdvp")
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_awqg8"]
-texture = ExtResource("5_dqdvp")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fxxnx"]
 bg_color = Color(0.0627451, 0.0627451, 0.0627451, 1)
@@ -219,11 +224,343 @@ grow_vertical = 2
 theme = ExtResource("1_71y40")
 script = ExtResource("2_ca1lw")
 metadata/_edit_lock_ = true
+metadata/_edit_horizontal_guides_ = [1080.0]
+metadata/_edit_vertical_guides_ = [1920.0]
 
-[node name="Berd" type="Sprite2D" parent="."]
-z_index = -1
-position = Vector2(960, 820)
-texture = ExtResource("3_0gij1")
+[node name="KeyTimeline" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 672.0
+offset_bottom = 144.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_aht3f")
+
+[node name="KeyController" type="Node2D" parent="KeyTimeline"]
+position = Vector2(960, 528)
+script = ExtResource("3_5l1uq")
+
+[node name="ShutterPanel" type="Panel" parent="KeyTimeline/KeyController"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -960.0
+offset_top = -528.0
+offset_right = 961.0
+offset_bottom = -480.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_4kvjm")
+
+[node name="AnimationsPanel" type="Panel" parent="KeyTimeline/KeyController"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -960.0
+offset_top = -480.0
+offset_right = 961.0
+offset_bottom = -376.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ritwt")
+
+[node name="EffectsPanel" type="Panel" parent="KeyTimeline/KeyController"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -960.0
+offset_top = -376.0
+offset_right = 961.0
+offset_bottom = -272.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_id34j")
+
+[node name="BackgroundsPanel" type="Panel" parent="KeyTimeline/KeyController"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -960.0
+offset_top = -272.0
+offset_right = 961.0
+offset_bottom = -168.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ritwt")
+
+[node name="ModifierPanel" type="Panel" parent="KeyTimeline/KeyController"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -960.0
+offset_top = -168.0
+offset_right = 961.0
+offset_bottom = -120.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_4kvjm")
+
+[node name="SoundLoopsPanel" type="Panel" parent="KeyTimeline/KeyController"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -960.0
+offset_top = -120.0
+offset_right = 961.0
+offset_bottom = -72.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ritwt")
+
+[node name="OneshotSoundPanel" type="Panel" parent="KeyTimeline/KeyController"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -960.0
+offset_top = -72.0
+offset_right = 961.0
+offset_bottom = -24.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_id34j")
+
+[node name="VoiceBanksPanel" type="Panel" parent="KeyTimeline/KeyController"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -960.0
+offset_top = -24.0
+offset_right = 961.0
+offset_bottom = 24.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ritwt")
+
+[node name="Beat" type="Node2D" parent="KeyTimeline/KeyController"]
+position = Vector2(0, 128)
+
+[node name="Half" type="Node2D" parent="KeyTimeline/KeyController"]
+position = Vector2(0, 128)
+
+[node name="Quarter" type="Node2D" parent="KeyTimeline/KeyController"]
+position = Vector2(0, 128)
+
+[node name="Eighth" type="Node2D" parent="KeyTimeline/KeyController"]
+position = Vector2(0, 128)
+
+[node name="ShutterTrack" type="Node2D" parent="KeyTimeline/KeyController"]
+position = Vector2(0, -504)
+
+[node name="AnimationsTrack" type="Node2D" parent="KeyTimeline/KeyController"]
+position = Vector2(0, -428)
+
+[node name="EffectsTrack" type="Node2D" parent="KeyTimeline/KeyController"]
+position = Vector2(0, -328)
+
+[node name="BackgroundsTrack" type="Node2D" parent="KeyTimeline/KeyController"]
+position = Vector2(0, -220)
+
+[node name="ModifierTrack" type="Node2D" parent="KeyTimeline/KeyController"]
+position = Vector2(0, -144)
+
+[node name="SoundLoopsTrack" type="Node2D" parent="KeyTimeline/KeyController"]
+position = Vector2(0, -96)
+
+[node name="OneshotSoundTrack" type="Node2D" parent="KeyTimeline/KeyController"]
+position = Vector2(0, -48)
+
+[node name="VoiceBanksTrack" type="Node2D" parent="KeyTimeline/KeyController"]
+
+[node name="ShutterGradient" type="Panel" parent="KeyTimeline/KeyController"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -960.0
+offset_top = -528.0
+offset_right = -768.0
+offset_bottom = -480.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_awqg8")
+
+[node name="AnimationsGradient" type="Panel" parent="KeyTimeline/KeyController"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -960.0
+offset_top = -480.0
+offset_right = -768.0
+offset_bottom = -376.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_x3vgy")
+
+[node name="EffectsGradient" type="Panel" parent="KeyTimeline/KeyController"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -960.0
+offset_top = -376.0
+offset_right = -768.0
+offset_bottom = -272.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_x3vgy")
+
+[node name="BackgroundsGradient" type="Panel" parent="KeyTimeline/KeyController"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -960.0
+offset_top = -272.0
+offset_right = -768.0
+offset_bottom = -168.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_x3vgy")
+
+[node name="ModifierGradient" type="Panel" parent="KeyTimeline/KeyController"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -960.0
+offset_top = -168.0
+offset_right = -768.0
+offset_bottom = -120.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_awqg8")
+
+[node name="SoundLoopsGradient" type="Panel" parent="KeyTimeline/KeyController"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -960.0
+offset_top = -120.0
+offset_right = -768.0
+offset_bottom = -72.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_awqg8")
+
+[node name="OneshotSoundGradient" type="Panel" parent="KeyTimeline/KeyController"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -960.0
+offset_top = -72.0
+offset_right = -768.0
+offset_bottom = -24.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_awqg8")
+
+[node name="VoiceBanksGradient" type="Panel" parent="KeyTimeline/KeyController"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -960.0
+offset_top = -24.0
+offset_right = -768.0
+offset_bottom = 24.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_awqg8")
+
+[node name="ShutterLabel" type="Label" parent="KeyTimeline/KeyController"]
+offset_left = -944.0
+offset_top = -520.0
+offset_right = -771.0
+offset_bottom = -491.0
+theme_override_colors/font_color = Color(1, 1, 1, 0.737255)
+theme_override_font_sizes/font_size = 18
+text = "SHUTTER"
+
+[node name="AnimationsLabel" type="Label" parent="KeyTimeline/KeyController"]
+offset_left = -944.0
+offset_top = -472.0
+offset_right = -817.0
+offset_bottom = -443.0
+theme_override_colors/font_color = Color(1, 1, 1, 0.737255)
+theme_override_font_sizes/font_size = 18
+text = "ANIMATIONS"
+
+[node name="EffectsLabel" type="Label" parent="KeyTimeline/KeyController"]
+offset_left = -944.0
+offset_top = -368.0
+offset_right = -771.0
+offset_bottom = -339.0
+theme_override_colors/font_color = Color(1, 1, 1, 0.737255)
+theme_override_font_sizes/font_size = 18
+text = "EFFECTS (WIP In-Game)"
+
+[node name="BackgroundsLabel" type="Label" parent="KeyTimeline/KeyController"]
+offset_left = -944.0
+offset_top = -264.0
+offset_right = -771.0
+offset_bottom = -235.0
+theme_override_colors/font_color = Color(1, 1, 1, 0.737255)
+theme_override_font_sizes/font_size = 18
+text = "BACKGROUNDS (WIP In-Game)"
+
+[node name="ModifierLabel" type="Label" parent="KeyTimeline/KeyController"]
+offset_left = -944.0
+offset_top = -160.0
+offset_right = -771.0
+offset_bottom = -131.0
+theme_override_colors/font_color = Color(1, 1, 1, 0.737255)
+theme_override_font_sizes/font_size = 18
+text = "MODIFIER (WIP In-Game)"
+
+[node name="SoundLoopsLabel" type="Label" parent="KeyTimeline/KeyController"]
+offset_left = -945.0
+offset_top = -112.0
+offset_right = -772.0
+offset_bottom = -83.0
+theme_override_colors/font_color = Color(1, 1, 1, 0.737255)
+theme_override_font_sizes/font_size = 18
+text = "SOUND LOOPS"
+
+[node name="OneshotSoundLabel" type="Label" parent="KeyTimeline/KeyController"]
+offset_left = -944.0
+offset_top = -64.0
+offset_right = -771.0
+offset_bottom = -35.0
+theme_override_colors/font_color = Color(1, 1, 1, 0.737255)
+theme_override_font_sizes/font_size = 18
+text = "ONESHOT SOUND"
+
+[node name="VoiceBanksLabel" type="Label" parent="KeyTimeline/KeyController"]
+offset_left = -945.0
+offset_top = -16.0
+offset_right = -772.0
+offset_bottom = 13.0
+theme_override_colors/font_color = Color(1, 1, 1, 0.737255)
+theme_override_font_sizes/font_size = 18
+text = "VOICE BANKS"
+
+[node name="VoiceBanksTemp" type="Panel" parent="KeyTimeline/KeyController"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -960.0
+offset_top = -24.0
+offset_right = 960.0
+offset_bottom = 24.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_2f5is")
 
 [node name="Character" type="Node2D" parent="."]
 position = Vector2(992, 336)
@@ -231,6 +568,7 @@ scale = Vector2(0.778, 0.778)
 script = ExtResource("5_in5ur")
 
 [node name="Panel" type="Panel" parent="Character"]
+clip_contents = true
 offset_left = -640.0
 offset_top = -360.0
 offset_right = 640.0
@@ -238,9 +576,8 @@ offset_bottom = 360.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_x5vw1")
 metadata/_edit_lock_ = true
 
-[node name="Pattern" type="Sprite2D" parent="Character"]
+[node name="Pattern" type="Sprite2D" parent="Character/Panel"]
 texture_repeat = 2
-position = Vector2(-640, -360)
 scale = Vector2(0.278, 0.281)
 texture = ExtResource("5_v7o4k")
 centered = false
@@ -248,12 +585,17 @@ region_enabled = true
 region_rect = Rect2(0, 0, 4604.4, 2562.3)
 region_filter_clip_enabled = true
 
-[node name="Static" type="Sprite2D" parent="Character"]
+[node name="Static" type="Sprite2D" parent="Character/Panel"]
 visible = false
+position = Vector2(640, 360)
 scale = Vector2(0.667, 0.667)
 texture = ExtResource("6_bp6ey")
 
-[node name="Visual" type="Sprite2D" parent="Character"]
+[node name="Visual" type="Sprite2D" parent="Character/Panel"]
+position = Vector2(640, 360)
+
+[node name="Effect" type="Sprite2D" parent="Character/Panel"]
+position = Vector2(640, 360)
 
 [node name="Shutters" type="Node2D" parent="Character"]
 script = ExtResource("15_kn5dq")
@@ -282,134 +624,6 @@ position = Vector2(-1200, -450)
 scale = Vector2(1.25, 1.25)
 color = Color(0, 0, 0, 1)
 polygon = PackedVector2Array(1472, 648, 896, 648, 1472, 520)
-
-[node name="KeyTimeline" type="Panel" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 472.0
-offset_bottom = -208.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxEmpty_aht3f")
-
-[node name="KeyController" type="Node2D" parent="KeyTimeline"]
-position = Vector2(960, 348)
-script = ExtResource("3_5l1uq")
-
-[node name="AnimationsPanel" type="Panel" parent="KeyTimeline/KeyController"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -960.0
-offset_top = -52.0
-offset_right = 960.0
-offset_bottom = 52.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_id34j")
-
-[node name="OneshotSoundPanel" type="Panel" parent="KeyTimeline/KeyController"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -960.0
-offset_top = -100.0
-offset_right = 960.0
-offset_bottom = -52.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_ritwt")
-
-[node name="ShutterPanel" type="Panel" parent="KeyTimeline/KeyController"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -960.0
-offset_top = -148.0
-offset_right = 960.0
-offset_bottom = -100.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_4kvjm")
-
-[node name="Indicators" type="Node2D" parent="KeyTimeline/KeyController"]
-position = Vector2(0, 156)
-
-[node name="AnimationsTrack" type="Node2D" parent="KeyTimeline/KeyController"]
-
-[node name="AnimationsGradient" type="Panel" parent="KeyTimeline/KeyController"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -960.0
-offset_top = -52.0
-offset_right = -768.0
-offset_bottom = 51.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxTexture_x3vgy")
-
-[node name="OneshotSoundTrack" type="Node2D" parent="KeyTimeline/KeyController"]
-position = Vector2(0, -76)
-
-[node name="OneshotSoundGradient" type="Panel" parent="KeyTimeline/KeyController"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -960.0
-offset_top = -100.0
-offset_right = -768.0
-offset_bottom = -52.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxTexture_awqg8")
-
-[node name="ShutterTrack" type="Node2D" parent="KeyTimeline/KeyController"]
-position = Vector2(0, -124)
-
-[node name="ShutterGradient" type="Panel" parent="KeyTimeline/KeyController"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -960.0
-offset_top = -148.0
-offset_right = -768.0
-offset_bottom = -100.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxTexture_awqg8")
-
-[node name="AnimationsLabel" type="Label" parent="KeyTimeline/KeyController"]
-offset_left = -944.0
-offset_top = -44.0001
-offset_right = -817.0
-offset_bottom = -15.0001
-theme_override_colors/font_color = Color(1, 1, 1, 0.737255)
-theme_override_font_sizes/font_size = 18
-text = "ANIMATIONS"
-
-[node name="OneshotSoundLabel" type="Label" parent="KeyTimeline/KeyController"]
-offset_left = -944.0
-offset_top = -92.0
-offset_right = -771.0
-offset_bottom = -63.0
-theme_override_colors/font_color = Color(1, 1, 1, 0.737255)
-theme_override_font_sizes/font_size = 18
-text = "ONESHOT SOUND"
-
-[node name="ShutterLabel" type="Label" parent="KeyTimeline/KeyController"]
-offset_left = -944.0
-offset_top = -140.0
-offset_right = -771.0
-offset_bottom = -111.0
-theme_override_colors/font_color = Color(1, 1, 1, 0.737255)
-theme_override_font_sizes/font_size = 18
-text = "SHUTTER"
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 1
@@ -445,6 +659,7 @@ theme_override_font_sizes/font_size = 24
 flat = true
 
 [node name="File" type="PopupMenu" parent="Toolbar/MenuBar"]
+size = Vector2i(154, 104)
 theme_override_font_sizes/font_size = 20
 item_count = 3
 item_0/text = "New Project"
@@ -468,34 +683,55 @@ item_1/disabled = true
 script = ExtResource("8_yungy")
 
 [node name="Add" type="PopupMenu" parent="Toolbar/MenuBar"]
+size = Vector2i(252, 136)
 theme_override_font_sizes/font_size = 20
-item_count = 1
+item_count = 4
 item_0/text = "Add Shutter"
 item_0/id = 0
 item_0/disabled = true
+item_1/text = "Add Modifier"
+item_1/id = 1
+item_1/disabled = true
+item_2/text = "Add Empty Sound Loop"
+item_2/id = 2
+item_2/disabled = true
+item_3/text = "Add Empty Voice Bank"
+item_3/id = 3
+item_3/disabled = true
 script = ExtResource("5_2p0vi")
 
 [node name="Clear" type="PopupMenu" parent="Toolbar/MenuBar"]
+size = Vector2i(194, 168)
 theme_override_font_sizes/font_size = 20
-item_count = 5
+item_count = 8
 item_0/text = "Clear Chart"
 item_0/id = 0
 item_0/disabled = true
-item_1/text = "Clear Animations"
+item_1/text = "Clear Shutters"
 item_1/id = 1
 item_1/disabled = true
-item_2/text = "Clear Oneshots"
+item_2/text = "Clear Animations"
 item_2/id = 2
 item_2/disabled = true
-item_3/text = "Clear Shutters"
+item_3/text = "Clear Backgrounds"
 item_3/id = 3
 item_3/disabled = true
-item_4/text = "Clear Timeline"
+item_4/text = "Clear Modifiers"
 item_4/id = 4
 item_4/disabled = true
+item_5/text = "Clear Sound Loops"
+item_5/id = 5
+item_5/disabled = true
+item_6/text = "Clear Oneshots"
+item_6/id = 6
+item_6/disabled = true
+item_7/text = "Clear Timeline"
+item_7/id = 7
+item_7/disabled = true
 script = ExtResource("6_pgban")
 
 [node name="Project" type="PopupMenu" parent="Toolbar/MenuBar"]
+size = Vector2i(233, 172)
 theme_override_font_sizes/font_size = 20
 item_count = 6
 item_0/text = "Reload Project"
@@ -519,6 +755,7 @@ item_5/disabled = true
 script = ExtResource("5_577ur")
 
 [node name="Help" type="PopupMenu" parent="Toolbar/MenuBar"]
+size = Vector2i(169, 100)
 theme_override_font_sizes/font_size = 20
 item_count = 2
 item_0/text = "Github Repo"
@@ -542,6 +779,7 @@ grow_horizontal = 0
 grow_vertical = 2
 tooltip_text = "Change Difficulty"
 focus_mode = 0
+mouse_default_cursor_shape = 2
 theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
 theme_override_colors/font_disabled_color = Color(0.482353, 0.482353, 0.482353, 1)
 theme_override_styles/pressed = SubResource("StyleBoxFlat_w0hwe")
@@ -686,7 +924,13 @@ width = 5.0
 [node name="NoteController" type="Node2D" parent="NoteTimeline/NoteLine"]
 script = ExtResource("3_t55vn")
 
-[node name="Indicators" type="Node2D" parent="NoteTimeline/NoteLine/NoteController"]
+[node name="Beat" type="Node2D" parent="NoteTimeline/NoteLine/NoteController"]
+
+[node name="Half" type="Node2D" parent="NoteTimeline/NoteLine/NoteController"]
+
+[node name="Quarter" type="Node2D" parent="NoteTimeline/NoteLine/NoteController"]
+
+[node name="Eighth" type="Node2D" parent="NoteTimeline/NoteLine/NoteController"]
 
 [node name="Notes" type="Node2D" parent="NoteTimeline/NoteLine/NoteController"]
 
@@ -716,6 +960,7 @@ theme_override_font_sizes/font_size = 18
 text = "NOTES"
 
 [node name="LineCenter" type="Line2D" parent="NoteTimeline/NoteLine"]
+position = Vector2(0, 1)
 points = PackedVector2Array(0, 104, 0, -304)
 width = 5.0
 default_color = Color(0.619608, 0.027451, 0.266667, 1)
@@ -802,6 +1047,38 @@ script = ExtResource("22_wed7f")
 
 [node name="Horny" type="AudioStreamPlayer" parent="."]
 script = ExtResource("31_rybx7")
+
+[node name="AudioMenu" type="PopupMenu" parent="."]
+size = Vector2i(182, 100)
+unresizable = false
+allow_search = false
+item_count = 3
+item_0/text = "Add Sound Loop"
+item_0/id = 0
+item_1/text = "Add Oneshot Sound"
+item_1/id = 1
+item_2/text = "Add Voice Bank"
+item_2/id = 2
+item_2/disabled = true
+script = ExtResource("34_8buew")
+
+[node name="ImageMenu" type="PopupMenu" parent="."]
+size = Vector2i(164, 120)
+unresizable = false
+allow_search = false
+item_count = 5
+item_0/text = "Add Animation"
+item_0/id = 0
+item_1/text = "Add Effect"
+item_1/id = 1
+item_2/text = "Add Background"
+item_2/id = 2
+item_3/text = ""
+item_3/id = 3
+item_3/separator = true
+item_4/text = "Set Difficulty Icon"
+item_4/id = 3
+script = ExtResource("22_btaqb")
 
 [node name="Popups" type="Panel" parent="."]
 visible = false
@@ -1086,7 +1363,7 @@ offset_bottom = 295.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_y543m")
-script = ExtResource("26_6tqyk")
+script = ExtResource("42_u4042")
 
 [node name="Label" type="Label" parent="Popups/PlaceAnimation"]
 layout_mode = 1
@@ -1267,6 +1544,149 @@ offset_bottom = 571.0
 theme_override_font_sizes/font_size = 18
 text = "Cancel"
 
+[node name="PlaceEffect" type="Panel" parent="Popups"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -295.0
+offset_right = 300.0
+offset_bottom = 295.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_y543m")
+script = ExtResource("43_cm3wp")
+
+[node name="Label" type="Label" parent="Popups/PlaceEffect"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 58.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 20
+text = "Place New Effect"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SheetH" type="SpinBox" parent="Popups/PlaceEffect"]
+layout_mode = 0
+offset_left = 100.0
+offset_top = 123.0
+offset_right = 507.0
+offset_bottom = 154.0
+value = 2.0
+rounded = true
+
+[node name="SheetH Label" type="Label" parent="Popups/PlaceEffect/SheetH"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 243.0
+offset_top = 5.0
+offset_right = -22.0
+offset_bottom = 31.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.501961, 0.501961, 0.501961, 1)
+text = "Horizontal Frames"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="SheetV" type="SpinBox" parent="Popups/PlaceEffect"]
+layout_mode = 0
+offset_left = 100.0
+offset_top = 163.0
+offset_right = 507.0
+offset_bottom = 194.0
+value = 3.0
+rounded = true
+
+[node name="SheetV Label" type="Label" parent="Popups/PlaceEffect/SheetV"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 265.0
+offset_top = 5.0
+offset_right = -22.0
+offset_bottom = 31.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.501961, 0.501961, 0.501961, 1)
+text = "Vertical Frames"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Total" type="SpinBox" parent="Popups/PlaceEffect"]
+layout_mode = 0
+offset_left = 100.0
+offset_top = 203.0
+offset_right = 507.0
+offset_bottom = 231.0
+value = 6.0
+rounded = true
+
+[node name="Total Label" type="Label" parent="Popups/PlaceEffect/Total"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 284.0
+offset_top = 5.0
+offset_right = -22.0
+offset_bottom = 31.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.501961, 0.501961, 0.501961, 1)
+text = "Total Frames"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Speed" type="SpinBox" parent="Popups/PlaceEffect"]
+layout_mode = 0
+offset_left = 100.0
+offset_top = 240.0
+offset_right = 507.0
+offset_bottom = 271.0
+step = 0.1
+value = 1.0
+allow_greater = true
+
+[node name="Speed Label" type="Label" parent="Popups/PlaceEffect/Speed"]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -142.0
+offset_top = 3.0
+offset_right = -22.0
+offset_bottom = 3.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.501961, 0.501961, 0.501961, 1)
+text = "Duration"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Create" type="Button" parent="Popups/PlaceEffect"]
+layout_mode = 2
+offset_left = 196.0
+offset_top = 531.0
+offset_right = 292.0
+offset_bottom = 571.0
+focus_mode = 0
+theme_override_font_sizes/font_size = 18
+text = "Create"
+
+[node name="Cancel" type="Button" parent="Popups/PlaceEffect"]
+layout_mode = 2
+offset_left = 308.0
+offset_top = 531.0
+offset_right = 394.0
+offset_bottom = 571.0
+theme_override_font_sizes/font_size = 18
+text = "Cancel"
+
 [node name="ClearPopup" type="Panel" parent="Popups"]
 visible = false
 layout_mode = 1
@@ -1383,6 +1803,8 @@ text = "Cancel"
 [connection signal="file_selected" from="FileDialog" to="FileDialog" method="_on_file_selected"]
 [connection signal="item_selected" from="BottomBar/Snapping" to="BottomBar/Snapping" method="_on_item_selected"]
 [connection signal="toggled" from="BottomBar/Snapping/SnapToggle" to="BottomBar/Snapping" method="_on_snap_toggle_toggled"]
+[connection signal="id_pressed" from="AudioMenu" to="AudioMenu" method="_on_id_pressed"]
+[connection signal="id_pressed" from="ImageMenu" to="ImageMenu" method="_on_id_pressed"]
 [connection signal="gui_input" from="Popups" to="Popups" method="_on_gui_input"]
 [connection signal="button_up" from="Popups/NewDifficultyPopup/Create" to="Popups/NewDifficultyPopup" method="_on_create_button_up"]
 [connection signal="button_up" from="Popups/NewDifficultyPopup/Cancel" to="Popups/NewDifficultyPopup" method="_on_cancel_button_up"]
@@ -1397,6 +1819,9 @@ text = "Cancel"
 [connection signal="button_up" from="Popups/PlaceAnimation/Create" to="Character" method="_on_create_button_up"]
 [connection signal="button_up" from="Popups/PlaceAnimation/Create" to="Popups/PlaceAnimation" method="_on_create_button_up"]
 [connection signal="button_up" from="Popups/PlaceAnimation/Cancel" to="Popups/PlaceAnimation" method="_on_cancel_button_up"]
+[connection signal="button_up" from="Popups/PlaceEffect/Create" to="Character" method="_on_create_button_up"]
+[connection signal="button_up" from="Popups/PlaceEffect/Create" to="Popups/PlaceEffect" method="_on_create_button_up"]
+[connection signal="button_up" from="Popups/PlaceEffect/Cancel" to="Popups/PlaceEffect" method="_on_cancel_button_up"]
 [connection signal="button_up" from="Popups/ClearPopup/Yes" to="Popups/ClearPopup" method="_on_yes_button_up"]
 [connection signal="button_up" from="Popups/ClearPopup/No" to="Popups/ClearPopup" method="_on_no_button_up"]
 [connection signal="button_up" from="Popups/QuitPopup/Save" to="Popups/QuitPopup" method="_on_save_button_up"]
