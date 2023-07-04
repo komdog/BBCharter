@@ -21,6 +21,7 @@ var backgrounds_track: Node2D
 var modifier_track: Node2D
 var sfx_track: Node2D
 var oneshot_sound_track: Node2D
+var voice_banks_track: Node2D
 
 var inc_scale: float
 
@@ -96,6 +97,7 @@ func clear_timeline():
 	else: delete_keyframes('modifiers', modifier_track)
 	delete_keyframes('sound_loop', sfx_track)
 	delete_keyframes('sound_oneshot', oneshot_sound_track)
+	delete_keyframes('voice_bank', voice_banks_track)
 
 func clear_notes_only():
 	print('Cleaning Notes Only')
@@ -126,7 +128,7 @@ func _input(event):
 			else:
 				if get_viewport().get_mouse_position().y > 872:
 					# Seeking
-					inc_scale = (Global.song_beats_per_second / Global.snapping_factor / 2) if !event.alt_pressed else 0.005
+					inc_scale = (Global.song_beats_per_second / 16) if !event.alt_pressed else 0.005
 					if event.button_index == MOUSE_BUTTON_WHEEL_UP:
 						clamp_seek(inc_scale)
 					if event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
@@ -150,9 +152,9 @@ func _input(event):
 									marquee_point_b = -1
 				else:
 					if event.button_index == MOUSE_BUTTON_WHEEL_UP:
-						scroll(1)
+						scroll(2)
 					if event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
-						scroll(-1)
+						scroll(-2)
 	
 	if event is InputEventPanGesture:
 		if get_viewport().get_mouse_position().y > 672:
@@ -167,7 +169,7 @@ func _input(event):
 				scroll(-event.delta.y)
 	
 	if event is InputEventKey:
-		# Speed up / Slow down song	
+		# Speed up / Slow down song
 		if event.is_action_pressed("ui_up"):
 			Global.music.pitch_scale = clampf(Global.music.pitch_scale + 0.1, 0.5, 2.0 )
 		if event.is_action_pressed("ui_down"):

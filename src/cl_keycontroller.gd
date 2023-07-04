@@ -20,6 +20,7 @@ func _ready():
 	Timeline.modifier_track = $ModifierTrack
 	Timeline.sfx_track = $SoundLoopsTrack
 	Timeline.oneshot_sound_track = $OneshotSoundTrack
+	Timeline.voice_banks_track = $VoiceBanksTrack
 	
 	Events.song_loaded.connect(_on_song_loaded)
 	Events.update_scrolling.connect(_on_update_scrolling)
@@ -33,6 +34,7 @@ func _on_song_loaded():
 	spawn_keyframes('modifiers', Prefabs.modifier_keyframe, Timeline.modifier_track)
 	spawn_keyframes('sound_loop', Prefabs.sfx_keyframe, Timeline.sfx_track)
 	spawn_keyframes('sound_oneshot', Prefabs.oneshot_keyframe, Timeline.oneshot_sound_track)
+	spawn_keyframes('voice_bank', Prefabs.voice_keyframe, Timeline.voice_banks_track)
 	
 	Global.clear_children(Timeline.key_beat_container)
 	Global.clear_children(Timeline.key_half_container)
@@ -200,7 +202,7 @@ func _process(_delta):
 	$ModifierLabel.position.x = -position.x + 16
 	$SoundLoopsLabel.position.x = -position.x + 16
 	$OneshotSoundLabel.position.x = -position.x + 16
-	$VoiceBanksLabel.position.x = -position.x + 16; $VoiceBanksTemp.position.x = -position.x
+	$VoiceBanksLabel.position.x = -position.x + 16
 
 func _on_update_scrolling(value):
 	if position.y + value < 175: position.y = 175

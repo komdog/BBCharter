@@ -53,7 +53,18 @@ func _on_id_pressed(id: int):
 			Timeline.key_controller.spawn_single_keyframe(new_sfx, Prefabs.sfx_keyframe, Timeline.sfx_track)
 			Global.project_saved = false
 		VOICEBANK:
-			pass
+			var new_bank = {'voice_paths': [], 'timestamp': time}
+			for bank in Timeline.voice_banks_track.get_children():
+				if snappedf(bank['data']['timestamp'], 0.001) == snappedf(time, 0.001):
+					if Global.replacing_allowed:
+						Timeline.delete_keyframe('voice_bank', bank, Save.keyframes['voice_bank'].find(bank['data']))
+					else:
+						Events.emit_signal('notify', 'Sound Loop Already Exists', 'Timestamp: ' + str(snappedf(time, 0.001)))
+						return
+			Save.keyframes['voice_bank'].append(new_bank)
+			Save.keyframes['voice_bank'].sort_custom(func(a, b): return a['timestamp'] < b['timestamp'])
+			Timeline.key_controller.spawn_single_keyframe(new_bank, Prefabs.voice_keyframe, Timeline.voice_banks_track)
+			Global.project_saved = false
 
 func _on_project_loaded():
 	for i in item_count-1:

@@ -13,6 +13,7 @@ const background_keyframe = preload("res://prefabs/BackgroundKeyframe.tscn")
 const modifier_keyframe = preload("res://prefabs/ModifierKeyframe.tscn")
 const sfx_keyframe = preload("res://prefabs/SoundLoopKeyframe.tscn")
 const oneshot_keyframe = preload("res://prefabs/OneshotSoundKeyframe.tscn")
+const voice_keyframe = preload("res://prefabs/VoiceBankKeyframe.tscn")
 
 # Icons
 const audio_icon = preload("res://assets/icon_audio.png")
