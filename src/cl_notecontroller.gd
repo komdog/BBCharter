@@ -53,16 +53,25 @@ func create_ui():
 		$Half.add_child(new_beat_indicator)
 		new_beat_indicator.setup(i, Enums.UI_INDICATOR_TYPE.HALF_BEAT)
 	
+	for i in Global.song_beats_total * 3:
+		if i % 3 == 0: continue
+		var new_beat_indicator = Prefabs.beat_indicator.instantiate()
+		$Indicators.add_child(new_beat_indicator)
+		new_beat_indicator.setup(i, Enums.UI_INDICATOR_TYPE.THIRD_BEAT)
+	
 	for i in Global.song_beats_total * 4:
-		if i % 4 == 0: continue
 		if i % 2 == 0: continue
 		var new_beat_indicator = Prefabs.beat_indicator.instantiate()
 		$Quarter.add_child(new_beat_indicator)
 		new_beat_indicator.setup(i, Enums.UI_INDICATOR_TYPE.QUARTER_BEAT)
 	
+	for i in Global.song_beats_total * 6:
+		if i % 3 == 0: continue
+		var new_beat_indicator = Prefabs.beat_indicator.instantiate()
+		$Indicators.add_child(new_beat_indicator)
+		new_beat_indicator.setup(i, Enums.UI_INDICATOR_TYPE.SIXTH_BEAT)
+	
 	for i in Global.song_beats_total * 8:
-		if i % 8 == 0: continue
-		if i % 4 == 0: continue
 		if i % 2 == 0: continue
 		var new_beat_indicator = Prefabs.beat_indicator.instantiate()
 		$Eighth.add_child(new_beat_indicator)

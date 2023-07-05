@@ -16,9 +16,9 @@ To create a new project, click on File and select New Project. Then, select a di
 ### Directory Shortcuts
 | Hotkey | Function |
 | ------ | ------ |
-|5|Open `keyframes.cfg` configuration file|
-|6|Open `note.cfg` configuration file|
-|7|Open project directory|
+|7|Open `keyframes.cfg` configuration file|
+|8|Open `note.cfg` configuration file|
+|9|Open project directory|
 ### Tool Shortcuts
 | Hotkey | Function |
 | ------ | ------ |

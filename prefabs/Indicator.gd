@@ -21,9 +21,15 @@ func setup(i, type):
 		Enums.UI_INDICATOR_TYPE.HALF_BEAT:
 			set("points", [point_0 * 0.8, point_1 * 0.8] )
 			default_color = Color(1,1,1,0.5)
+		Enums.UI_INDICATOR_TYPE.THIRD_BEAT:
+			set("points", [point_0 * 0.7, point_1 * 0.7] )
+			default_color = Color(0.8,1,0.8,0.4)
 		Enums.UI_INDICATOR_TYPE.QUARTER_BEAT:
 			set("points", [point_0 * 0.6, point_1 * 0.6] )
 			default_color = Color(1,1,1,0.25)
+		Enums.UI_INDICATOR_TYPE.SIXTH_BEAT:
+			set("points", [point_0 * 0.5, point_1 * 0.5] )
+			default_color = Color(0.8,1,0.8,0.25)
 		Enums.UI_INDICATOR_TYPE.EIGHTH_BEAT:
 			set("points", [point_0 * 0.4, point_1 * 0.4] )
 			default_color = Color(1,0,0,0.25)
@@ -36,19 +42,36 @@ func update_position():
 			else: position.x = -(indicator_index * Global.beat_length_msec - Global.offset) * Global.note_speed
 		Enums.UI_INDICATOR_TYPE.HALF_BEAT:
 			if Save.keyframes['modifiers'].size() > 1: position.x = -(indicator_index * Global.beat_length_msec/2 - Global.offset + Global.beat_offset) * Global.note_speed
-			else: position.x = -(indicator_index * Global.beat_length_msec/2 - Global.offset) * Global.note_speed
+			position.x = -(indicator_index * Global.beat_length_msec/2 - Global.offset) * Global.note_speed
+		Enums.UI_INDICATOR_TYPE.THIRD_BEAT:
+			if Save.keyframes['modifiers'].size() > 1: position.x = -(indicator_index * Global.beat_length_msec/3 - Global.offset + Global.beat_offset) * Global.note_speed
+			position.x = -(indicator_index * Global.beat_length_msec/3 - Global.offset) * Global.note_speed
 		Enums.UI_INDICATOR_TYPE.QUARTER_BEAT:
 			if Save.keyframes['modifiers'].size() > 1: position.x = -(indicator_index * Global.beat_length_msec/4 - Global.offset + Global.beat_offset) * Global.note_speed
-			else: position.x = -(indicator_index * Global.beat_length_msec/4 - Global.offset) * Global.note_speed
+			position.x = -(indicator_index * Global.beat_length_msec/4 - Global.offset) * Global.note_speed
+		Enums.UI_INDICATOR_TYPE.SIXTH_BEAT:
+			if Save.keyframes['modifiers'].size() > 1: position.x = -(indicator_index * Global.beat_length_msec/6 - Global.offset + Global.beat_offset) * Global.note_speed
+			position.x = -(indicator_index * Global.beat_length_msec/6 - Global.offset) * Global.note_speed
 		Enums.UI_INDICATOR_TYPE.EIGHTH_BEAT:
 			if Save.keyframes['modifiers'].size() > 1: position.x = -(indicator_index * Global.beat_length_msec/8 - Global.offset + Global.beat_offset) * Global.note_speed
 			else: position.x = -(indicator_index * Global.beat_length_msec/8 - Global.offset) * Global.note_speed
 
 func _on_update_snapping(index):
-	if index >= indicator_type: modulate = Color(1,1,1,1)
-	else: modulate = Color(1,1,1,0)
+	# 1/3rds and 1/6ths are special cases
+	if indicator_type == 1 && index == 2:
+		modulate = Color(1,1,1,0)
+	elif indicator_type == 3 && index == 4:
+		modulate = Color(1,1,1,0)
+	elif indicator_type == 2 && indicator_type != index:
+		modulate = Color(1,1,1,0)
+	elif index == 5 && indicator_type == 4:
+		modulate = Color(1,1,1,0)
+	elif index >= indicator_type:
+		modulate = Color(1,1,1,1)
+	else:
+		modulate = Color(1,1,1,0)
 	update_indicator()
-
+	
 func _process(_delta):
 	visible = global_position.x >= Global.note_culling_bounds.x and global_position.x < Global.note_culling_bounds.y
 

@@ -40,8 +40,8 @@ var song_eighths_per_second: float
 var eighth_length_msec: float
 
 # Editor Settings
-var note_culling_bounds: Vector2 = Vector2(-50, 1970)
-var snapping_ratios = [1,2,4,8]
+var note_culling_bounds: Vector2 = Vector2(0, 1920)
+var snapping_ratios = [1,2,3,4,6,8]
 var snapping_factor = 2
 var snapping_allowed = true
 

@@ -172,8 +172,10 @@ func _on_hit_note(data):
 		Events.emit_signal('horny_mode')
 	
 	current_note_timestamp = Global.current_chart[index]['timestamp']
-	if index < Global.current_chart.size()-1:
-		next_note_timestamp = Global.current_chart[index + 1]['timestamp']
+	for n in range(1, Global.current_chart.size() - index):
+		if Global.current_chart[index + n]['note_modifier'] != 2:
+			next_note_timestamp = Global.current_chart[index + n]['timestamp']
+			break
 	if !next_note_timestamp: return
 	
 	animation_time = (next_note_timestamp - current_note_timestamp) / manual_speed_multiplier
@@ -284,13 +286,13 @@ func change_background(idx: int):
 	if bg.has('background_scale_multiplier'):
 		if bg_type == 0:
 			$Panel/Pattern.scale = Vector2(bg['background_scale_multiplier'] * 0.278, bg['background_scale_multiplier'] * 0.281)
-		elif bg_index == 1:
-			$Panel/Static.scale = Vector2(bg['background_scale_multiplier'] * 2/3, bg['background_scale_multiplier'] * 2/3)
+		else:
+			$Panel/Static.scale = Vector2(bg['background_scale_multiplier'] * 2.0/3.0, bg['background_scale_multiplier'] * 2.0/3.0)
 	else:
 		if idx == 0:
 			$Panel/Pattern.scale = Vector2(0.278, 0.281)
-		elif bg_index == 1:
-			$Panel/Static.scale = Vector2(0.667, 0.667)
+		else:
+			$Panel/Static.scale = Vector2(2.0/3.0, 2.0/3.0)
 
 func _on_panel_gui_input(event):
 	if event is InputEventMouseButton:

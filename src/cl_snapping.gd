@@ -25,6 +25,10 @@ func _input(event):
 		_on_item_selected(2)
 	elif event.is_action_pressed("snap_4"):
 		_on_item_selected(3)
+	elif event.is_action_pressed("snap_5"):
+		_on_item_selected(4)
+	elif event.is_action_pressed("snap_6"):
+		_on_item_selected(5)
 
 func _on_snap_toggle_toggled(state: bool):
 	Global.snapping_allowed = state
