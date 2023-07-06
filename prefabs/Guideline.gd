@@ -23,7 +23,7 @@ func update_position():
 			else: position.x = -(indicator_index * Global.beat_length_msec/2 - Global.offset) * Global.note_speed
 		Enums.UI_INDICATOR_TYPE.THIRD_BEAT:
 			if Save.keyframes['modifiers'].size() > 1: position.x = -(indicator_index * Global.beat_length_msec/3 - Global.offset + Global.beat_offset) * Global.note_speed
-			position.x = -(indicator_index * Global.beat_length_msec/3 - Global.offset) * Global.note_speed
+			else: position.x = -(indicator_index * Global.beat_length_msec/3 - Global.offset) * Global.note_speed
 		Enums.UI_INDICATOR_TYPE.QUARTER_BEAT:
 			if Save.keyframes['modifiers'].size() > 1: position.x = -(indicator_index * Global.beat_length_msec/4 - Global.offset + Global.beat_offset) * Global.note_speed
 			else: position.x = -(indicator_index * Global.beat_length_msec/4 - Global.offset) * Global.note_speed
