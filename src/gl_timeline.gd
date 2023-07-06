@@ -5,12 +5,18 @@ var key_controller: Node2D
 
 var beat_container: Node2D
 var half_container: Node2D
+var third_container: Node2D
 var quarter_container: Node2D
+var sixth_container: Node2D
 var eighth_container: Node2D
+
 var key_beat_container: Node2D
 var key_half_container: Node2D
+var key_third_container: Node2D
 var key_quarter_container: Node2D
+var key_sixth_container: Node2D
 var key_eighth_container: Node2D
+
 var note_container: Node2D
 var line_center: Node2D
 

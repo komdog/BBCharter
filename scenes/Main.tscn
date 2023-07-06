@@ -341,7 +341,13 @@ position = Vector2(0, 128)
 [node name="Half" type="Node2D" parent="KeyTimeline/KeyController"]
 position = Vector2(0, 128)
 
+[node name="Third" type="Node2D" parent="KeyTimeline/KeyController"]
+position = Vector2(0, 128)
+
 [node name="Quarter" type="Node2D" parent="KeyTimeline/KeyController"]
+position = Vector2(0, 128)
+
+[node name="Sixth" type="Node2D" parent="KeyTimeline/KeyController"]
 position = Vector2(0, 128)
 
 [node name="Eighth" type="Node2D" parent="KeyTimeline/KeyController"]
@@ -912,7 +918,11 @@ script = ExtResource("3_t55vn")
 
 [node name="Half" type="Node2D" parent="NoteTimeline/NoteLine/NoteController"]
 
+[node name="Third" type="Node2D" parent="NoteTimeline/NoteLine/NoteController"]
+
 [node name="Quarter" type="Node2D" parent="NoteTimeline/NoteLine/NoteController"]
+
+[node name="Sixth" type="Node2D" parent="NoteTimeline/NoteLine/NoteController"]
 
 [node name="Eighth" type="Node2D" parent="NoteTimeline/NoteLine/NoteController"]
 

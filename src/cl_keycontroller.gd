@@ -10,7 +10,9 @@ func _ready():
 	
 	Timeline.key_beat_container = $Beat
 	Timeline.key_half_container = $Half
+	Timeline.key_third_container = $Third
 	Timeline.key_quarter_container = $Quarter
+	Timeline.key_sixth_container = $Sixth
 	Timeline.key_eighth_container = $Eighth
 	
 	Timeline.shutter_track = $ShutterTrack
@@ -38,7 +40,9 @@ func _on_song_loaded():
 	
 	Global.clear_children(Timeline.key_beat_container)
 	Global.clear_children(Timeline.key_half_container)
+	Global.clear_children(Timeline.key_third_container)
 	Global.clear_children(Timeline.key_quarter_container)
+	Global.clear_children(Timeline.key_sixth_container)
 	Global.clear_children(Timeline.key_eighth_container)
 	create_ui()
 
@@ -73,7 +77,7 @@ func create_ui():
 	for i in Global.song_beats_total * 3:
 		if i % 3 == 0: continue
 		var new_key_indicator = Prefabs.key_indicator.instantiate()
-		$Indicators.add_child(new_key_indicator)
+		$Third.add_child(new_key_indicator)
 		new_key_indicator.setup(i, Enums.UI_INDICATOR_TYPE.THIRD_BEAT)
 	
 	for i in Global.song_beats_total * 4:
@@ -84,8 +88,9 @@ func create_ui():
 	
 	for i in Global.song_beats_total * 6:
 		if i % 3 == 0: continue
+		if i % 2 == 0: continue
 		var new_key_indicator = Prefabs.key_indicator.instantiate()
-		$Indicators.add_child(new_key_indicator)
+		$Sixth.add_child(new_key_indicator)
 		new_key_indicator.setup(i, Enums.UI_INDICATOR_TYPE.SIXTH_BEAT)
 	
 	for i in Global.song_beats_total * 8:
@@ -107,11 +112,27 @@ func reset_indicators():
 			if $Eighth.get_child($Eighth.get_child_count()-1).indicator_index-2 == index: index += 4
 			if $Quarter.get_child($Quarter.get_child_count()-1).indicator_index*2-5 == index: index += 6
 			var new_key_indicator = Prefabs.key_indicator.instantiate()
-			new_key_indicator.setup(index,3)
+			new_key_indicator.setup(index, Enums.UI_INDICATOR_TYPE.EIGHTH_BEAT)
 			$Eighth.add_child(new_key_indicator)
 	elif difference < 0:
 		for beat in $Eighth.get_children():
 			if beat.get_index() > float(Global.song_eighths_total-1)/2: $Eighth.remove_child(beat)
+	
+	difference = Global.song_sixths_total - $Sixth.get_child_count()*3
+	if difference > 0:
+		for i in difference+1:
+			if int(i) % 6 == 0: continue
+			if int(i) % 3 == 0: continue
+			if int(i) % 2 == 0: continue
+			var index = $Beat.get_child_count()*6-6+i
+			#if $Sixth.get_child($Sixth.get_child_count()-1).indicator_index == index: index += 1
+			#if $Third.get_child($Third.get_child_count()-1).indicator_index*2 == index: index += 1
+			var new_key_indicator = Prefabs.key_indicator.instantiate()
+			new_key_indicator.setup(index, Enums.UI_INDICATOR_TYPE.SIXTH_BEAT)
+			$Sixth.add_child(new_key_indicator)
+	elif difference < 0:
+		for beat in $Sixth.get_children():
+			if beat.get_index() > float(Global.song_sixths_total-1)/3: $Sixth.remove_child(beat)
 	
 	difference = Global.song_quarters_total - $Quarter.get_child_count()*2
 	if difference > 0:
@@ -121,18 +142,29 @@ func reset_indicators():
 			var index = $Beat.get_child_count()*4-4+i
 			if $Quarter.get_child($Quarter.get_child_count()-1).indicator_index == index: index += 2
 			var new_key_indicator = Prefabs.key_indicator.instantiate()
-			new_key_indicator.setup(index,2)
+			new_key_indicator.setup(index, Enums.UI_INDICATOR_TYPE.QUARTER_BEAT)
 			$Quarter.add_child(new_key_indicator)
 	elif difference < 0:
 		for beat in $Quarter.get_children():
 			if beat.get_index() > float(Global.song_quarters_total-1)/2: $Quarter.remove_child(beat)
+	
+	difference = Global.song_thirds_total - $Third.get_child_count()*1.5
+	if difference > 0:
+		for i in difference+1:
+			if int(i) % 3 == 0: continue
+			var new_key_indicator = Prefabs.key_indicator.instantiate()
+			new_key_indicator.setup($Beat.get_child_count()*3-3+i, Enums.UI_INDICATOR_TYPE.THIRD_BEAT)
+			$Third.add_child(new_key_indicator)
+	elif difference < 0:
+		for beat in $Third.get_children():
+			if beat.get_index() > float(Global.song_thirds_total-1)/1.5: $Third.remove_child(beat)
 	
 	difference = Global.song_halfs_total - $Half.get_child_count()*2
 	if difference > 0:
 		for i in difference+1:
 			if i % 2 == 0: continue
 			var new_key_indicator = Prefabs.key_indicator.instantiate()
-			new_key_indicator.setup($Beat.get_child_count()*2-2+i,1)
+			new_key_indicator.setup($Beat.get_child_count()*2-2+i, Enums.UI_INDICATOR_TYPE.HALF_BEAT)
 			$Half.add_child(new_key_indicator)
 	elif difference < 0:
 		for beat in $Half.get_children():
@@ -142,7 +174,7 @@ func reset_indicators():
 	if difference > 0:
 		for i in difference:
 			var new_key_indicator = Prefabs.key_indicator.instantiate()
-			new_key_indicator.setup($Beat.get_child_count(),0)
+			new_key_indicator.setup($Beat.get_child_count(), Enums.UI_INDICATOR_TYPE.BEAT)
 			$Beat.add_child(new_key_indicator)
 	elif difference < 0:
 		for beat in $Beat.get_children():
