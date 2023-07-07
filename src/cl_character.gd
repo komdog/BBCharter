@@ -61,7 +61,7 @@ func _process(_delta):
 	
 	if Save.keyframes.has('background') and Save.keyframes['background'].size() > 0 and Timeline.backgrounds_track.get_child_count() > 0 and Global.project_loaded:
 		var idx = bg_index-1; if idx < 0: idx = 0
-		var bg = Save.keyframes['effects'][idx]
+		var bg = Save.keyframes['background'][idx]
 		if bg_type == 0:
 			if $Panel/Pattern.texture != Assets.get_asset(bg['path']):
 				$Panel/Pattern.texture = Assets.get_asset(bg['path'])
