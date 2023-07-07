@@ -268,7 +268,7 @@ func run_effect(idx: int):
 	
 	# The "playback_speed" is actually the duration. Don't ask.
 	effect_tween = create_tween()
-	effect_tween.tween_property($Panel/Effect, "frame", effect["sheet_data"]["total"], effect["playback_speed"])
+	effect_tween.tween_property($Panel/Effect, "frame", effect["sheet_data"]["total"]-1, effect["playback_speed"])
 	effect_tween.play()
 	
 	await effect_tween.finished

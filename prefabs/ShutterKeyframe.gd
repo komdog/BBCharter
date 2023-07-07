@@ -32,6 +32,8 @@ func _on_input_handler_gui_input(event) -> void:
 	if event is InputEventMouseButton:
 		if event.pressed:
 			match event.button_index:
+				MOUSE_BUTTON_LEFT:
+					selected_key = self
 				MOUSE_BUTTON_MIDDLE:
 					print(Save.keyframes['shutter'].find(data))
 				MOUSE_BUTTON_RIGHT:
