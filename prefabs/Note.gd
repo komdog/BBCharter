@@ -24,7 +24,7 @@ func update_position():
 	position.x = -((data['timestamp'] - Global.offset - Global.bpm_offset) * Global.note_speed)
 
 func _input(event):
-	clear_clipboard = !event.is_command_or_control_pressed()
+	if event is InputEventKey: clear_clipboard = !event.is_command_or_control_pressed()
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
 		if (get_viewport().get_mouse_position().x < $InputHandler.global_position.x
 		or get_viewport().get_mouse_position().x > $InputHandler.global_position.x + $InputHandler.size.x

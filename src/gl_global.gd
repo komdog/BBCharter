@@ -24,28 +24,8 @@ var song_length: float
 var mouse_pos: float
 
 var song_beats_total: int
-var song_beats_per_second: float
+var song_seconds_per_beat: float
 var beat_length_msec: float
-
-var song_halfs_total: int
-var song_halfs_per_second: float
-var half_length_msec: float
-
-var song_thirds_total: int
-var song_thirds_per_second: float
-var third_length_msec: float
-
-var song_quarters_total: int
-var song_quarters_per_second: float
-var quarter_length_msec: float
-
-var song_sixths_total: int
-var song_sixths_per_second: float
-var sixth_length_msec: float
-
-var song_eighths_total: int
-var song_eighths_per_second: float
-var eighth_length_msec: float
 
 # Editor Settings
 var note_culling_bounds: Vector2 = Vector2(0, 1920)
@@ -90,7 +70,7 @@ func load_texture(path) -> ImageTexture:
 	return tex
 
 func get_timestamp_snapped() -> float:
-	return snappedf(song_pos - bpm_offset, (song_beats_per_second) / snapping_factor) + bpm_offset
+	return snappedf(song_pos - bpm_offset, (song_seconds_per_beat) / snapping_factor) + bpm_offset
 
 func get_mouse_timestamp() -> float:
 	var time = ((song_pos * note_speed) - mouse_pos)/note_speed
@@ -99,7 +79,7 @@ func get_mouse_timestamp() -> float:
 	return time
 
 func get_mouse_timestamp_snapped() -> float:
-	var time = snappedf(get_mouse_timestamp() - bpm_offset, (song_beats_per_second) / snapping_factor) + bpm_offset
+	var time = snappedf(get_mouse_timestamp() - bpm_offset, (song_seconds_per_beat) / snapping_factor) + bpm_offset
 	if time < -offset: time = -offset
 	elif time > song_length - offset: time = song_length - offset
 	return time
@@ -115,28 +95,8 @@ func reload_bpm(idx: int = 0):
 	bpm = Save.keyframes.get('modifiers', Save.modifier_default)[idx]['bpm']
 	
 	beat_length_msec = 60.0/bpm
-	song_beats_per_second = float(60.0/bpm)
-	song_beats_total = int((song_length - offset - bpm_offset - beat_offset) / song_beats_per_second)
-	
-	half_length_msec = 30.0/bpm
-	song_halfs_per_second = float(30.0/bpm)
-	song_halfs_total = int((song_length - offset - bpm_offset - beat_offset) / song_halfs_per_second)
-	
-	third_length_msec = 20.0/bpm
-	song_thirds_per_second = float(20.0/bpm)
-	song_thirds_total = int((song_length - offset - bpm_offset - beat_offset) / song_thirds_per_second)
-	
-	quarter_length_msec = 15.0/bpm
-	song_quarters_per_second = float(15.0/bpm)
-	song_quarters_total = int((song_length - offset - bpm_offset - beat_offset) / song_quarters_per_second)
-	
-	sixth_length_msec = 10.0/bpm
-	song_sixths_per_second = float(10.0/bpm)
-	song_sixths_total = int((song_length - offset - bpm_offset - beat_offset) / song_sixths_per_second)
-	
-	eighth_length_msec = 7.5/bpm
-	song_eighths_per_second = float(7.5/bpm)
-	song_eighths_total = int((song_length - offset - bpm_offset - beat_offset) / song_eighths_per_second)
+	song_seconds_per_beat = float(60.0/bpm)
+	song_beats_total = int((song_length - offset - bpm_offset - beat_offset) / song_seconds_per_beat)
 	
 	if Global.project_loaded:
 		Events.emit_signal('update_notespeed')

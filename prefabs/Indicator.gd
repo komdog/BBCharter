@@ -81,7 +81,7 @@ func update_indicator():
 		if idx < Save.keyframes['modifiers'].size(): if position.x < Timeline.modifier_track.get_child(idx).position.x: modulate = Color(1,1,1,0)
 		else: idx = Save.keyframes['modifiers'].size()-1
 		
-		var beat = (Global.song_length - Global.offset) / Global.song_beats_per_second
+		var beat = (Global.song_length - Global.offset) / Global.song_seconds_per_beat
 		$BeatNum.text = str(indicator_index + int(beat) - Global.song_beats_total)
 	else:
 		$BeatNum.text = str(indicator_index)

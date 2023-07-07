@@ -85,7 +85,7 @@ func create_ui():
 	Events.emit_signal('update_snapping', Global.snapping_ratios.find(Global.snapping_factor))
 
 func reset_indicators():
-	var difference = Global.song_eighths_total - $Eighth.get_child_count()*2
+	var difference = Global.song_beats_total*8 - $Eighth.get_child_count()*2
 	if difference > 0:
 		for i in difference+1:
 			if i % 8 == 0: continue
@@ -103,7 +103,7 @@ func reset_indicators():
 		for beat in $Eighth.get_children():
 			if beat.get_index() > float(Global.song_eighths_total-1)/2: $Eighth.remove_child(beat)
 	
-	difference = Global.song_sixths_total - $Sixth.get_child_count()*3
+	difference = Global.song_beats_total*6 - $Sixth.get_child_count()*3
 	if difference > 0:
 		for i in difference+1:
 			if int(i) % 6 == 0: continue
@@ -115,9 +115,9 @@ func reset_indicators():
 			$Sixth.add_child(new_beat_indicator)
 	elif difference < 0:
 		for beat in $Sixth.get_children():
-			if beat.get_index() > float(Global.song_sixths_total-1)/3: $Sixth.remove_child(beat)
+			if beat.get_index() > float(Global.song_beats_total*6-1)/3: $Sixth.remove_child(beat)
 	
-	difference = Global.song_quarters_total - $Quarter.get_child_count()*2
+	difference = Global.song_beats_total*4 - $Quarter.get_child_count()*2
 	if difference > 0:
 		for i in difference+1:
 			if i % 4 == 0: continue
@@ -127,9 +127,9 @@ func reset_indicators():
 			$Quarter.add_child(new_beat_indicator)
 	elif difference < 0:
 		for beat in $Quarter.get_children():
-			if beat.get_index() > float(Global.song_quarters_total-1)/2: $Quarter.remove_child(beat)
+			if beat.get_index() > float(Global.song_beats_total*4-1)/2: $Quarter.remove_child(beat)
 	
-	difference = Global.song_thirds_total - $Third.get_child_count()*1.5
+	difference = Global.song_beats_total*3-1 - $Third.get_child_count()*1.5
 	if difference > 0:
 		for i in difference+1:
 			var new_beat_indicator = Prefabs.beat_indicator.instantiate()
@@ -137,9 +137,9 @@ func reset_indicators():
 			$Third.add_child(new_beat_indicator)
 	elif difference < 0:
 		for beat in $Third.get_children():
-			if beat.get_index() > float(Global.song_thirds_total-1)/1.5: $Third.remove_child(beat)
+			if beat.get_index() > float(Global.song_beats_total*3-1)/1.5: $Third.remove_child(beat)
 	
-	difference = Global.song_halfs_total - $Half.get_child_count()*2
+	difference = Global.song_beats_total*2 - $Half.get_child_count()*2
 	if difference > 0:
 		for i in difference+1:
 			if i % 2 == 0: continue
@@ -148,7 +148,7 @@ func reset_indicators():
 			$Half.add_child(new_beat_indicator)
 	elif difference < 0:
 		for beat in $Half.get_children():
-			if beat.get_index() > float(Global.song_halfs_total-1)/2: $Half.remove_child(beat)
+			if beat.get_index() > float(Global.song_beats_total*2-1)/2: $Half.remove_child(beat)
 	
 	difference = Global.song_beats_total+1 - $Beat.get_child_count()
 	if difference > 0:
