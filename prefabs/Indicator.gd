@@ -62,7 +62,7 @@ func _on_update_snapping(index):
 		modulate = Color(1,1,1,0)
 	elif indicator_type == Enums.UI_INDICATOR_TYPE.QUARTER_BEAT and index == 4:
 		modulate = Color(1,1,1,0)
-	elif indicator_type == Enums.UI_INDICATOR_TYPE.THIRD_BEAT and (index == 3 or index == 6):
+	elif indicator_type == Enums.UI_INDICATOR_TYPE.THIRD_BEAT and (index == 3 or index == 5):
 		modulate = Color(1,1,1,0)
 	elif indicator_type == Enums.UI_INDICATOR_TYPE.SIXTH_BEAT and index == 5:
 		modulate = Color(1,1,1,0)
