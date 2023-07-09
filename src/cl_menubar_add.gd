@@ -26,7 +26,7 @@ func _on_id_pressed(id: int):
 			Global.project_saved = false
 		MODIFIER:
 			if time < 0: time = 0
-			var new_bpm = {'bpm': Global.bpm, 'timestamp': time}
+			var new_bpm = {'bpm': Global.get_current_bpm(), 'timestamp': time}
 			for bpm in Timeline.modifier_track.get_children():
 				if snappedf(bpm['data']['timestamp'], 0.001) == snappedf(time, 0.001):
 					if Global.replacing_allowed:

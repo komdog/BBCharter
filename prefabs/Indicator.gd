@@ -6,7 +6,7 @@ var indicator_type: int
 func _ready():
 	Events.update_notespeed.connect(update_position)
 	Events.update_snapping.connect(_on_update_snapping)
-	Events.update_bpm.connect(update_indicator)
+	Events.update_bpm.connect(update_position)
 
 func setup(i, type):
 	indicator_index = i
@@ -38,23 +38,17 @@ func setup(i, type):
 func update_position():
 	match indicator_type:
 		Enums.UI_INDICATOR_TYPE.BEAT:
-			if Save.keyframes['modifiers'].size() > 1: position.x = -(indicator_index * Global.beat_length_msec - Global.offset + Global.beat_offset) * Global.note_speed
-			else: position.x = -(indicator_index * Global.beat_length_msec - Global.offset) * Global.note_speed
+			position.x = -(Global.get_time_at_beat(indicator_index) - Global.offset) * Global.note_speed
 		Enums.UI_INDICATOR_TYPE.HALF_BEAT:
-			if Save.keyframes['modifiers'].size() > 1: position.x = -(indicator_index * Global.beat_length_msec/2 - Global.offset + Global.beat_offset) * Global.note_speed
-			else: position.x = -(indicator_index * Global.beat_length_msec/2 - Global.offset) * Global.note_speed
+			position.x = -(Global.get_time_at_beat(indicator_index/2.0) - Global.offset) * Global.note_speed
 		Enums.UI_INDICATOR_TYPE.THIRD_BEAT:
-			if Save.keyframes['modifiers'].size() > 1: position.x = -(indicator_index * Global.beat_length_msec/3 - Global.offset + Global.beat_offset) * Global.note_speed
-			else: position.x = -(indicator_index * Global.beat_length_msec/3 - Global.offset) * Global.note_speed
+			position.x = -(Global.get_time_at_beat(indicator_index/3.0) - Global.offset) * Global.note_speed
 		Enums.UI_INDICATOR_TYPE.QUARTER_BEAT:
-			if Save.keyframes['modifiers'].size() > 1: position.x = -(indicator_index * Global.beat_length_msec/4 - Global.offset + Global.beat_offset) * Global.note_speed
-			else: position.x = -(indicator_index * Global.beat_length_msec/4 - Global.offset) * Global.note_speed
+			position.x = -(Global.get_time_at_beat(indicator_index/4.0) - Global.offset) * Global.note_speed
 		Enums.UI_INDICATOR_TYPE.SIXTH_BEAT:
-			if Save.keyframes['modifiers'].size() > 1: position.x = -(indicator_index * Global.beat_length_msec/6 - Global.offset + Global.beat_offset) * Global.note_speed
-			else: position.x = -(indicator_index * Global.beat_length_msec/6 - Global.offset) * Global.note_speed
+			position.x = -(Global.get_time_at_beat(indicator_index/6.0) - Global.offset) * Global.note_speed
 		Enums.UI_INDICATOR_TYPE.EIGHTH_BEAT:
-			if Save.keyframes['modifiers'].size() > 1: position.x = -(indicator_index * Global.beat_length_msec/8 - Global.offset + Global.beat_offset) * Global.note_speed
-			else: position.x = -(indicator_index * Global.beat_length_msec/8 - Global.offset) * Global.note_speed
+			position.x = -(Global.get_time_at_beat(indicator_index/8.0) - Global.offset) * Global.note_speed
 
 func _on_update_snapping(index):
 	# 1/3rds and 1/6ths are special cases
@@ -62,7 +56,7 @@ func _on_update_snapping(index):
 		modulate = Color(1,1,1,0)
 	elif indicator_type == Enums.UI_INDICATOR_TYPE.QUARTER_BEAT and index == 4:
 		modulate = Color(1,1,1,0)
-	elif indicator_type == Enums.UI_INDICATOR_TYPE.THIRD_BEAT and (index == 3 or index == 6):
+	elif indicator_type == Enums.UI_INDICATOR_TYPE.THIRD_BEAT and (index == 3 or index == 5):
 		modulate = Color(1,1,1,0)
 	elif indicator_type == Enums.UI_INDICATOR_TYPE.SIXTH_BEAT and index == 5:
 		modulate = Color(1,1,1,0)
@@ -70,18 +64,6 @@ func _on_update_snapping(index):
 		modulate = Color(1,1,1,1)
 	else:
 		modulate = Color(1,1,1,0)
-	update_indicator()
 
 func _process(_delta):
 	visible = global_position.x >= Global.note_culling_bounds.x and global_position.x < Global.note_culling_bounds.y
-
-func update_indicator():
-	if Save.keyframes['modifiers'].size() > 1:
-		var idx = Global.bpm_index; if idx < 1: idx = 1
-		if idx < Save.keyframes['modifiers'].size(): if position.x < Timeline.modifier_track.get_child(idx).position.x: modulate = Color(1,1,1,0)
-		else: idx = Save.keyframes['modifiers'].size()-1
-		
-		var beat = (Global.song_length - Global.offset) / Global.song_seconds_per_beat
-		$BeatNum.text = str(indicator_index + int(beat) - Global.song_beats_total)
-	else:
-		$BeatNum.text = str(indicator_index)

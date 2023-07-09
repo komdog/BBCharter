@@ -1,6 +1,7 @@
 extends Node2D
 
 var data: Dictionary
+var beat: float
 
 var move_pos: bool
 var mouse_pos: float
@@ -10,6 +11,7 @@ var selected_key: Node2D
 
 func _ready():
 	Events.update_notespeed.connect(update_position)
+	Events.update_bpm.connect(update_position)
 
 func _process(_delta):
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
@@ -25,11 +27,13 @@ func _process(_delta):
 func setup(keyframe_data):
 	move_pos = false
 	data = keyframe_data
+	beat = Global.get_beat_at_time(data['timestamp'])
 	$InputHandler.tooltip_text = str(data['bpm'])
 	update_position()
 
 func update_position():
-	position.x = -((data['timestamp'] - Global.offset - Global.bpm_offset) * Global.note_speed)
+	data['timestamp'] = Global.get_time_at_beat(beat)
+	position.x = -((data['timestamp'] - Global.offset) * Global.note_speed)
 
 func _on_input_handler_gui_input(event):
 	if event is InputEventMouseButton:
@@ -48,11 +52,10 @@ func _on_input_handler_gui_input(event):
 				MOUSE_BUTTON_RIGHT:
 					if data['timestamp'] != 0:
 						Timeline.delete_keyframe('modifiers', self, Save.keyframes['modifiers'].find(data))
-						if Save.keyframes['modifiers'].size() <= 1: Global.beat_offset = 0
-						Global.reload_bpm(Global.bpm_index)
+						Global.reload_bpm()
 						Global.project_saved = false
 					else:
-						print('This modifier is used to set Global.bpm')
+						print('This modifier is used to set bpm')
 		else:
 			match event.button_index:
 				MOUSE_BUTTON_LEFT:
@@ -83,25 +86,17 @@ func _input(event):
 
 func _on_text_submitted(new_text):
 	if new_text.to_float() != data['bpm']:
-		if new_text.to_float() < 60:
-			new_text = '60'
-			$LineEdit.text = '60'
-		if new_text.to_float() > 300:
-			new_text = '300'
-			$LineEdit.text = '300'
+		if new_text.to_float() < 1:
+			new_text = '1'
+			$LineEdit.text = '1'
+		if new_text.to_float() > 1000:
+			new_text = '1000'
+			$LineEdit.text = '1000'
 		
 		$InputHandler.tooltip_text = new_text
 		Save.keyframes['modifiers'][Save.keyframes['modifiers'].find(data)]['bpm'] = float(new_text)
 		data['bpm'] = float(new_text)
-		if data['timestamp'] == 0: Global.global_bpm = data['bpm']
-		
-		var idx = Global.bpm_index-1; if idx < 0: idx = 0
-		Global.bpm = Save.keyframes['modifiers'][idx]['bpm']
-		Global.bpm_offset = Save.keyframes['modifiers'][idx]['timestamp']
-		var bpm = Save.keyframes['modifiers'][idx-1]['bpm']; var time = Save.keyframes['modifiers'][idx-1]['timestamp']
-		Global.beat_offset = (float(60.0/Global.bpm)-Global.bpm_offset) + (float(60.0/bpm)-time/(60.0/bpm))
-		if Global.beat_offset < 0: Global.beat_offset = 0
-		Global.reload_bpm(idx)
+		Global.reload_bpm()
 		
 		Global.project_saved = false
 
@@ -111,4 +106,3 @@ func _on_mouse_exited():
 			move_pos = true
 		else:
 			selected_key = null
-			print('This modifier is used to set Global.bpm')

@@ -2,6 +2,7 @@ extends Node2D
 
 var hit: bool
 var data: Dictionary
+var beat: float
 
 var move_pos: bool
 var mouse_pos: float
@@ -12,16 +13,19 @@ var selected_note: Node2D
 
 func _ready():
 	Events.update_notespeed.connect(update_position)
+	Events.update_bpm.connect(update_position)
 
 func setup(note_data):
 	data = note_data
 	move_pos = false
 	clear_clipboard = false
+	beat = Global.get_beat_at_time(data['timestamp'])
 	update_visual()
 	update_position()
 
 func update_position():
-	position.x = -((data['timestamp'] - Global.offset - Global.bpm_offset) * Global.note_speed)
+	data['timestamp'] = Global.get_time_at_beat(beat)
+	position.x = -((data['timestamp'] - Global.offset) * Global.note_speed)
 
 func _input(event):
 	if event is InputEventKey: clear_clipboard = !event.is_command_or_control_pressed()
@@ -148,6 +152,7 @@ func horny_add():
 		data['horny']['required'] += 1
 	update_visual()
 	Events.emit_signal('tool_used_after', data)
+
 func horny_remove():
 	Events.emit_signal('tool_used_before', data)
 	if data.has('horny') and data['horny'].has('required'):
@@ -157,6 +162,7 @@ func horny_remove():
 			data['horny']['required'] -= 1
 	update_visual()
 	Events.emit_signal('tool_used_after', data)
+
 func toggle_voice_trigger():
 	Events.emit_signal('tool_used_before', data)
 	if data.has('trigger_voice'):
@@ -165,6 +171,7 @@ func toggle_voice_trigger():
 		data['trigger_voice'] = true
 	update_visual()
 	Events.emit_signal('tool_used_after', data)
+
 func modify_cycle(i):
 	Events.emit_signal('tool_used_before', data)
 	data['note_modifier'] = wrapi(data['note_modifier'] + i, 0, 3)

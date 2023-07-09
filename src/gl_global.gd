@@ -7,16 +7,17 @@ var music: AudioStreamPlayer
 var current_chart: Array = []
 
 # Chart Settings
-var bpm: float
-var global_bpm: float
-var bpm_index: int
+var bpms: Array = []
+var bpm_timestamps: Array = []
+var bpm_beatstamps: Array = []
 
 var offset: float
-var bpm_offset: float
-var beat_offset: float
 
 var note_speed: float = 200
 var difficulty_index: int
+
+# Whether or not notes need to be recalculated before saving
+var mods_need_reapply: bool
 
 # Realtime Info
 var song_pos: float
@@ -24,7 +25,7 @@ var song_length: float
 var mouse_pos: float
 
 var song_beats_total: int
-var song_seconds_per_beat: float
+var zoom_factor: float
 var beat_length_msec: float
 
 # Editor Settings
@@ -69,8 +70,8 @@ func load_texture(path) -> ImageTexture:
 	var tex = ImageTexture.create_from_image(Image.load_from_file(path))
 	return tex
 
-func get_timestamp_snapped() -> float:
-	return snappedf(song_pos - bpm_offset, (song_seconds_per_beat) / snapping_factor) + bpm_offset
+func get_timestamp_snapped(pos: float = song_pos) -> float:
+	return Global.get_time_at_beat(snappedf(Global.get_beat_at_time(pos), 1.0/snapping_factor))
 
 func get_mouse_timestamp() -> float:
 	var time = ((song_pos * note_speed) - mouse_pos)/note_speed
@@ -79,25 +80,67 @@ func get_mouse_timestamp() -> float:
 	return time
 
 func get_mouse_timestamp_snapped() -> float:
-	var time = snappedf(get_mouse_timestamp() - bpm_offset, (song_seconds_per_beat) / snapping_factor) + bpm_offset
+	var time = get_timestamp_snapped(((song_pos * note_speed) - mouse_pos)/note_speed)
 	if time < -offset: time = -offset
 	elif time > song_length - offset: time = song_length - offset
 	return time
+
+func get_current_bpm_timestamp() -> float:
+	var prevEntry = 0.0
+	for entry in Global.bpm_timestamps:
+		if entry > song_pos:
+			return prevEntry
+		prevEntry = entry
+	return Global.bpm_timestamps[-1]
+
+func get_current_bpm() -> float:
+	var prevEntry = 0.0
+	for i in Global.bpm_timestamps.size():
+		if Global.bpm_timestamps[i] > song_pos:
+			return prevEntry
+		prevEntry = Global.bpms[i]
+	return Global.bpms[-1]
 
 func clear_children(parent: Node):
 	print("Cleaning %s's children" % parent.name)
 	for child in parent.get_children():
 		child.queue_free()
 
-func reload_bpm(idx: int = 0):
-	if idx > Save.keyframes['modifiers'].size()-1: idx = Save.keyframes['modifiers'].size()-1
-	if Save.keyframes['modifiers'].size() <= 1: beat_offset = 0
-	bpm = Save.keyframes.get('modifiers', Save.modifier_default)[idx]['bpm']
+func reload_bpm():
+	var cumulativeBeats = 0.0
+	var prevTimestamp = 0.0
+	var prevBpm = 0.0
+	if !Global.bpms.is_empty():
+		Global.bpms.clear()
+		Global.bpm_timestamps.clear()
+		Global.bpm_beatstamps.clear()
+	for mod in Save.keyframes.get('modifiers', Save.modifier_default):
+		Global.bpms.append(mod['bpm'])
+		Global.bpm_timestamps.append(mod['timestamp'])
+		cumulativeBeats += (mod['timestamp'] - prevTimestamp) * (prevBpm / 60)
+		Global.bpm_beatstamps.append(cumulativeBeats)
+		prevTimestamp = mod['timestamp']
+		prevBpm = mod['bpm']
+	song_beats_total = int(get_beat_at_time(Global.song_length))
 	
-	beat_length_msec = 60.0/bpm
-	song_seconds_per_beat = float(60.0/bpm)
-	song_beats_total = int((song_length - offset - bpm_offset - beat_offset) / song_seconds_per_beat)
+	Global.mods_need_reapply = true
 	
 	if Global.project_loaded:
 		Events.emit_signal('update_notespeed')
 		Events.emit_signal('update_bpm')
+
+func get_beat_at_time(time: float) -> float:
+	var idx = 1
+	while idx < Global.bpm_timestamps.size():
+		if Global.bpm_timestamps[idx] > time:
+			break
+		idx += 1
+	return Global.bpm_beatstamps[idx-1] + ((time - Global.bpm_timestamps[idx-1]) * (Global.bpms[idx-1] / 60))
+
+func get_time_at_beat(beat: float) -> float:
+	var idx = 1
+	while idx < Global.bpm_beatstamps.size():
+		if Global.bpm_beatstamps[idx] > beat:
+			break
+		idx += 1
+	return Global.bpm_timestamps[idx-1] + ((beat - Global.bpm_beatstamps[idx-1]) * (1 / (Global.bpms[idx-1] / 60.0)))
