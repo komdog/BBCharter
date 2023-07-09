@@ -67,5 +67,5 @@ func _on_id_pressed(id: int):
 			Global.project_saved = false
 
 func _on_project_loaded():
-	for i in item_count-1:
+	for i in item_count:
 		set_item_disabled(i,false)
