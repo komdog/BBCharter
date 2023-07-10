@@ -3,8 +3,6 @@ extends Node2D
 var note_pos: float
 var note_offset: float
 
-var last_bpm_index: int
-
 var modifiers: int
 
 func _ready():

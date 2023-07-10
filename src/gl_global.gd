@@ -86,20 +86,20 @@ func get_mouse_timestamp_snapped() -> float:
 	return time
 
 func get_current_bpm_timestamp() -> float:
-	var prevEntry = 0.0
+	var prevEntry = bpm_timestamps[0]
 	for entry in bpm_timestamps:
 		if entry > song_pos:
 			return prevEntry
 		prevEntry = entry
-	return bpm_timestamps[-1]
+	return prevEntry
 
 func get_current_bpm() -> float:
-	var prevEntry = 0.0
+	var prevEntry = bpms[0]
 	for i in bpm_timestamps.size():
 		if bpm_timestamps[i] > song_pos:
 			return prevEntry
 		prevEntry = bpms[i]
-	return bpms[-1]
+	return prevEntry
 
 func clear_children(parent: Node):
 	print("Cleaning %s's children" % parent.name)
