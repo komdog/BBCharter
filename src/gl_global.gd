@@ -121,7 +121,7 @@ func reload_bpm():
 		bpm_beatstamps.append(cumulativeBeats)
 		prevTimestamp = mod['timestamp']
 		prevBpm = mod['bpm']
-	song_beats_total = int(get_beat_at_time(song_length - offset))
+	song_beats_total = ceil(get_beat_at_time(song_length - offset))
 	
 	mods_need_reapply = true
 	
