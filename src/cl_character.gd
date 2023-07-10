@@ -153,7 +153,7 @@ func set_animation(idx: int):
 func change_animation(idx: int):
 	set_animation(idx)
 	if Save.keyframes.has('loops') and Save.keyframes['loops'].size() > 0:
-		if loop_index > 0: run_loop()
+		if loop_index > 1: run_loop()
 
 func _on_hit_note(data):
 	# Ignore Ghost Notes

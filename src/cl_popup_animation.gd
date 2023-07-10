@@ -90,7 +90,7 @@ func _on_add_animation_to_timeline(asset_path):
 		else: time = Global.song_pos
 		if time < 0: time = 0
 		
-		for animation in Timeline.effects_track.get_children():
+		for animation in Timeline.animations_track.get_children():
 			if snappedf(animation['data']['timestamp'], 0.001) == snappedf(time, 0.001):
 				if !Global.replacing_allowed:
 					Events.emit_signal('notify', 'Animation Already Exists', 'Timestamp: ' + str(snappedf(time, 0.001)))
