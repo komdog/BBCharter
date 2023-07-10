@@ -117,7 +117,7 @@ func reload_bpm():
 	for mod in Save.keyframes.get('modifiers', Save.modifier_default):
 		bpms.append(mod['bpm'])
 		bpm_timestamps.append(mod['timestamp'])
-		cumulativeBeats += (mod['timestamp'] - prevTimestamp) * (prevBpm / 60)
+		cumulativeBeats += (mod['timestamp'] - prevTimestamp) * (prevBpm / 60.0)
 		bpm_beatstamps.append(cumulativeBeats)
 		prevTimestamp = mod['timestamp']
 		prevBpm = mod['bpm']
@@ -135,7 +135,7 @@ func get_beat_at_time(time: float) -> float:
 		if bpm_timestamps[idx] > time:
 			break
 		idx += 1
-	return bpm_beatstamps[idx-1] + ((time - bpm_timestamps[idx-1]) * (bpms[idx-1] / 60))
+	return bpm_beatstamps[idx-1] + ((time - bpm_timestamps[idx-1]) * (bpms[idx-1] / 60.0))
 
 func get_time_at_beat(beat: float) -> float:
 	var idx = 1
