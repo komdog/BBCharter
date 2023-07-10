@@ -147,7 +147,7 @@ func save_original_mods():
 	var prevTimestamp = 0.0
 	var prevBpm = 0.0
 	for mod in original_modifiers:
-		cumulativeBeats += (mod['timestamp'] - prevTimestamp) * (prevBpm / 60)
+		cumulativeBeats += (mod['timestamp'] - prevTimestamp) * (prevBpm / 60.0)
 		mod['beatstamp'] = cumulativeBeats
 		prevTimestamp = mod['timestamp']
 		prevBpm = mod['bpm']
@@ -162,6 +162,6 @@ func recalculate_all_notes():
 				if original_modifiers[j]['timestamp'] > note['timestamp']:
 					break
 				j += 1
-			var beat = original_modifiers[j-1]['beatstamp'] + ((note['timestamp'] - original_modifiers[j-1]['timestamp']) * (original_modifiers[j-1]['bpm'] / 60))
+			var beat = original_modifiers[j-1]['beatstamp'] + ((note['timestamp'] - original_modifiers[j-1]['timestamp']) * (original_modifiers[j-1]['bpm'] / 60.0))
 			note['timestamp'] = Global.get_time_at_beat(beat)
 	save_original_mods()
