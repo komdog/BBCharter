@@ -43,6 +43,7 @@ func _on_input_handler_gui_input(event):
 			match event.button_index:
 				MOUSE_BUTTON_LEFT:
 					selected_key = self
+					mouse_pos_start = self['data']['timestamp']
 				MOUSE_BUTTON_MIDDLE:
 					print(Save.keyframes['sound_loop'].find(data))
 				MOUSE_BUTTON_RIGHT:

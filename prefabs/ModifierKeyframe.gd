@@ -21,8 +21,6 @@ func _process(_delta):
 		
 		if move_pos and selected_key != null:
 			selected_key.update_beat_and_position(mouse_pos)
-			Save.keyframes['modifiers'].sort_custom(func(a, b): return a['timestamp'] < b['timestamp'])
-			#Global.reload_bpm()
 
 func setup(keyframe_data):
 	move_pos = false
@@ -40,12 +38,26 @@ func update_beat_and_position(time: float):
 	data['timestamp'] = time
 	position.x = -((data['timestamp'] - Global.offset) * Global.note_speed)
 
+func get_real_timestamp_and_update(time: float):
+	# Since this keyframe itself affects time, getting what time this key is at is tricky...
+	beat = Global.get_beat_at_time(time)
+	var idx = 1
+	while idx < Global.bpm_beatstamps.size():
+		if Global.bpm_beatstamps[idx] > beat:
+			break
+		idx += 1
+	if Global.bpm_timestamps[idx-1] == mouse_pos_start && idx > 1:
+		idx -= 1
+	data['timestamp'] = Global.bpm_timestamps[idx-1] + ((beat - Global.bpm_beatstamps[idx-1]) * (1 / (Global.bpms[idx-1] / 60.0)))
+	Global.reload_bpm()
+
 func _on_input_handler_gui_input(event):
 	if event is InputEventMouseButton:
 		if event.pressed:
 			match event.button_index:
 				MOUSE_BUTTON_LEFT:
 					selected_key = self
+					mouse_pos_start = self['data']['timestamp']
 					if event.double_click:
 						Global.lock_timeline = true
 						$Visual.visible = false
@@ -72,7 +84,8 @@ func _on_input_handler_gui_input(event):
 							else:
 								print('Modifier already exists at %s' % [snappedf(mouse_pos_end, 0.001)])
 								selected_key.update_beat_and_position(mouse_pos_start)
-								break
+								return
+						selected_key.get_real_timestamp_and_update(mouse_pos_end)
 						Save.keyframes['modifiers'].sort_custom(func(a, b): return a['timestamp'] < b['timestamp']); update_position()
 						if mouse_pos_start != selected_key['data']['timestamp']: Global.project_saved = false
 						Global.reload_bpm()
@@ -108,7 +121,7 @@ func _on_text_submitted(new_text):
 
 func _on_mouse_exited():
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
-		if selected_key['data']['timestamp'] != 0:
+		if selected_key != null && selected_key['data']['timestamp'] != 0:
 			move_pos = true
 		else:
 			selected_key = null
