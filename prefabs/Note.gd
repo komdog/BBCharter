@@ -27,6 +27,11 @@ func update_position():
 	data['timestamp'] = Global.get_time_at_beat(beat)
 	position.x = -((data['timestamp'] - Global.offset) * Global.note_speed)
 
+func update_beat_and_position(time: float):
+	beat = Global.get_beat_at_time(time)
+	data['timestamp'] = time
+	position.x = -((data['timestamp'] - Global.offset) * Global.note_speed)
+
 func _input(event):
 	if event is InputEventKey: clear_clipboard = !event.is_command_or_control_pressed()
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
@@ -58,9 +63,8 @@ func _process(_delta):
 			update_visual()
 			
 			if move_pos:
-				selected_note['data']['timestamp'] = mouse_pos
+				selected_note.update_beat_and_position(mouse_pos)
 				Global.current_chart.sort_custom(func(a, b): return a['timestamp'] < b['timestamp'])
-				update_position()
 
 func update_visual():
 	$Voice.visible = data.has('trigger_voice')
@@ -138,7 +142,7 @@ func _on_gui_input(event):
 								Timeline.delete_note(note, Save.notes['data']['charts'][Global.difficulty_index]['notes'].find(note['data']))
 							else:
 								print('Note already exists at %s' % [snappedf(mouse_pos_end, 0.001)])
-								selected_note['data']['timestamp'] = mouse_pos_start
+								selected_note.update_beat_and_position(mouse_pos_start)
 								break
 						Global.current_chart.sort_custom(func(a, b): return a['timestamp'] < b['timestamp']); update_position()
 						if mouse_pos_start != selected_note['data']['timestamp']: Global.project_saved = false
