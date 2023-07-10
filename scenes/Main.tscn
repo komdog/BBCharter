@@ -221,18 +221,12 @@ grow_vertical = 2
 theme = ExtResource("1_71y40")
 script = ExtResource("2_ca1lw")
 metadata/_edit_lock_ = true
-metadata/_edit_horizontal_guides_ = [1080.0]
-metadata/_edit_vertical_guides_ = [1920.0]
 
 [node name="KeyTimeline" type="Panel" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+layout_mode = 0
 offset_top = 672.0
-offset_bottom = 144.0
-grow_horizontal = 2
-grow_vertical = 2
+offset_right = 1920.0
+offset_bottom = 1224.0
 theme_override_styles/panel = SubResource("StyleBoxEmpty_aht3f")
 
 [node name="KeyController" type="Node2D" parent="KeyTimeline"]
@@ -245,7 +239,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = -960.0
 offset_top = -528.0
-offset_right = 961.0
+offset_right = 960.0
 offset_bottom = -480.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -257,7 +251,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = -960.0
 offset_top = -480.0
-offset_right = 961.0
+offset_right = 960.0
 offset_bottom = -376.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -269,7 +263,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = -960.0
 offset_top = -376.0
-offset_right = 961.0
+offset_right = 960.0
 offset_bottom = -272.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -281,7 +275,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = -960.0
 offset_top = -272.0
-offset_right = 961.0
+offset_right = 960.0
 offset_bottom = -168.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -293,7 +287,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = -960.0
 offset_top = -168.0
-offset_right = 961.0
+offset_right = 960.0
 offset_bottom = -120.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -305,7 +299,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = -960.0
 offset_top = -120.0
-offset_right = 961.0
+offset_right = 960.0
 offset_bottom = -72.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -317,7 +311,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = -960.0
 offset_top = -72.0
-offset_right = 961.0
+offset_right = 960.0
 offset_bottom = -24.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -329,7 +323,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = -960.0
 offset_top = -24.0
-offset_right = 961.0
+offset_right = 960.0
 offset_bottom = 24.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -605,11 +599,11 @@ libraries = {
 
 [node name="Hud" type="Node2D" parent="Character"]
 
-[node name="Polygon2D" type="Polygon2D" parent="Character/Hud"]
+[node name="TopBlack" type="Polygon2D" parent="Character/Hud"]
 color = Color(0, 0, 0, 1)
 polygon = PackedVector2Array(-640, -360, 80, -360, -640, -210)
 
-[node name="Polygon2D2" type="Polygon2D" parent="Character/Hud"]
+[node name="BottomBlack" type="Polygon2D" parent="Character/Hud"]
 position = Vector2(-1200, -450)
 scale = Vector2(1.25, 1.25)
 color = Color(0, 0, 0, 1)
@@ -617,14 +611,10 @@ polygon = PackedVector2Array(1472, 648, 896, 648, 1472, 520)
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
 offset_left = 1490.0
 offset_top = 56.0
-offset_bottom = -464.0
-grow_horizontal = 2
-grow_vertical = 2
+offset_right = 1920.0
+offset_bottom = 616.0
 
 [node name="Toolbar" type="Panel" parent="."]
 layout_mode = 0
@@ -634,19 +624,15 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_fxxnx")
 
 [node name="MenuBar" type="MenuBar" parent="Toolbar"]
 layout_direction = 2
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+layout_mode = 0
 offset_left = 16.0
 offset_top = 8.0
-offset_right = 289.0
-offset_bottom = 10.0
-grow_horizontal = 2
-grow_vertical = 2
+offset_right = 491.0
+offset_bottom = 50.0
 theme_override_constants/h_separation = 20
 theme_override_font_sizes/font_size = 24
 flat = true
+switch_on_hover = false
 
 [node name="File" type="PopupMenu" parent="Toolbar/MenuBar"]
 size = Vector2i(154, 104)
@@ -897,13 +883,10 @@ access = 2
 script = ExtResource("5_qvt2c")
 
 [node name="NoteTimeline" type="Panel" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+layout_mode = 0
 offset_top = 871.0
-grow_horizontal = 2
-grow_vertical = 2
+offset_right = 1920.0
+offset_bottom = 1080.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_fxxnx")
 
 [node name="NoteLine" type="Line2D" parent="NoteTimeline"]
@@ -1080,12 +1063,9 @@ script = ExtResource("22_btaqb")
 
 [node name="Popups" type="Panel" parent="."]
 visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_qq0lv")
 script = ExtResource("24_hyexw")
 

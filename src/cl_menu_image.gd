@@ -19,6 +19,7 @@ func _on_id_pressed(id: int):
 	
 	match id:
 		ADDANIMATION:
+			Popups.id = 0
 			Events.emit_signal('add_animation_to_timeline', asset_path)
 		ADDEFFECT:
 			Events.emit_signal('add_effect_to_timeline', asset_path)

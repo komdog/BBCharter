@@ -11,9 +11,6 @@ func _ready():
 	
 	get_window().min_size = Vector2i(228, 128)
 	get_viewport().content_scale_size = Vector2i(1920, 1080)
-	$Panel.scale.y = $Panel.scale.y / 1.5
-	$Popups.position.x -= 320
-	$Popups.position.y -= 180
 	
 	get_viewport().files_dropped.connect(on_files_dropped)
 

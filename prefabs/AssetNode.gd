@@ -38,6 +38,7 @@ func _on_gui_input(event):
 				if asset_type == Enums.ASSET.AUDIO:
 					add_sound_oneshot_to_timeline()
 				if asset_type == Enums.ASSET.IMAGE:
+					Popups.id = 0
 					Events.emit_signal('add_animation_to_timeline', asset_path)
 			MOUSE_BUTTON_MIDDLE:
 				if asset_type == Enums.ASSET.AUDIO:

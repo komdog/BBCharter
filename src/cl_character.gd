@@ -298,9 +298,8 @@ func _on_panel_gui_input(event):
 	if event is InputEventMouseButton:
 		if event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 			Popups.id = 1
-			var data
 			if Save.keyframes.has('loops') and Save.keyframes['loops'].size() > 0:
-				data = Save.keyframes['loops'][loop_index-1]
+				var data = Save.keyframes['loops'][loop_index-1]
 				if Global.song_pos <= Save.keyframes['loops'][0]['timestamp']:
 					data = Save.keyframes['loops'][0]
 				Events.emit_signal('add_animation_to_timeline', data)
