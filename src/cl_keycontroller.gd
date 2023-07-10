@@ -2,7 +2,6 @@ extends Node2D
 
 var note_pos: float
 var note_offset: float
-var bpm_offset: float
 
 func _ready():
 	# Globalize Tracks
@@ -37,7 +36,6 @@ func _on_song_loaded():
 	spawn_keyframes('sound_loop', Prefabs.sfx_keyframe, Timeline.sfx_track)
 	spawn_keyframes('sound_oneshot', Prefabs.oneshot_keyframe, Timeline.oneshot_sound_track)
 	spawn_keyframes('voice_bank', Prefabs.voice_keyframe, Timeline.voice_banks_track)
-	
 	Global.clear_children(Timeline.key_beat_container)
 	Global.clear_children(Timeline.key_half_container)
 	Global.clear_children(Timeline.key_third_container)
@@ -100,132 +98,67 @@ func create_ui():
 		new_key_indicator.setup(i, Enums.UI_INDICATOR_TYPE.EIGHTH_BEAT)
 
 func reset_indicators():
-	var difference = Global.song_beats_total*8 - $Eighth.get_child_count()*2
-	if difference > 0:
-		for i in difference+1:
-			if i % 8 == 0: continue
-			if i % 4 == 0: continue
+	var difference = Global.song_beats_total + 1 - $Beat.get_child_count()
+	if difference != 0:
+		for i in range(Global.song_beats_total - difference + 1, Global.song_beats_total + 1, 1 if difference>0 else -1):
+			if difference > 0:
+				var new_key_indicator = Prefabs.key_indicator.instantiate()
+				$Beat.add_child(new_key_indicator)
+				new_key_indicator.setup(i, Enums.UI_INDICATOR_TYPE.BEAT)
+			else:
+				$Beat.remove_child($Beat.get_child($Beat.get_child_count()-1))
+	
+		for i in range((Global.song_beats_total - difference) * 2, Global.song_beats_total * 2, 1 if difference>0 else -1):
 			if i % 2 == 0: continue
-			var index = $Beat.get_child_count()*8-8+i
-			if $Eighth.get_child($Eighth.get_child_count()-1).indicator_index == index: index += 1
-			if $Quarter.get_child($Quarter.get_child_count()-1).indicator_index*2 == index: index += 1
-			if $Eighth.get_child($Eighth.get_child_count()-1).indicator_index-2 == index: index += 4
-			if $Quarter.get_child($Quarter.get_child_count()-1).indicator_index*2-5 == index: index += 6
-			var new_key_indicator = Prefabs.key_indicator.instantiate()
-			new_key_indicator.setup(index, Enums.UI_INDICATOR_TYPE.EIGHTH_BEAT)
-			$Eighth.add_child(new_key_indicator)
-	elif difference < 0:
-		for beat in $Eighth.get_children():
-			if beat.get_index() > float(Global.song_beats_total*8-1)/2: $Eighth.remove_child(beat)
+			if difference > 0:
+				var new_key_indicator = Prefabs.key_indicator.instantiate()
+				$Half.add_child(new_key_indicator)
+				new_key_indicator.setup(i, Enums.UI_INDICATOR_TYPE.HALF_BEAT)
+			else:
+				$Half.remove_child($Half.get_child($Half.get_child_count()-1))
 	
-	difference = Global.song_beats_total*6 - $Sixth.get_child_count()*3
-	if difference > 0:
-		for i in difference+1:
-			if int(i) % 6 == 0: continue
-			if int(i) % 3 == 0: continue
-			if int(i) % 2 == 0: continue
-			var index = $Beat.get_child_count()*6-6+i
-			#if $Sixth.get_child($Sixth.get_child_count()-1).indicator_index == index: index += 1
-			#if $Third.get_child($Third.get_child_count()-1).indicator_index*2 == index: index += 1
-			var new_key_indicator = Prefabs.key_indicator.instantiate()
-			new_key_indicator.setup(index, Enums.UI_INDICATOR_TYPE.SIXTH_BEAT)
-			$Sixth.add_child(new_key_indicator)
-	elif difference < 0:
-		for beat in $Sixth.get_children():
-			if beat.get_index() > float(Global.song_beats_total*6-1)/3: $Sixth.remove_child(beat)
+		for i in range((Global.song_beats_total - difference) * 3, Global.song_beats_total * 3, 1 if difference>0 else -1):
+			if i % 3 == 0: continue
+			if difference > 0:
+				var new_key_indicator = Prefabs.key_indicator.instantiate()
+				$Third.add_child(new_key_indicator)
+				new_key_indicator.setup(i, Enums.UI_INDICATOR_TYPE.THIRD_BEAT)
+			else:
+				$Third.remove_child($Third.get_child($Third.get_child_count()-1))
 	
-	difference = Global.song_beats_total*4 - $Quarter.get_child_count()*2
-	if difference > 0:
-		for i in difference+1:
-			if i % 4 == 0: continue
+		for i in range((Global.song_beats_total - difference) * 4, Global.song_beats_total * 4, 1 if difference>0 else -1):
 			if i % 2 == 0: continue
-			var index = $Beat.get_child_count()*4-4+i
-			if $Quarter.get_child($Quarter.get_child_count()-1).indicator_index == index: index += 2
-			var new_key_indicator = Prefabs.key_indicator.instantiate()
-			new_key_indicator.setup(index, Enums.UI_INDICATOR_TYPE.QUARTER_BEAT)
-			$Quarter.add_child(new_key_indicator)
-	elif difference < 0:
-		for beat in $Quarter.get_children():
-			if beat.get_index() > float(Global.song_beats_total*4-1)/2: $Quarter.remove_child(beat)
+			if difference > 0:
+				var new_key_indicator = Prefabs.key_indicator.instantiate()
+				$Quarter.add_child(new_key_indicator)
+				new_key_indicator.setup(i, Enums.UI_INDICATOR_TYPE.QUARTER_BEAT)
+			else:
+				$Quarter.remove_child($Quarter.get_child($Quarter.get_child_count()-1))
 	
-	difference = Global.song_beats_total*3 - $Third.get_child_count()*1.5
-	if difference > 0:
-		for i in difference+1:
-			if int(i) % 3 == 0: continue
-			var new_key_indicator = Prefabs.key_indicator.instantiate()
-			new_key_indicator.setup($Beat.get_child_count()*3-3+i, Enums.UI_INDICATOR_TYPE.THIRD_BEAT)
-			$Third.add_child(new_key_indicator)
-	elif difference < 0:
-		for beat in $Third.get_children():
-			if beat.get_index() > float(Global.song_beats_total*3-1)/1.5: $Third.remove_child(beat)
-	
-	difference = Global.song_beats_total*2 - $Half.get_child_count()*2
-	if difference > 0:
-		for i in difference+1:
+		for i in range((Global.song_beats_total - difference) * 6, Global.song_beats_total * 6, 1 if difference>0 else -1):
+			if i % 3 == 0: continue
 			if i % 2 == 0: continue
-			var new_key_indicator = Prefabs.key_indicator.instantiate()
-			new_key_indicator.setup($Beat.get_child_count()*2-2+i, Enums.UI_INDICATOR_TYPE.HALF_BEAT)
-			$Half.add_child(new_key_indicator)
-	elif difference < 0:
-		for beat in $Half.get_children():
-			if beat.get_index() > float(Global.song_beats_total*2-1)/2: $Half.remove_child(beat)
+			if difference > 0:
+				var new_key_indicator = Prefabs.key_indicator.instantiate()
+				$Sixth.add_child(new_key_indicator)
+				new_key_indicator.setup(i, Enums.UI_INDICATOR_TYPE.SIXTH_BEAT)
+			else:
+				$Sixth.remove_child($Sixth.get_child($Sixth.get_child_count()-1))
 	
-	difference = Global.song_beats_total+1 - $Beat.get_child_count()
-	if difference > 0:
-		for i in difference:
-			var new_key_indicator = Prefabs.key_indicator.instantiate()
-			new_key_indicator.setup($Beat.get_child_count(), Enums.UI_INDICATOR_TYPE.BEAT)
-			$Beat.add_child(new_key_indicator)
-	elif difference < 0:
-		for beat in $Beat.get_children():
-			if beat.get_index() > Global.song_beats_total: $Beat.remove_child(beat)
-	
-	var nega_beat = Global.beat_offset / Global.beat_length_msec
-	if nega_beat > 0 and nega_beat <= 1:
-		if nega_beat >= 0.125:
-			var new_key_indicator = Prefabs.key_indicator.instantiate()
-			new_key_indicator.setup(-1,3)
-			$Eighth.add_child(new_key_indicator)
-		if nega_beat >= 0.25:
-			var new_key_indicator = Prefabs.key_indicator.instantiate()
-			new_key_indicator.setup(-1,2)
-			$Quarter.add_child(new_key_indicator)
-		if nega_beat >= 0.375:
-			var new_key_indicator = Prefabs.key_indicator.instantiate()
-			new_key_indicator.setup(-3,3)
-			$Eighth.add_child(new_key_indicator)
-		if nega_beat >= 0.5:
-			var new_key_indicator = Prefabs.key_indicator.instantiate()
-			new_key_indicator.setup(-1,1)
-			$Half.add_child(new_key_indicator)
-		if nega_beat >= 0.625:
-			var new_key_indicator = Prefabs.key_indicator.instantiate()
-			new_key_indicator.setup(-5,3)
-			$Eighth.add_child(new_key_indicator)
-		if nega_beat >= 0.75:
-			var new_key_indicator = Prefabs.key_indicator.instantiate()
-			new_key_indicator.setup(-3,2)
-			$Quarter.add_child(new_key_indicator)
-		if nega_beat >= 0.875:
-			var new_key_indicator = Prefabs.key_indicator.instantiate()
-			new_key_indicator.setup(-7,3)
-			$Eighth.add_child(new_key_indicator)
-		if nega_beat == 1:
-			var new_key_indicator = Prefabs.key_indicator.instantiate()
-			new_key_indicator.setup(-1,0)
-			$Beat.add_child(new_key_indicator)
-	else:
-		for beat in $Beat.get_children(): if beat.indicator_index < 0: $Beat.remove_child(beat)
-		for beat in $Half.get_children(): if beat.indicator_index < 0: $Half.remove_child(beat)
-		for beat in $Quarter.get_children(): if beat.indicator_index < 0: $Quarter.remove_child(beat)
-		for beat in $Eighth.get_children(): if beat.indicator_index < 0: $Eighth.remove_child(beat)
+		for i in range((Global.song_beats_total - difference) * 8, Global.song_beats_total * 8, 1 if difference>0 else -1):
+			if i % 2 == 0: continue
+			if difference > 0:
+				var new_key_indicator = Prefabs.key_indicator.instantiate()
+				$Eighth.add_child(new_key_indicator)
+				new_key_indicator.setup(i, Enums.UI_INDICATOR_TYPE.EIGHTH_BEAT)
+			else:
+				$Eighth.remove_child($Eighth.get_child($Eighth.get_child_count()-1))
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
 	note_pos = Global.song_pos * Global.note_speed
 	note_offset = Global.offset * Global.note_speed
-	bpm_offset = Global.bpm_offset * Global.note_speed
-	position.x = note_pos - note_offset - bpm_offset + 960
+	position.x = note_pos - note_offset + 960
 	
 	$ShutterPanel.position.x = -position.x; $ShutterGradient.position.x = -position.x
 	$AnimationsPanel.position.x = -position.x; $AnimationsGradient.position.x = -position.x

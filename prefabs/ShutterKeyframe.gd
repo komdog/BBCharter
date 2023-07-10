@@ -1,6 +1,7 @@
 extends Node2D
 
 var data: Dictionary
+var beat: float
 
 var move_pos: bool
 var mouse_pos: float
@@ -10,6 +11,7 @@ var selected_key: Node2D
 
 func _ready():
 	Events.update_notespeed.connect(update_position)
+	Events.update_bpm.connect(update_position)
 
 func _process(_delta):
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
@@ -23,10 +25,12 @@ func _process(_delta):
 func setup(keyframe_data):
 	move_pos = false
 	data = keyframe_data
+	beat = Global.get_beat_at_time(data['timestamp'])
 	update_position()
 
 func update_position():
-	position.x = -((data['timestamp'] - Global.offset - Global.bpm_offset) * Global.note_speed)
+	data['timestamp'] = Global.get_time_at_beat(beat)
+	position.x = -((data['timestamp'] - Global.offset) * Global.note_speed)
 
 func _on_input_handler_gui_input(event) -> void:
 	if event is InputEventMouseButton:

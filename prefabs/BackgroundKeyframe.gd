@@ -1,6 +1,7 @@
 extends Node2D
 
 var data: Dictionary
+var beat: float
 
 var move_pos: bool
 var mouse_pos: float
@@ -25,6 +26,7 @@ func _process(_delta):
 func setup(keyframe_data):
 	move_pos = false
 	data = keyframe_data
+	beat = Global.get_beat_at_time(data['timestamp'])
 	$InputHandler.tooltip_text = data['path']
 	$Thumb.texture = Assets.get_asset(data['path'])
 	if $Thumb.texture:
@@ -37,7 +39,8 @@ func setup(keyframe_data):
 		update_position()
 
 func update_position():
-	position.x = -((data['timestamp'] - Global.offset - Global.bpm_offset) * Global.note_speed)
+	data['timestamp'] = Global.get_time_at_beat(beat)
+	position.x = -((data['timestamp'] - Global.offset) * Global.note_speed)
 
 func _on_input_handler_gui_input(event):
 	if event is InputEventMouseButton:

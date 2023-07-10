@@ -12,10 +12,17 @@ var settings: Dictionary
 var song_offset_default = 0.0
 var modifier_default = [{"bpm": 128.0, "timestamp": 0}]
 
+# Keep a copy of the original BPMs in memory. 
+# If these change, apply changes to all difficulties on save or load difficulty
+var original_modifiers: Array
+
 func save_project() -> void:
 	#Save keyframes
 	keyframes['loops'].sort_custom(func(a,b): return a['timestamp'] < b['timestamp'])
 	print('Could not save keyframes.cfg') if save_cfg('keyframes.cfg', keyframes) == FAILED else print('Saved keyframes.cfg')
+	
+	if Global.mods_need_reapply:
+		recalculate_all_notes()
 	
 	#Save Notes
 	notes['charts'][Global.difficulty_index]['notes'] = Global.current_chart # Move chart to save cache
@@ -73,7 +80,7 @@ func load_project(file_path):
 		Global.offset = settings.get('song_offset', song_offset_default)
 		
 		await get_tree().process_frame; await get_tree().physics_frame
-		Global.bpm_offset = 0; load_assets(); load_chart(); load_song()
+		load_assets(); load_song(); save_original_mods(); load_chart()
 		
 		Events.emit_signal('notify', 'Project Loaded', meta['level_name'], project_dir + "/thumb.png")
 		Events.emit_signal('project_loaded')
@@ -99,10 +106,9 @@ func load_song():
 	var path = project_dir + "/audio/" + asset.get('song_path', "")
 	Global.music.stream = Global.load_mp3(path)
 	Global.song_length = Global.music.stream.get_length()
-	Global.bpm_offset = Save.keyframes.get('modifiers', Save.modifier_default)[0]['timestamp']
 	Global.reload_bpm()
-	Global.global_bpm = Global.bpm
-	Global.beat_offset = 0
+	Global.zoom_factor = 60.0/keyframes.get('modifiers', modifier_default)[0]['bpm']
+	Global.song_beats_total = ceil(Global.get_beat_at_time(Global.song_length - Global.offset))
 	Events.emit_signal('song_loaded')
 
 func load_chart(difficulty_index: int = 0) -> int:
@@ -113,6 +119,8 @@ func load_chart(difficulty_index: int = 0) -> int:
 		notes['charts'][Global.difficulty_index]['notes'] = Global.current_chart.duplicate(true)
 		print('Storing previous chart')
 	Timeline.clear_notes_only()
+	if Global.mods_need_reapply:
+		recalculate_all_notes()
 	if notes != {}:
 		if notes['charts'].size() < 1:
 			create_difficulty()
@@ -132,3 +140,28 @@ func create_difficulty(diffcuilty_name: String = "Virgin", rating: int = 0, char
 		'notes': chart
 	}
 	notes['charts'].append(new_difficulty) 
+
+func save_original_mods():
+	original_modifiers = keyframes['modifiers'].duplicate(true)
+	var cumulativeBeats = 0.0
+	var prevTimestamp = 0.0
+	var prevBpm = 0.0
+	for mod in original_modifiers:
+		cumulativeBeats += (mod['timestamp'] - prevTimestamp) * (prevBpm / 60)
+		mod['beatstamp'] = cumulativeBeats
+		prevTimestamp = mod['timestamp']
+		prevBpm = mod['bpm']
+	Global.mods_need_reapply = false
+
+func recalculate_all_notes():
+	for i in notes['charts'].size():
+		if i == Global.difficulty_index: continue
+		for note in notes['charts'][i]['notes']:
+			var j = 1
+			while j < original_modifiers.size():
+				if original_modifiers[j]['timestamp'] > note['timestamp']:
+					break
+				j += 1
+			var beat = original_modifiers[j-1]['beatstamp'] + ((note['timestamp'] - original_modifiers[j-1]['timestamp']) * (original_modifiers[j-1]['bpm'] / 60))
+			note['timestamp'] = Global.get_time_at_beat(beat)
+	save_original_mods()
