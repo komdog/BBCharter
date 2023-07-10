@@ -18,9 +18,8 @@ func _process(_delta):
 		if Global.snapping_allowed: mouse_pos = Global.get_mouse_timestamp_snapped()
 		else: mouse_pos = Global.get_mouse_timestamp()
 		if move_pos and selected_key != null:
-			selected_key['data']['timestamp'] = mouse_pos
+			selected_key.update_beat_and_position(mouse_pos)
 			Save.keyframes['shutter'].sort_custom(func(a, b): return a['timestamp'] < b['timestamp'])
-			update_position()
 
 func setup(keyframe_data):
 	move_pos = false
@@ -30,6 +29,11 @@ func setup(keyframe_data):
 
 func update_position():
 	data['timestamp'] = Global.get_time_at_beat(beat)
+	position.x = -((data['timestamp'] - Global.offset) * Global.note_speed)
+
+func update_beat_and_position(time: float):
+	beat = Global.get_beat_at_time(time)
+	data['timestamp'] = time
 	position.x = -((data['timestamp'] - Global.offset) * Global.note_speed)
 
 func _on_input_handler_gui_input(event) -> void:
@@ -52,7 +56,7 @@ func _on_input_handler_gui_input(event) -> void:
 							Timeline.delete_keyframe('shutter', key, Save.keyframes['shutter'].find(key['data']))
 						else:
 							print('Shutter already exists at %s' % [snappedf(mouse_pos_end, 0.001)])
-							selected_key['data']['timestamp'] = mouse_pos_start
+							selected_key.update_beat_and_position(mouse_pos_start)
 							break
 					Save.keyframes['shutter'].sort_custom(func(a, b): return a['timestamp'] < b['timestamp']); update_position()
 					if mouse_pos_start != selected_key['data']['timestamp']: Global.project_saved = false

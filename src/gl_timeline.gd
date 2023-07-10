@@ -153,7 +153,6 @@ func _input(event):
 								if Global.current_tool == Enums.TOOL.MARQUEE and marquee_point_a >= 0:
 									marquee_point_b = Global.music.song_position_raw
 									line_center.set_default_color(Color(0.61,0.02,0.26,1))
-									Events.emit_signal('update_selection', marquee_point_a, marquee_point_b)
 									marquee_point_a = -1
 									marquee_point_b = -1
 				else:
