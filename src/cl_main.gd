@@ -8,9 +8,7 @@ func _ready():
 		get_window().size = Vector2i(1920, 1080)
 		get_window().position.x -= 320
 		get_window().position.y -= 180
-	
 	get_window().min_size = Vector2i(228, 128)
-	get_viewport().content_scale_size = Vector2i(1920, 1080)
 	
 	get_viewport().files_dropped.connect(on_files_dropped)
 
