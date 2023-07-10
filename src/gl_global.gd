@@ -71,7 +71,7 @@ func load_texture(path) -> ImageTexture:
 	return tex
 
 func get_timestamp_snapped(pos: float = song_pos) -> float:
-	return Global.get_time_at_beat(snappedf(Global.get_beat_at_time(pos), 1.0/snapping_factor))
+	return get_time_at_beat(snappedf(get_beat_at_time(pos), 1.0/snapping_factor))
 
 func get_mouse_timestamp() -> float:
 	var time = ((song_pos * note_speed) - mouse_pos)/note_speed
@@ -87,19 +87,19 @@ func get_mouse_timestamp_snapped() -> float:
 
 func get_current_bpm_timestamp() -> float:
 	var prevEntry = 0.0
-	for entry in Global.bpm_timestamps:
+	for entry in bpm_timestamps:
 		if entry > song_pos:
 			return prevEntry
 		prevEntry = entry
-	return Global.bpm_timestamps[-1]
+	return bpm_timestamps[-1]
 
 func get_current_bpm() -> float:
 	var prevEntry = 0.0
-	for i in Global.bpm_timestamps.size():
-		if Global.bpm_timestamps[i] > song_pos:
+	for i in bpm_timestamps.size():
+		if bpm_timestamps[i] > song_pos:
 			return prevEntry
-		prevEntry = Global.bpms[i]
-	return Global.bpms[-1]
+		prevEntry = bpms[i]
+	return bpms[-1]
 
 func clear_children(parent: Node):
 	print("Cleaning %s's children" % parent.name)
@@ -110,37 +110,37 @@ func reload_bpm():
 	var cumulativeBeats = 0.0
 	var prevTimestamp = 0.0
 	var prevBpm = 0.0
-	if !Global.bpms.is_empty():
-		Global.bpms.clear()
-		Global.bpm_timestamps.clear()
-		Global.bpm_beatstamps.clear()
+	if !bpms.is_empty():
+		bpms.clear()
+		bpm_timestamps.clear()
+		bpm_beatstamps.clear()
 	for mod in Save.keyframes.get('modifiers', Save.modifier_default):
-		Global.bpms.append(mod['bpm'])
-		Global.bpm_timestamps.append(mod['timestamp'])
+		bpms.append(mod['bpm'])
+		bpm_timestamps.append(mod['timestamp'])
 		cumulativeBeats += (mod['timestamp'] - prevTimestamp) * (prevBpm / 60)
-		Global.bpm_beatstamps.append(cumulativeBeats)
+		bpm_beatstamps.append(cumulativeBeats)
 		prevTimestamp = mod['timestamp']
 		prevBpm = mod['bpm']
-	song_beats_total = int(get_beat_at_time(Global.song_length))
+	song_beats_total = int(get_beat_at_time(song_length - offset))
 	
-	Global.mods_need_reapply = true
+	mods_need_reapply = true
 	
-	if Global.project_loaded:
+	if project_loaded:
 		Events.emit_signal('update_notespeed')
 		Events.emit_signal('update_bpm')
 
 func get_beat_at_time(time: float) -> float:
 	var idx = 1
-	while idx < Global.bpm_timestamps.size():
-		if Global.bpm_timestamps[idx] > time:
+	while idx < bpm_timestamps.size():
+		if bpm_timestamps[idx] > time:
 			break
 		idx += 1
-	return Global.bpm_beatstamps[idx-1] + ((time - Global.bpm_timestamps[idx-1]) * (Global.bpms[idx-1] / 60))
+	return bpm_beatstamps[idx-1] + ((time - bpm_timestamps[idx-1]) * (bpms[idx-1] / 60))
 
 func get_time_at_beat(beat: float) -> float:
 	var idx = 1
-	while idx < Global.bpm_beatstamps.size():
-		if Global.bpm_beatstamps[idx] > beat:
+	while idx < bpm_beatstamps.size():
+		if bpm_beatstamps[idx] > beat:
 			break
 		idx += 1
-	return Global.bpm_timestamps[idx-1] + ((beat - Global.bpm_beatstamps[idx-1]) * (1 / (Global.bpms[idx-1] / 60.0)))
+	return bpm_timestamps[idx-1] + ((beat - bpm_beatstamps[idx-1]) * (1 / (bpms[idx-1] / 60.0)))

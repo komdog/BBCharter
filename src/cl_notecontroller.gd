@@ -82,7 +82,7 @@ func create_ui():
 	Events.emit_signal('update_snapping', Global.snapping_ratios.find(Global.snapping_factor))
 
 func reset_indicators():
-	var difference = Global.song_beats_total - $Beat.get_child_count()
+	var difference = Global.song_beats_total + 1 - $Beat.get_child_count()
 	if difference != 0:
 		for i in range(Global.song_beats_total - difference + 1, Global.song_beats_total + 1, 1 if difference>0 else -1):
 			if difference > 0:

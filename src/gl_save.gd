@@ -107,8 +107,8 @@ func load_song():
 	Global.music.stream = Global.load_mp3(path)
 	Global.song_length = Global.music.stream.get_length()
 	Global.reload_bpm()
-	Global.zoom_factor = 60.0/Save.keyframes.get('modifiers', Save.modifier_default)[0]['bpm']
-	Global.song_beats_total = int(Global.get_beat_at_time(Global.song_length))
+	Global.zoom_factor = 60.0/keyframes.get('modifiers', modifier_default)[0]['bpm']
+	Global.song_beats_total = int(Global.get_beat_at_time(Global.song_length - Global.offset))
 	Events.emit_signal('song_loaded')
 
 func load_chart(difficulty_index: int = 0) -> int:
