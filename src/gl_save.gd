@@ -79,6 +79,13 @@ func load_project(file_path):
 		settings = load_cfg('settings.cfg')
 		Global.offset = settings.get('song_offset', song_offset_default)
 		
+		# Temporary code for mods converted with latest build of Mod Converter
+		var modifier = keyframes.get('modifiers', modifier_default)[0]
+		if modifier.has("MC.BPM"):
+			print('Modifier at timestamp 0.0 is called "MC.BPM" instead of "bpm"')
+			modifier["bpm"] = modifier["MC.BPM"]
+			modifier.erase("MC.BPM")
+		
 		await get_tree().process_frame; await get_tree().physics_frame
 		load_assets(); load_song(); save_original_mods(); load_chart()
 		
