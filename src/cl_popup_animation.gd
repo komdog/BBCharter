@@ -1,7 +1,16 @@
 extends Panel
 
-var animation_name: String
-var timestamp: float
+var animation_name:String
+var timestamp:float
+
+# default/prev values
+var Horny:String = ""
+var SheetH:int = 2
+var SheetV:int = 3
+var Total:int = 6
+var OffsetX:int = 0
+var OffsetY:int = 0
+var Scale:float = 1.0
 
 func _ready():
 	Events.popups_opened.connect(_on_popups_opened)
@@ -9,16 +18,16 @@ func _ready():
 
 func _on_popups_opened(_index):
 	if Popups.id > 0:
-		$Label.text = "Edit Animation"
-		$Create.text = "Edit"
+		$Label.text = "Edit Animation"; $Create.text = "Edit"
 	else:
-		$Label.text = "Place New Animation"
-		$Create.text = "Create"
+		$Label.text = "Place New Animation"; $Create.text = "Create"
+		reset()
 
 func _on_create_button_up():
-	var time: float
+	var time:float
 	if Global.snapping_allowed: time = Global.get_timestamp_snapped()
 	else: time = Global.song_pos
+	if time < 0: time = 0
 	
 	var new_animation_key = {
 		"timestamp": time,
@@ -30,6 +39,14 @@ func _on_create_button_up():
 			"horny": $Horny.text if $Horny.text != "" else animation_name
 			}
 		}
+	
+	Horny = $Horny.text
+	SheetH = $SheetH.value
+	SheetV = $SheetV.value
+	Total = $Total.value
+	OffsetX = $OffsetX.value
+	OffsetY = $OffsetY.value
+	Scale = $Scale.value
 	
 	if Popups.id > 0 or Global.replacing_allowed:
 		if Popups.id > 0: new_animation_key['timestamp'] = timestamp
@@ -46,16 +63,15 @@ func _on_create_button_up():
 func _on_cancel_button_up():
 	Popups.close()
 	Popups.id = -1
-	reset()
 
 func reset():
-	$Horny.clear()
-	$SheetH.value = 2
-	$SheetV.value = 3
-	$Total.value = 6
-	$OffsetX.value = 0
-	$OffsetY.value = 0
-	$Scale.value = 1.0
+	$Horny.text = Horny
+	$SheetH.value = SheetH
+	$SheetV.value = SheetV
+	$Total.value = Total
+	$OffsetX.value = OffsetX
+	$OffsetY.value = OffsetY
+	$Scale.value = Scale
 
 func _on_add_animation_to_timeline(asset_path):
 	if Popups.id > 0:
@@ -65,10 +81,10 @@ func _on_add_animation_to_timeline(asset_path):
 		$SheetV.value = asset_path['sheet_data']['v']
 		$Total.value = asset_path['sheet_data']['total']
 		
-		if asset_path['animations'].has('horny'):
+		if asset_path['animations'].has('horny') and asset_path['animations']['horny'] != animation_name:
 			$Horny.text = asset_path['animations']['horny']
 		else:
-			$Horny.text = animation_name
+			$Horny.text = ""
 		if asset_path.has('position_offset'):
 			if asset_path['position_offset'].has('x'):
 				$OffsetX.value = asset_path['position_offset']['x']
@@ -85,7 +101,7 @@ func _on_add_animation_to_timeline(asset_path):
 		if asset_path.has('scale_multiplier'): $Scale.value = asset_path['scale_multiplier']
 		else: $Scale.value = 1.0
 	else:
-		var time: float
+		var time:float
 		if Global.snapping_allowed: time = Global.get_timestamp_snapped()
 		else: time = Global.song_pos
 		if time < 0: time = 0

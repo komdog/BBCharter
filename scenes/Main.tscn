@@ -1485,9 +1485,10 @@ offset_left = 100.0
 offset_top = 320.0
 offset_right = 507.0
 offset_bottom = 351.0
-step = 0.1
+step = 0.01
 value = 1.0
 allow_greater = true
+custom_arrow_step = 0.1
 
 [node name="Scale Label" type="Label" parent="Popups/PlaceAnimation/Scale"]
 layout_mode = 1

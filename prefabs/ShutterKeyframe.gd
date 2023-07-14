@@ -17,6 +17,7 @@ func _process(_delta):
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
 		if Global.snapping_allowed: mouse_pos = Global.get_mouse_timestamp_snapped()
 		else: mouse_pos = Global.get_mouse_timestamp()
+		
 		if move_pos and selected_key != null:
 			selected_key.update_beat_and_position(mouse_pos)
 			Save.keyframes['shutter'].sort_custom(func(a, b): return a['timestamp'] < b['timestamp'])

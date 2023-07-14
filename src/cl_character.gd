@@ -135,11 +135,11 @@ func set_animation(idx: int):
 	
 	if loop.has('position_offset'):
 		if loop['position_offset'].has('x'):
-			$Panel/Visual.offset.x = loop['position_offset']['x']/2
+			$Panel/Visual.offset.x = loop['position_offset']['x']/1.5
 		else:
 			$Panel/Visual.offset.x = 0
 		if loop['position_offset'].has('y'):
-			$Panel/Visual.offset.y = loop['position_offset']['y']/2
+			$Panel/Visual.offset.y = loop['position_offset']['y']/1.5
 		else:
 			$Panel/Visual.offset.y = 0
 	else:
