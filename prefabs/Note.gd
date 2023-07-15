@@ -151,7 +151,7 @@ func _on_gui_input(event):
 func horny_add():
 	Events.emit_signal('tool_used_before', data)
 	if !data.has('horny') or !data['horny'].has('required'):
-		data['horny'] = {'required': 1}
+		data['horny'] = {'required': 0}
 	else:
 		data['horny']['required'] += 1
 	update_visual()
@@ -160,7 +160,7 @@ func horny_add():
 func horny_remove():
 	Events.emit_signal('tool_used_before', data)
 	if data.has('horny') and data['horny'].has('required'):
-		if data['horny']['required'] == 1:
+		if data['horny']['required'] == 0:
 			data.erase('horny')
 		else:
 			data['horny']['required'] -= 1
