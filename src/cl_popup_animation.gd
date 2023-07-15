@@ -49,7 +49,8 @@ func _on_create_button_up():
 	Scale = $Scale.value
 	
 	if Popups.id > 0 or Global.replacing_allowed:
-		if Popups.id > 0: new_animation_key['timestamp'] = timestamp
+		if Popups.id > 0:
+			time = timestamp; new_animation_key['timestamp'] = time
 		for animation in Timeline.animations_track.get_children():
 			if snappedf(animation['data']['timestamp'], 0.001) == snappedf(time, 0.001):
 				Timeline.delete_keyframe('loops', animation, Save.keyframes['loops'].find(animation['data']))

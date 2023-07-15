@@ -38,7 +38,8 @@ func _on_create_button_up():
 	Speed = $Speed.value
 	
 	if Popups.id > 0 or Global.replacing_allowed:
-		if Popups.id > 0: new_effect_key['timestamp'] = timestamp
+		if Popups.id > 0:
+			time = timestamp; new_effect_key['timestamp'] = time
 		for effect in Timeline.effects_track.get_children():
 			if snappedf(effect['data']['timestamp'], 0.001) == snappedf(time, 0.001):
 				Timeline.delete_keyframe('effects', effect, Save.keyframes['effects'].find(effect['data']))
