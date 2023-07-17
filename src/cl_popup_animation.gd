@@ -32,13 +32,13 @@ func _on_create_button_up():
 	var new_animation_key = {
 		"timestamp": time,
 		"sheet_data": {"h": $SheetH.value, "v": $SheetV.value, "total": $Total.value},
-		"scale_multiplier": $Scale.value,
-		"position_offset": {"x": $OffsetX.value ,"y": $OffsetY.value},
 		"animations": {
 			"normal": animation_name,
 			"horny": $Horny.text if $Horny.text != "" else animation_name
 			}
 		}
+	if $OffsetX/CheckBox.button_pressed: new_animation_key["position_offset"] = {"x": $OffsetX.value ,"y": $OffsetY.value}
+	if $Scale/CheckBox.button_pressed: new_animation_key["scale_multiplier"] = $Scale.value
 	
 	Horny = $Horny.text
 	SheetH = $SheetH.value
@@ -86,21 +86,17 @@ func _on_add_animation_to_timeline(asset_path):
 			$Horny.text = asset_path['animations']['horny']
 		else:
 			$Horny.text = ""
-		if asset_path.has('position_offset'):
-			if asset_path['position_offset'].has('x'):
-				$OffsetX.value = asset_path['position_offset']['x']
-			else:
-				$OffsetX.value = 0
-			if asset_path['position_offset'].has('y'):
-				$OffsetY.value = asset_path['position_offset']['y']
-			else:
-				$OffsetY.value = 0
-		else:
-			$OffsetX.value = 0
-			$OffsetY.value = 0
 		
-		if asset_path.has('scale_multiplier'): $Scale.value = asset_path['scale_multiplier']
-		else: $Scale.value = 1.0
+		if asset_path.has('position_offset'):
+			$OffsetX/CheckBox.button_pressed = true
+			$OffsetX.value = asset_path['position_offset'].x; $OffsetY.value = asset_path['position_offset'].y
+		else:
+			$OffsetX/CheckBox.button_pressed = false
+		if asset_path.has('scale_multiplier'):
+			$Scale/CheckBox.button_pressed = true
+			$Scale.value = asset_path['scale_multiplier']
+		else:
+			$Scale/CheckBox.button_pressed = false
 	else:
 		var time:float
 		if Global.snapping_allowed: time = Global.get_timestamp_snapped()
@@ -113,5 +109,10 @@ func _on_add_animation_to_timeline(asset_path):
 					Events.emit_signal('notify', 'Animation Already Exists', 'Timestamp: ' + str(snappedf(time, 0.001)))
 					return
 		animation_name = asset_path
-	
+	_on_check_box_button_up()
 	Popups.reveal(Popups.ANIMATION)
+
+func _on_check_box_button_up():
+	$OffsetX.editable = $OffsetX/CheckBox.button_pressed
+	$OffsetY.editable = $OffsetX/CheckBox.button_pressed
+	$Scale.editable = $Scale/CheckBox.button_pressed

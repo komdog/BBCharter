@@ -1,4 +1,4 @@
-[gd_scene load_steps=78 format=3 uid="uid://bo2pso1k2xik8"]
+[gd_scene load_steps=79 format=3 uid="uid://bo2pso1k2xik8"]
 
 [ext_resource type="Theme" uid="uid://cehpee20dikgi" path="res://themes/main_theme.tres" id="1_71y40"]
 [ext_resource type="Script" path="res://src/cl_main.gd" id="2_ca1lw"]
@@ -62,6 +62,9 @@ texture = ExtResource("5_dqdvp")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_x3vgy"]
 texture = ExtResource("5_dqdvp")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e28ao"]
+bg_color = Color(0, 0, 0, 0.5)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x5vw1"]
 bg_color = Color(0.0862745, 0.0862745, 0.0862745, 1)
@@ -546,6 +549,18 @@ theme_override_colors/font_color = Color(1, 1, 1, 0.737255)
 theme_override_font_sizes/font_size = 18
 text = "VOICE BANKS"
 
+[node name="EffectsTemp" type="Panel" parent="KeyTimeline/KeyController"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -960.0
+offset_top = -376.0
+offset_right = 960.0
+offset_bottom = -272.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_e28ao")
+
 [node name="Character" type="Node2D" parent="."]
 position = Vector2(992, 336)
 scale = Vector2(0.778, 0.778)
@@ -963,7 +978,7 @@ offset_right = 186.0
 offset_bottom = 22.5
 grow_vertical = 2
 theme_override_font_sizes/font_size = 24
-text = "00:00.00 : 00:00.00"
+text = "00:00.000 : 00:00.000"
 horizontal_alignment = 1
 vertical_alignment = 1
 script = ExtResource("11_ycej5")
@@ -1052,6 +1067,7 @@ item_0/text = "Add Animation"
 item_0/id = 0
 item_1/text = "Add Effect"
 item_1/id = 1
+item_1/disabled = true
 item_2/text = "Add Background"
 item_2/id = 2
 item_3/text = ""
@@ -1455,6 +1471,12 @@ text = "X-Offset"
 horizontal_alignment = 2
 vertical_alignment = 1
 
+[node name="CheckBox" type="CheckBox" parent="Popups/PlaceAnimation/OffsetX"]
+offset_left = -24.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = 24.0
+
 [node name="OffsetY" type="SpinBox" parent="Popups/PlaceAnimation"]
 layout_mode = 0
 offset_left = 304.0
@@ -1503,6 +1525,12 @@ theme_override_colors/font_color = Color(0.501961, 0.501961, 0.501961, 1)
 text = "Scale Multiplier"
 horizontal_alignment = 2
 vertical_alignment = 1
+
+[node name="CheckBox" type="CheckBox" parent="Popups/PlaceAnimation/Scale"]
+offset_left = -24.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = 24.0
 
 [node name="Create" type="Button" parent="Popups/PlaceAnimation"]
 layout_mode = 2
@@ -1620,12 +1648,40 @@ text = "Total Frames"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="Speed" type="SpinBox" parent="Popups/PlaceEffect"]
+[node name="Time" type="SpinBox" parent="Popups/PlaceEffect"]
 layout_mode = 0
 offset_left = 100.0
 offset_top = 240.0
 offset_right = 507.0
 offset_bottom = 271.0
+step = 0.001
+value = 1.0
+allow_greater = true
+custom_arrow_step = 0.1
+
+[node name="Time Label" type="Label" parent="Popups/PlaceEffect/Time"]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -142.0
+offset_top = 3.0
+offset_right = -22.0
+offset_bottom = 3.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.501961, 0.501961, 0.501961, 1)
+text = "Duration"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Speed" type="SpinBox" parent="Popups/PlaceEffect"]
+layout_mode = 0
+offset_left = 100.0
+offset_top = 280.0
+offset_right = 507.0
+offset_bottom = 311.0
 step = 0.1
 value = 1.0
 allow_greater = true
@@ -1643,9 +1699,119 @@ offset_bottom = 3.0
 grow_horizontal = 0
 grow_vertical = 2
 theme_override_colors/font_color = Color(0.501961, 0.501961, 0.501961, 1)
-text = "Duration"
+text = "Playback Speed"
 horizontal_alignment = 2
 vertical_alignment = 1
+
+[node name="CheckBox" type="CheckBox" parent="Popups/PlaceEffect/Speed"]
+layout_mode = 0
+offset_left = -24.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = 24.0
+
+[node name="OffsetX" type="SpinBox" parent="Popups/PlaceEffect"]
+layout_mode = 0
+offset_left = 100.0
+offset_top = 320.0
+offset_right = 304.0
+offset_bottom = 351.0
+rounded = true
+allow_greater = true
+allow_lesser = true
+
+[node name="OffsetX Label" type="Label" parent="Popups/PlaceEffect/OffsetX"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 119.0
+offset_top = 5.0
+offset_right = -21.5
+offset_bottom = 31.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.501961, 0.501961, 0.501961, 1)
+text = "X-Offset"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="CheckBox" type="CheckBox" parent="Popups/PlaceEffect/OffsetX"]
+layout_mode = 0
+offset_left = -24.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = 24.0
+
+[node name="OffsetY" type="SpinBox" parent="Popups/PlaceEffect"]
+layout_mode = 0
+offset_left = 304.0
+offset_top = 320.0
+offset_right = 507.0
+offset_bottom = 351.0
+rounded = true
+allow_greater = true
+allow_lesser = true
+
+[node name="OffsetY Label" type="Label" parent="Popups/PlaceEffect/OffsetY"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 119.5
+offset_top = 5.0
+offset_right = -21.0
+offset_bottom = 31.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.501961, 0.501961, 0.501961, 1)
+text = "Y-Offset"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Scale" type="SpinBox" parent="Popups/PlaceEffect"]
+layout_mode = 0
+offset_left = 100.0
+offset_top = 360.0
+offset_right = 507.0
+offset_bottom = 391.0
+step = 0.01
+value = 1.0
+allow_greater = true
+custom_arrow_step = 0.1
+
+[node name="Scale Label" type="Label" parent="Popups/PlaceEffect/Scale"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 265.0
+offset_top = 5.0
+offset_right = -22.0
+offset_bottom = 31.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.501961, 0.501961, 0.501961, 1)
+text = "Scale Multiplier"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="CheckBox" type="CheckBox" parent="Popups/PlaceEffect/Scale"]
+layout_mode = 0
+offset_left = -24.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = 24.0
+
+[node name="Scale2" type="CheckButton" parent="Popups/PlaceEffect"]
+layout_mode = 0
+offset_left = 100.0
+offset_top = 400.0
+offset_right = 507.0
+offset_bottom = 431.0
+text = "Scaled to Character"
+alignment = 2
+
+[node name="CheckBox" type="CheckBox" parent="Popups/PlaceEffect/Scale2"]
+layout_mode = 0
+offset_left = -24.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = 24.0
 
 [node name="Create" type="Button" parent="Popups/PlaceEffect"]
 layout_mode = 2
@@ -1795,9 +1961,15 @@ text = "Cancel"
 [connection signal="text_changed" from="Popups/IconDifficultyPopup/File" to="Popups/IconDifficultyPopup" method="_on_file_text_changed"]
 [connection signal="button_up" from="Popups/IconDifficultyPopup/Set" to="Popups/IconDifficultyPopup" method="_on_set_button_up"]
 [connection signal="button_up" from="Popups/IconDifficultyPopup/Cancel" to="Popups/RenameDifficultyPopup" method="_on_cancel_button_up"]
+[connection signal="button_up" from="Popups/PlaceAnimation/OffsetX/CheckBox" to="Popups/PlaceAnimation" method="_on_check_box_button_up"]
+[connection signal="button_up" from="Popups/PlaceAnimation/Scale/CheckBox" to="Popups/PlaceAnimation" method="_on_check_box_button_up"]
 [connection signal="button_up" from="Popups/PlaceAnimation/Create" to="Character" method="_on_create_button_up"]
 [connection signal="button_up" from="Popups/PlaceAnimation/Create" to="Popups/PlaceAnimation" method="_on_create_button_up"]
 [connection signal="button_up" from="Popups/PlaceAnimation/Cancel" to="Popups/PlaceAnimation" method="_on_cancel_button_up"]
+[connection signal="button_up" from="Popups/PlaceEffect/Speed/CheckBox" to="Popups/PlaceEffect" method="_on_check_box_button_up"]
+[connection signal="button_up" from="Popups/PlaceEffect/OffsetX/CheckBox" to="Popups/PlaceEffect" method="_on_check_box_button_up"]
+[connection signal="button_up" from="Popups/PlaceEffect/Scale/CheckBox" to="Popups/PlaceEffect" method="_on_check_box_button_up"]
+[connection signal="button_up" from="Popups/PlaceEffect/Scale2/CheckBox" to="Popups/PlaceEffect" method="_on_check_box_button_up"]
 [connection signal="button_up" from="Popups/PlaceEffect/Create" to="Character" method="_on_create_button_up"]
 [connection signal="button_up" from="Popups/PlaceEffect/Create" to="Popups/PlaceEffect" method="_on_create_button_up"]
 [connection signal="button_up" from="Popups/PlaceEffect/Cancel" to="Popups/PlaceEffect" method="_on_cancel_button_up"]

@@ -171,7 +171,7 @@ func _process(_delta):
 	
 	$ShutterLabel.position.x = -position.x + 16
 	$AnimationsLabel.position.x = -position.x + 16
-	$EffectsLabel.position.x = -position.x + 16
+	$EffectsLabel.position.x = -position.x + 16; $EffectsTemp.position.x = -position.x
 	$BackgroundsLabel.position.x = -position.x + 16
 	$ModifierLabel.position.x = -position.x + 16
 	$SoundLoopsLabel.position.x = -position.x + 16

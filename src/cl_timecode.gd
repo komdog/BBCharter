@@ -36,7 +36,8 @@ func _process(_delta):
 			text = "-%02d:%02d.%02d" % current_array
 		else:
 			text = "%02d:%02d.%02d" % current_array
-		text = text + " : "
+		if abs(current_time_msec) < 100:text += "0"
+		text += " : "
 		
 		if total_time_msec - offset_time_msec < 0:
 			total_time_msec = total_time_msec - offset_time_msec + 1000
@@ -53,3 +54,4 @@ func _process(_delta):
 		]
 		
 		text = text + "%02d:%02d.%02d" % total_array
+		if abs(total_time_msec) < 100:text += "0"

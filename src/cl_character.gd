@@ -265,10 +265,10 @@ func run_effect(idx: int):
 	$Panel/Effect.texture = Assets.get_asset(effect["path"])
 	$Panel/Effect.hframes = effect["sheet_data"]["h"]
 	$Panel/Effect.vframes = effect["sheet_data"]["v"]
+	$Panel/Effect.scale = Vector2(effect['scale_multiplier'], effect['scale_multiplier']) if effect.has('scale_multiplier') else Vector2(1.0, 1.0)
 	
-	# The "playback_speed" is actually the duration. Don't ask.
 	effect_tween = create_tween()
-	effect_tween.tween_property($Panel/Effect, "frame", effect["sheet_data"]["total"]-1, effect["playback_speed"])
+	effect_tween.tween_property($Panel/Effect, "frame", effect["sheet_data"]["total"]-1, effect["duration"]/effect["playback_speed"] if effect.has("playback_speed") else effect["duration"])
 	effect_tween.play()
 	
 	await effect_tween.finished

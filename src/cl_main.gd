@@ -32,20 +32,17 @@ func _input(event):
 		else:
 			get_window().mode = get_window().MODE_FULLSCREEN
 	if event.is_action_pressed("open_project_dir"):
-		if OS.get_name() == "macOS":
-			OS.shell_open("file:" + Save.project_dir)
-		else:
-			OS.shell_open(Save.project_dir)
+		var url = Save.project_dir
+		if OS.get_name() == "macOS": url = "file:" + url
+		OS.shell_open(url)
 	if event.is_action_pressed("open_note_file"):
-		if OS.get_name() == "macOS":
-			OS.shell_open("file:" + Save.project_dir + "/config/notes.cfg")
-		else:
-			OS.shell_open(Save.project_dir + "/config/notes.cfg")
+		var url = Save.project_dir + "/config/notes.cfg"
+		if OS.get_name() == "macOS": url = "file:" + url
+		OS.shell_open(url)
 	if event.is_action_pressed("open_keyframes_file"):
-		if OS.get_name() == "macOS":
-			OS.shell_open("file:" + Save.project_dir + "/config/keyframes.cfg")
-		else:
-			OS.shell_open(Save.project_dir + "/config/keyframes.cfg")
+		var url = Save.project_dir + "/config/keyframes.cfg"
+		if OS.get_name() == "macOS": url = "file:" + url
+		OS.shell_open(url)
 
 func _notification(what):
 	if what == NOTIFICATION_WM_CLOSE_REQUEST:
