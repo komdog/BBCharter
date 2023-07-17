@@ -45,4 +45,5 @@ func _on_id_pressed(id: int):
 			Timeline.key_controller.spawn_single_keyframe(new_sound_oneshot_key, Prefabs.oneshot_keyframe, Timeline.oneshot_sound_track)
 			Global.project_saved = false
 		ADDVOICEBANK:
-			pass
+			Popups.id = 0
+			Events.emit_signal('add_voicebank_to_timeline', asset_path)

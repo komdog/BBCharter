@@ -22,6 +22,7 @@ func _on_id_pressed(id: int):
 			Popups.id = 0
 			Events.emit_signal('add_animation_to_timeline', asset_path)
 		ADDEFFECT:
+			Popups.id = 0
 			Events.emit_signal('add_effect_to_timeline', asset_path)
 		ADDBACKGROUND:
 			if time < 0: time = 0

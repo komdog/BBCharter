@@ -1,4 +1,4 @@
-[gd_scene load_steps=79 format=3 uid="uid://bo2pso1k2xik8"]
+[gd_scene load_steps=82 format=3 uid="uid://bo2pso1k2xik8"]
 
 [ext_resource type="Theme" uid="uid://cehpee20dikgi" path="res://themes/main_theme.tres" id="1_71y40"]
 [ext_resource type="Script" path="res://src/cl_main.gd" id="2_ca1lw"]
@@ -45,6 +45,9 @@
 [ext_resource type="Texture2D" uid="uid://f5ooa0gle4sk" path="res://assets/icon_difficulty.png" id="37_8v42t"]
 [ext_resource type="Script" path="res://src/cl_popup_animation.gd" id="42_u4042"]
 [ext_resource type="Script" path="res://src/cl_popup_effect.gd" id="43_cm3wp"]
+[ext_resource type="Script" path="res://src/cl_popup_voicebank.gd" id="44_earsn"]
+[ext_resource type="Script" path="res://prefabs/VoiceBankNode.gd" id="45_gd3qt"]
+[ext_resource type="Texture2D" uid="uid://bt6ryhnpjv6yf" path="res://assets/icon-delete.png" id="45_lslcg"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_aht3f"]
 
@@ -1078,7 +1081,6 @@ item_4/id = 3
 script = ExtResource("22_btaqb")
 
 [node name="Popups" type="Panel" parent="."]
-visible = false
 layout_mode = 0
 offset_right = 1920.0
 offset_bottom = 1080.0
@@ -1472,6 +1474,7 @@ horizontal_alignment = 2
 vertical_alignment = 1
 
 [node name="CheckBox" type="CheckBox" parent="Popups/PlaceAnimation/OffsetX"]
+layout_mode = 0
 offset_left = -24.0
 offset_top = 8.0
 offset_right = -8.0
@@ -1527,6 +1530,7 @@ horizontal_alignment = 2
 vertical_alignment = 1
 
 [node name="CheckBox" type="CheckBox" parent="Popups/PlaceAnimation/Scale"]
+layout_mode = 0
 offset_left = -24.0
 offset_top = 8.0
 offset_right = -8.0
@@ -1552,7 +1556,6 @@ theme_override_font_sizes/font_size = 18
 text = "Cancel"
 
 [node name="PlaceEffect" type="Panel" parent="Popups"]
-visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -1832,6 +1835,85 @@ offset_bottom = 571.0
 theme_override_font_sizes/font_size = 18
 text = "Cancel"
 
+[node name="EditVoiceBank" type="Panel" parent="Popups"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -295.0
+offset_right = 300.0
+offset_bottom = 295.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_y543m")
+script = ExtResource("44_earsn")
+
+[node name="Label" type="Label" parent="Popups/EditVoiceBank"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 58.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 20
+text = "Place New Voice Bank"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Popups/EditVoiceBank"]
+layout_mode = 2
+offset_left = 100.0
+offset_top = 123.0
+offset_right = 507.0
+offset_bottom = 431.0
+follow_focus = true
+horizontal_scroll_mode = 0
+
+[node name="VBankContainer" type="VBoxContainer" parent="Popups/EditVoiceBank/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Bank" type="LineEdit" parent="Popups/EditVoiceBank/ScrollContainer/VBankContainer"]
+layout_mode = 2
+focus_mode = 1
+placeholder_text = "Audio File Name"
+script = ExtResource("45_gd3qt")
+
+[node name="Delete" type="Button" parent="Popups/EditVoiceBank/ScrollContainer/VBankContainer/Bank"]
+layout_mode = 0
+offset_left = 377.0
+offset_top = 3.0
+offset_right = 441.0
+offset_bottom = 67.0
+scale = Vector2(0.4, 0.4)
+icon = ExtResource("45_lslcg")
+
+[node name="Add" type="Button" parent="Popups/EditVoiceBank/ScrollContainer/VBankContainer"]
+layout_mode = 2
+text = "Add"
+flat = true
+
+[node name="Create" type="Button" parent="Popups/EditVoiceBank"]
+layout_mode = 2
+offset_left = 196.0
+offset_top = 531.0
+offset_right = 292.0
+offset_bottom = 571.0
+focus_mode = 0
+theme_override_font_sizes/font_size = 18
+text = "Edit"
+
+[node name="Cancel" type="Button" parent="Popups/EditVoiceBank"]
+layout_mode = 2
+offset_left = 308.0
+offset_top = 531.0
+offset_right = 394.0
+offset_bottom = 571.0
+theme_override_font_sizes/font_size = 18
+text = "Cancel"
+
 [node name="ClearPopup" type="Panel" parent="Popups"]
 visible = false
 layout_mode = 1
@@ -1973,6 +2055,10 @@ text = "Cancel"
 [connection signal="button_up" from="Popups/PlaceEffect/Create" to="Character" method="_on_create_button_up"]
 [connection signal="button_up" from="Popups/PlaceEffect/Create" to="Popups/PlaceEffect" method="_on_create_button_up"]
 [connection signal="button_up" from="Popups/PlaceEffect/Cancel" to="Popups/PlaceEffect" method="_on_cancel_button_up"]
+[connection signal="button_up" from="Popups/EditVoiceBank/ScrollContainer/VBankContainer/Bank/Delete" to="Popups/EditVoiceBank/ScrollContainer/VBankContainer/Bank" method="_on_delete_button_up"]
+[connection signal="button_up" from="Popups/EditVoiceBank/ScrollContainer/VBankContainer/Add" to="Popups/EditVoiceBank" method="_on_add_button_up"]
+[connection signal="button_up" from="Popups/EditVoiceBank/Create" to="Popups/EditVoiceBank" method="_on_create_button_up"]
+[connection signal="button_up" from="Popups/EditVoiceBank/Cancel" to="Popups/EditVoiceBank" method="_on_cancel_button_up"]
 [connection signal="button_up" from="Popups/ClearPopup/Yes" to="Popups/ClearPopup" method="_on_yes_button_up"]
 [connection signal="button_up" from="Popups/ClearPopup/No" to="Popups/ClearPopup" method="_on_no_button_up"]
 [connection signal="button_up" from="Popups/QuitPopup/Save" to="Popups/QuitPopup" method="_on_save_button_up"]
