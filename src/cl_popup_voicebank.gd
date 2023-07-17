@@ -32,7 +32,7 @@ func _on_add_voicebank_to_timeline(asset_path):
 	
 	if Popups.id > 0:
 		timestamp = asset_path['timestamp']
-		for i in asset_path['voice_paths'].size()-1:
+		for i in asset_path['voice_paths'].size():
 			var bank = default_bank.duplicate()
 			bank.text = asset_path['voice_paths'][i]
 			VBankContainer.add_child(bank)
@@ -65,7 +65,7 @@ func _on_create_button_up():
 		}
 	
 	for child in VBankContainer.get_children():
-		if child == LineEdit:
+		if child.get_class() == 'LineEdit':
 			if !child.text.ends_with('.mp3') and child.text.length() > 0: child.text += '.mp3'
 			new_voice_key['voice_paths'].append(child.text)
 	
@@ -74,11 +74,11 @@ func _on_create_button_up():
 			time = timestamp; new_voice_key['timestamp'] = time
 		for bank in Timeline.voice_banks_track.get_children():
 			if snappedf(bank['data']['timestamp'], 0.001) == snappedf(time, 0.001):
-				Timeline.delete_keyframe('voice_paths', bank, Save.keyframes['voice_paths'].find(bank['data']))
+				Timeline.delete_keyframe('voice_bank', bank, Save.keyframes['voice_bank'].find(bank['data']))
 	
 	Global.project_saved = false
-	Save.keyframes['voice_paths'].append(new_voice_key)
-	Save.keyframes['voice_paths'].sort_custom(func(a, b): return a['timestamp'] < b['timestamp'])
+	Save.keyframes['voice_bank'].append(new_voice_key)
+	Save.keyframes['voice_bank'].sort_custom(func(a, b): return a['timestamp'] < b['timestamp'])
 	Timeline.key_controller.spawn_single_keyframe(new_voice_key, Prefabs.voice_keyframe, Timeline.voice_banks_track)
 	_on_cancel_button_up()
 
