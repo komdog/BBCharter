@@ -1058,7 +1058,6 @@ item_1/text = "Add Oneshot Sound"
 item_1/id = 1
 item_2/text = "Add Voice Bank"
 item_2/id = 2
-item_2/disabled = true
 script = ExtResource("34_8buew")
 
 [node name="ImageMenu" type="PopupMenu" parent="."]

@@ -2,10 +2,9 @@ extends Panel
 
 var VBankContainer:VBoxContainer
 var default_bank:LineEdit
-var add_button:Button
+var button:Button
 
 var timestamp:float
-
 
 func _ready():
 	Events.popups_opened.connect(_on_popups_opened)
@@ -13,7 +12,7 @@ func _ready():
 	
 	VBankContainer = $ScrollContainer/VBankContainer
 	default_bank = $ScrollContainer/VBankContainer/Bank.duplicate()
-	add_button = $ScrollContainer/VBankContainer/Add.duplicate()
+	button = $ScrollContainer/VBankContainer/Add.duplicate()
 
 func _on_popups_opened(_index):
 	if Popups.id > 0:
@@ -40,7 +39,6 @@ func _on_add_voicebank_to_timeline(asset_path):
 		var time:float
 		if Global.snapping_allowed: time = Global.get_timestamp_snapped()
 		else: time = Global.song_pos
-		if time < 0: time = 0
 		
 		for bank in Timeline.voice_banks_track.get_children():
 			if snappedf(bank['data']['timestamp'], 0.001) == snappedf(time, 0.001):
@@ -50,8 +48,7 @@ func _on_add_voicebank_to_timeline(asset_path):
 		
 		_on_add_button_up(); VBankContainer.get_child(0).text = asset_path
 	
-	var button:Button = add_button.duplicate()
-	VBankContainer.add_child(button)
+	VBankContainer.add_child(button.duplicate())
 	Popups.reveal(Popups.VOICEBANK)
 
 func _on_create_button_up():
