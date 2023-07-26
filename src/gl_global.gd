@@ -57,11 +57,16 @@ func _process(_delta):
 		mouse_pos = get_window().get_mouse_position().x - 960
 
 func load_mp3(path) -> AudioStreamMP3:
-	var song_file = FileAccess.open(path, FileAccess.READ)
-	var bytes = song_file.get_buffer(song_file.get_length())
 	var mp3_steam = AudioStreamMP3.new()
-	mp3_steam.data = bytes
-	song_file.close()
+	var song_file = FileAccess.open(path, FileAccess.READ)
+	
+	if song_file == null:
+		mp3_steam = preload("res://assets/base_jam.mp3")
+	else:
+		var bytes = song_file.get_buffer(song_file.get_length())
+		mp3_steam.data = bytes
+		song_file.close()
+	
 	print('Loaded %s' % path)
 	return mp3_steam
 

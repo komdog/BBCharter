@@ -41,23 +41,13 @@ func save_cfg(file_name: String, new_data) -> int:
 	else: return FAILED
 
 func valid_project():
-	if load_cfg('asset.cfg') == {}:
-		print("Could not load 'asset.cfg'")
-		return false
 	if load_cfg('keyframes.cfg') == {}:
-		print("Could not load 'keyframes.cfg'")
 		return false
 	if load_cfg('meta.cfg') == {}:
-		print("Could not load 'meta.cfg'")
 		return false
 	if load_cfg('settings.cfg') == {}:
-		print("Could not load 'settings.cfg'")
 		return false
 	if load_cfg('notes.cfg') == {}:
-		print("Could not load 'notes.cfg'")
-		return false
-	if !FileAccess.file_exists(project_dir + "/audio/" + load_cfg('asset.cfg').get('song_path', "")):
-		print("Could not load '%s'" % load_cfg('asset.cfg').get('song_path', "song_path"))
 		return false
 	return true
 

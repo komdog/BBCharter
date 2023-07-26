@@ -1386,8 +1386,10 @@ offset_left = 100.0
 offset_top = 163.0
 offset_right = 507.0
 offset_bottom = 194.0
+min_value = 1.0
 value = 2.0
 rounded = true
+allow_greater = true
 
 [node name="SheetH Label" type="Label" parent="Popups/PlaceAnimation/SheetH"]
 layout_mode = 1
@@ -1409,8 +1411,10 @@ offset_left = 100.0
 offset_top = 203.0
 offset_right = 507.0
 offset_bottom = 234.0
+min_value = 1.0
 value = 3.0
 rounded = true
+allow_greater = true
 
 [node name="SheetV Label" type="Label" parent="Popups/PlaceAnimation/SheetV"]
 layout_mode = 1
@@ -1432,8 +1436,10 @@ offset_left = 100.0
 offset_top = 243.0
 offset_right = 507.0
 offset_bottom = 234.0
+min_value = 1.0
 value = 6.0
 rounded = true
+allow_greater = true
 
 [node name="Total Label" type="Label" parent="Popups/PlaceAnimation/Total"]
 layout_mode = 1
@@ -1510,7 +1516,7 @@ offset_left = 100.0
 offset_top = 320.0
 offset_right = 507.0
 offset_bottom = 351.0
-step = 0.01
+step = 0.001
 value = 1.0
 allow_greater = true
 custom_arrow_step = 0.1
@@ -1589,8 +1595,10 @@ offset_left = 100.0
 offset_top = 123.0
 offset_right = 507.0
 offset_bottom = 154.0
+min_value = 1.0
 value = 2.0
 rounded = true
+allow_greater = true
 
 [node name="SheetH Label" type="Label" parent="Popups/PlaceEffect/SheetH"]
 layout_mode = 1
@@ -1612,8 +1620,10 @@ offset_left = 100.0
 offset_top = 163.0
 offset_right = 507.0
 offset_bottom = 194.0
+min_value = 1.0
 value = 3.0
 rounded = true
+allow_greater = true
 
 [node name="SheetV Label" type="Label" parent="Popups/PlaceEffect/SheetV"]
 layout_mode = 1
@@ -1635,8 +1645,10 @@ offset_left = 100.0
 offset_top = 203.0
 offset_right = 507.0
 offset_bottom = 231.0
+min_value = 1.0
 value = 6.0
 rounded = true
+allow_greater = true
 
 [node name="Total Label" type="Label" parent="Popups/PlaceEffect/Total"]
 layout_mode = 1
@@ -1775,7 +1787,7 @@ offset_left = 100.0
 offset_top = 360.0
 offset_right = 507.0
 offset_bottom = 391.0
-step = 0.01
+step = 0.001
 value = 1.0
 allow_greater = true
 custom_arrow_step = 0.1
@@ -2030,7 +2042,6 @@ text = "Cancel"
 [connection signal="id_pressed" from="Toolbar/MenuBar/Help" to="Toolbar/MenuBar/Help" method="_on_id_pressed"]
 [connection signal="item_selected" from="Toolbar/Difficulty" to="Toolbar/Difficulty" method="_on_item_selected"]
 [connection signal="dir_selected" from="FileDialog" to="FileDialog" method="_on_dir_selected"]
-[connection signal="file_selected" from="FileDialog" to="FileDialog" method="_on_file_selected"]
 [connection signal="item_selected" from="BottomBar/Snapping" to="BottomBar/Snapping" method="_on_item_selected"]
 [connection signal="toggled" from="BottomBar/Snapping/SnapToggle" to="BottomBar/Snapping" method="_on_snap_toggle_toggled"]
 [connection signal="id_pressed" from="AudioMenu" to="AudioMenu" method="_on_id_pressed"]
