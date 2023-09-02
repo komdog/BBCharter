@@ -11,6 +11,7 @@ var Total:int = 6
 var OffsetX:int = 0
 var OffsetY:int = 0
 var Scale:float = 1.0
+var Speed:float = 1.0
 
 func _ready():
 	Events.popups_opened.connect(_on_popups_opened)
@@ -39,6 +40,7 @@ func _on_create_button_up():
 		}
 	if $OffsetX/CheckBox.button_pressed: new_animation_key["position_offset"] = {"x": $OffsetX.value ,"y": $OffsetY.value}
 	if $Scale/CheckBox.button_pressed: new_animation_key["scale_multiplier"] = $Scale.value
+	if $Speed/CheckBox.button_pressed: new_animation_key["manual_speed_multiplier"] = $Speed.value
 	
 	Horny = $Horny.text
 	SheetH = $SheetH.value
@@ -47,6 +49,7 @@ func _on_create_button_up():
 	OffsetX = $OffsetX.value
 	OffsetY = $OffsetY.value
 	Scale = $Scale.value
+	Speed = $Speed.value
 	
 	if Popups.id > 0 or Global.replacing_allowed:
 		if Popups.id > 0:
@@ -73,6 +76,7 @@ func reset():
 	$OffsetX.value = OffsetX
 	$OffsetY.value = OffsetY
 	$Scale.value = Scale
+	$Speed.value = Speed
 
 func _on_add_animation_to_timeline(asset_path):
 	if Popups.id > 0:
@@ -97,6 +101,11 @@ func _on_add_animation_to_timeline(asset_path):
 			$Scale.value = asset_path['scale_multiplier']
 		else:
 			$Scale/CheckBox.button_pressed = false
+		if asset_path.has('manual_speed_multiplier'):
+			$Speed/CheckBox.button_pressed = true
+			$Speed.value = asset_path['manual_speed_multiplier']
+		else:
+			$Speed/CheckBox.button_pressed = false
 	else:
 		var time:float
 		if Global.snapping_allowed: time = Global.get_timestamp_snapped()
@@ -116,3 +125,4 @@ func _on_check_box_button_up():
 	$OffsetX.editable = $OffsetX/CheckBox.button_pressed
 	$OffsetY.editable = $OffsetX/CheckBox.button_pressed
 	$Scale.editable = $Scale/CheckBox.button_pressed
+	$Speed.editable = $Speed/CheckBox.button_pressed
