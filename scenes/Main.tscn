@@ -1344,6 +1344,7 @@ theme_override_font_sizes/font_size = 18
 text = "Cancel"
 
 [node name="PlaceAnimation" type="Panel" parent="Popups"]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5

@@ -43,7 +43,7 @@ func _on_dir_selected(path: String):
 			dir.make_dir("config")
 		
 		var config = ConfigFile.new()
-		if !dir.file_exists(path + "/config/assets.cfg"):
+		if !dir.file_exists(path + "/config/asset.cfg"):
 			config.set_value("main", "data", {
 				"song_path":"base_jam.mp3",
 				"horny_mode_sound":"",
@@ -51,7 +51,7 @@ func _on_dir_selected(path: String):
 				"final_audio":""
 			})
 			await get_tree().physics_frame
-			config.save(path + "/config/assets.cfg")
+			config.save(path + "/config/asset.cfg")
 		
 		if !dir.file_exists(path + "/config/keyframes.cfg"):
 			config.set_value("main", "data", {
