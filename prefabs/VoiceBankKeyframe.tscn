@@ -17,6 +17,7 @@ offset_left = -19.0
 offset_top = -29.0
 offset_right = 19.0
 offset_bottom = 29.0
+mouse_default_cursor_shape = 2
 
 [connection signal="gui_input" from="InputHandler" to="." method="_on_input_handler_gui_input"]
 [connection signal="mouse_exited" from="InputHandler" to="." method="_on_mouse_exited"]

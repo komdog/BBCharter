@@ -95,6 +95,7 @@ func _physics_process(_delta):
 			$Panel/Visual.hframes = 1
 			$Panel/Visual.vframes = 1
 			$Panel/Visual.frame = $Panel/Visual.hframes * $Panel/Visual.vframes - 1
+	$Panel.mouse_default_cursor_shape = 2 if $Panel/Visual.texture != null else 0
 	
 	if Save.keyframes.has('effects') and Save.keyframes['effects'].size() > 0 and Timeline.effects_track.get_child_count() > 0:
 		var arr = Save.keyframes['effects'].filter(func(effect): return Global.song_pos >= effect['timestamp'])
@@ -123,15 +124,19 @@ func set_animation(idx: int):
 	if horny: $Panel/Visual.texture = Assets.get_asset(loop['animations']['horny'])
 	else: $Panel/Visual.texture = Assets.get_asset(loop['animations']['normal'])
 	
-	if loop.has('manual_speed_multiplier'):
-		manual_speed_multiplier = loop['manual_speed_multiplier']
-	else:
-		if idx == 0: manual_speed_multiplier = 1
+	for i in range(idx, -1, -1):
+		if Save.keyframes['loops'][i].has('manual_speed_multiplier'):
+			manual_speed_multiplier = Save.keyframes['loops'][i]['manual_speed_multiplier']
+			break
+		else:
+			if i == 0: manual_speed_multiplier = 1
 	
-	if loop.has('scale_multiplier'):
-		$Panel/Visual.scale = Vector2(loop['scale_multiplier'], loop['scale_multiplier'])
-	else:
-		if idx == 0: $Panel/Visual.scale = Vector2(1, 1)
+	for i in range(idx, -1, -1):
+		if Save.keyframes['loops'][i].has('scale_multiplier'):
+			$Panel/Visual.scale = Vector2(Save.keyframes['loops'][i]['scale_multiplier'], Save.keyframes['loops'][i]['scale_multiplier'])
+			break
+		else:
+			if i == 0: $Panel/Visual.scale = Vector2(1, 1)
 	
 	if loop.has('position_offset'):
 		if loop['position_offset'].has('x'):
@@ -156,6 +161,8 @@ func change_animation(idx: int):
 		if loop_index > 1: run_loop()
 
 func _on_hit_note(data):
+	await get_tree().process_frame
+	
 	# Ignore Ghost Notes
 	if data['note_modifier'] == 2: return
 	var index = Global.current_chart.find(data)

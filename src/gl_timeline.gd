@@ -1,7 +1,7 @@
 extends Node
 
 var note_controller: Node2D
-var key_controller: Node2D
+var key_controller: Control
 
 var beat_container: Node2D
 var half_container: Node2D
@@ -28,6 +28,8 @@ var modifier_track: Node2D
 var sfx_track: Node2D
 var oneshot_sound_track: Node2D
 var voice_banks_track: Node2D
+
+var note_scroller: Control
 
 var inc_scale: float
 
@@ -80,17 +82,16 @@ func clamp_seek(value):
 	Global.music.song_position_raw = clampf(Global.music.song_position_raw + value, 0.0, Global.song_length )
 	Global.music.seek(Global.music.song_position_raw)
 	Global.music.pause_pos = Global.music.song_position_raw
+	note_scroller.value = Global.music.song_position_raw
 
 func seek(value):
 	Global.music.song_position_raw = value
 	Global.music.seek(Global.music.song_position_raw)
 	Global.music.pause_pos = Global.music.song_position_raw
+	note_scroller.value = Global.music.song_position_raw
 
 func reset():
 	seek(0.0)
-
-func scroll(value):
-	Events.emit_signal('update_scrolling', 10*value)
 
 func clear_timeline():
 	clear_notes_only()
@@ -155,11 +156,6 @@ func _input(event):
 									line_center.set_default_color(Color(0.61,0.02,0.26,1))
 									marquee_point_a = -1
 									marquee_point_b = -1
-				else:
-					if event.button_index == MOUSE_BUTTON_WHEEL_UP:
-						scroll(2)
-					if event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
-						scroll(-2)
 	
 	if event is InputEventPanGesture:
 		if get_viewport().get_mouse_position().y > 672:
@@ -171,7 +167,6 @@ func _input(event):
 				# Seeking
 				inc_scale = (Global.zoom_factor / 8) if !event.alt_pressed else 0.005
 				clamp_seek(inc_scale * event.delta.x)
-				scroll(-event.delta.y)
 	
 	if event is InputEventKey:
 		# Speed up / Slow down song

@@ -9,7 +9,6 @@ signal difficulty_deleted(index)
 
 signal update_bpm()
 signal update_notespeed()
-signal update_scrolling(num)
 signal update_snapping(index)
 
 signal notify()

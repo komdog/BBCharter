@@ -19,16 +19,17 @@ func _input(event):
 			seek(pause_pos)
 
 func _process(_delta):
-		if Popups.open:
-			playing = false
-			pause_pos = song_position_raw
-		
-		if playing: 
-			# Get raw song position for pausing
-			song_position_raw = (
-				get_playback_position() 
-				+ AudioServer.get_time_since_last_mix()
-				- AudioServer.get_output_latency()
-			)
-		
-		Global.song_pos = song_position_raw - Global.offset
+	if Popups.open:
+		playing = false
+		pause_pos = song_position_raw
+	
+	if playing: 
+		# Get raw song position for pausing
+		song_position_raw = (
+			get_playback_position() 
+			+ AudioServer.get_time_since_last_mix()
+			- AudioServer.get_output_latency()
+		)
+		Timeline.note_scroller.value = song_position_raw
+	
+	Global.song_pos = song_position_raw - Global.offset

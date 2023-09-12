@@ -1,4 +1,4 @@
-extends Node2D
+extends Control
 
 var note_pos: float
 var note_offset: float
@@ -14,17 +14,16 @@ func _ready():
 	Timeline.key_sixth_container = $Sixth
 	Timeline.key_eighth_container = $Eighth
 	
-	Timeline.shutter_track = $ShutterTrack
-	Timeline.animations_track = $AnimationsTrack
-	Timeline.effects_track = $EffectsTrack
-	Timeline.backgrounds_track = $BackgroundsTrack
-	Timeline.modifier_track = $ModifierTrack
-	Timeline.sfx_track = $SoundLoopsTrack
-	Timeline.oneshot_sound_track = $OneshotSoundTrack
-	Timeline.voice_banks_track = $VoiceBanksTrack
+	Timeline.shutter_track = $Shutter/Track
+	Timeline.animations_track = $Animations/Track
+	Timeline.effects_track = $Effects/Track
+	Timeline.backgrounds_track = $Backgrounds/Track
+	Timeline.modifier_track = $Modifier/Track
+	Timeline.sfx_track = $SoundLoops/Track
+	Timeline.oneshot_sound_track = $OneshotSound/Track
+	Timeline.voice_banks_track = $VoiceBanks/Track
 	
 	Events.song_loaded.connect(_on_song_loaded)
-	Events.update_scrolling.connect(_on_update_scrolling)
 	Events.update_bpm.connect(_on_update_bpm)
 
 func _on_song_loaded():
@@ -154,34 +153,15 @@ func reset_indicators():
 			else:
 				$Eighth.remove_child($Eighth.get_child($Eighth.get_child_count()-1))
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
 	note_pos = Global.song_pos * Global.note_speed
 	note_offset = Global.offset * Global.note_speed
-	position.x = note_pos - note_offset + 960
 	
-	$ShutterPanel.position.x = -position.x; $ShutterGradient.position.x = -position.x
-	$AnimationsPanel.position.x = -position.x; $AnimationsGradient.position.x = -position.x
-	$EffectsPanel.position.x = -position.x; $EffectsGradient.position.x = -position.x
-	$BackgroundsPanel.position.x = -position.x; $BackgroundsGradient.position.x = -position.x
-	$ModifierPanel.position.x = -position.x; $ModifierGradient.position.x = -position.x
-	$SoundLoopsPanel.position.x = -position.x; $SoundLoopsGradient.position.x = -position.x
-	$OneshotSoundPanel.position.x = -position.x; $OneshotSoundGradient.position.x = -position.x
-	$VoiceBanksPanel.position.x = -position.x; $VoiceBanksGradient.position.x = -position.x
-	
-	$ShutterLabel.position.x = -position.x + 16
-	$AnimationsLabel.position.x = -position.x + 16
-	$EffectsLabel.position.x = -position.x + 16; $EffectsTemp.position.x = -position.x
-	$BackgroundsLabel.position.x = -position.x + 16
-	$ModifierLabel.position.x = -position.x + 16
-	$SoundLoopsLabel.position.x = -position.x + 16
-	$OneshotSoundLabel.position.x = -position.x + 16
-	$VoiceBanksLabel.position.x = -position.x + 16
-
-func _on_update_scrolling(value):
-	if position.y + value < 175: position.y = 175
-	elif position.y + value > 528: position.y = 528
-	else: position.y += value
+	for child in get_children():
+		if child.has_node("Track"):
+			child.get_node("Track").position.x = note_pos - note_offset + 960
+		else:
+			child.position.x = note_pos - note_offset + 960
 
 func _on_update_bpm():
 	if Global.project_loaded: reset_indicators()

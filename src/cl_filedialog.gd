@@ -18,18 +18,14 @@ func _ready():
 
 func open_project_dialog():
 	print('Opening New Project...')
+	title = "Select Project Directory"
 	create = false
-	
-	title = "Select Project Folder"
-	file_mode = FileDialog.FILE_MODE_OPEN_DIR
 	popup()
 
 func new_project_dialog():
 	print('Creating New Project...')
+	title = "Create Project Directory"
 	create = true
-	
-	title = "Create Project Folder"
-	file_mode = FileDialog.FILE_MODE_OPEN_DIR
 	popup()
 
 func _on_dir_selected(path: String):
