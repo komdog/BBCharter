@@ -1,4 +1,4 @@
-[gd_scene load_steps=81 format=3 uid="uid://bo2pso1k2xik8"]
+[gd_scene load_steps=82 format=3 uid="uid://bo2pso1k2xik8"]
 
 [ext_resource type="Theme" uid="uid://cehpee20dikgi" path="res://themes/main_theme.tres" id="1_71y40"]
 [ext_resource type="Script" path="res://src/cl_main.gd" id="2_ca1lw"]
@@ -47,6 +47,7 @@
 [ext_resource type="Script" path="res://src/cl_popup_animation.gd" id="42_u4042"]
 [ext_resource type="Script" path="res://src/cl_popup_effect.gd" id="43_cm3wp"]
 [ext_resource type="Script" path="res://src/cl_popup_voicebank.gd" id="44_earsn"]
+[ext_resource type="Script" path="res://src/cl_popup_background.gd" id="44_tvfc5"]
 [ext_resource type="Script" path="res://prefabs/VoiceBankNode.gd" id="45_gd3qt"]
 [ext_resource type="Texture2D" uid="uid://bt6ryhnpjv6yf" path="res://assets/icon-delete.png" id="45_lslcg"]
 
@@ -1349,7 +1350,7 @@ placeholder_text = "Horny Alternative Animation"
 layout_mode = 0
 offset_left = 100.0
 offset_top = 163.0
-offset_right = 507.0
+offset_right = 235.0
 offset_bottom = 194.0
 min_value = 1.0
 value = 2.0
@@ -1360,22 +1361,22 @@ allow_greater = true
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_left = 244.0
+offset_left = 33.0
 offset_top = 5.0
 offset_right = -21.0
 offset_bottom = 31.0
 grow_horizontal = 2
 theme_override_colors/font_color = Color(0.501961, 0.501961, 0.501961, 1)
-text = "Horizontal Frames"
+text = "Horizontal"
 horizontal_alignment = 2
 vertical_alignment = 1
 
 [node name="SheetV" type="SpinBox" parent="Popups/PlaceAnimation"]
 layout_mode = 0
-offset_left = 100.0
-offset_top = 203.0
-offset_right = 507.0
-offset_bottom = 234.0
+offset_left = 236.0
+offset_top = 163.0
+offset_right = 371.0
+offset_bottom = 194.0
 min_value = 1.0
 value = 3.0
 rounded = true
@@ -1385,22 +1386,22 @@ allow_greater = true
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_left = 266.0
+offset_left = 55.0
 offset_top = 5.0
 offset_right = -21.0
 offset_bottom = 31.0
 grow_horizontal = 2
 theme_override_colors/font_color = Color(0.501961, 0.501961, 0.501961, 1)
-text = "Vertical Frames"
+text = "Vertical"
 horizontal_alignment = 2
 vertical_alignment = 1
 
 [node name="Total" type="SpinBox" parent="Popups/PlaceAnimation"]
 layout_mode = 0
-offset_left = 100.0
-offset_top = 243.0
+offset_left = 372.0
+offset_top = 163.0
 offset_right = 507.0
-offset_bottom = 234.0
+offset_bottom = 194.0
 min_value = 1.0
 value = 6.0
 rounded = true
@@ -1410,22 +1411,22 @@ allow_greater = true
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_left = 285.0
+offset_left = 75.0
 offset_top = 5.0
 offset_right = -21.0
 offset_bottom = 31.0
 grow_horizontal = 2
 theme_override_colors/font_color = Color(0.501961, 0.501961, 0.501961, 1)
-text = "Total Frames"
+text = "Total"
 horizontal_alignment = 2
 vertical_alignment = 1
 
 [node name="OffsetX" type="SpinBox" parent="Popups/PlaceAnimation"]
 layout_mode = 0
 offset_left = 100.0
-offset_top = 280.0
+offset_top = 203.0
 offset_right = 304.0
-offset_bottom = 311.0
+offset_bottom = 234.0
 rounded = true
 allow_greater = true
 allow_lesser = true
@@ -1454,9 +1455,9 @@ offset_bottom = 24.0
 [node name="OffsetY" type="SpinBox" parent="Popups/PlaceAnimation"]
 layout_mode = 0
 offset_left = 304.0
-offset_top = 280.0
+offset_top = 203.0
 offset_right = 507.0
-offset_bottom = 311.0
+offset_bottom = 234.0
 rounded = true
 allow_greater = true
 allow_lesser = true
@@ -1478,9 +1479,9 @@ vertical_alignment = 1
 [node name="Scale" type="SpinBox" parent="Popups/PlaceAnimation"]
 layout_mode = 0
 offset_left = 100.0
-offset_top = 320.0
+offset_top = 243.0
 offset_right = 507.0
-offset_bottom = 351.0
+offset_bottom = 274.0
 step = 0.001
 value = 1.0
 allow_greater = true
@@ -1510,9 +1511,9 @@ offset_bottom = 24.0
 [node name="Speed" type="SpinBox" parent="Popups/PlaceAnimation"]
 layout_mode = 0
 offset_left = 100.0
-offset_top = 360.0
+offset_top = 283.0
 offset_right = 507.0
-offset_bottom = 391.0
+offset_bottom = 314.0
 min_value = 0.001
 step = 0.001
 value = 1.0
@@ -1846,6 +1847,84 @@ offset_bottom = 571.0
 theme_override_font_sizes/font_size = 18
 text = "Cancel"
 
+[node name="PlaceBackground" type="Panel" parent="Popups"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -295.0
+offset_right = 300.0
+offset_bottom = 295.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_y543m")
+script = ExtResource("44_tvfc5")
+
+[node name="Label" type="Label" parent="Popups/PlaceBackground"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 58.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 20
+text = "Place New Background"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Scale" type="SpinBox" parent="Popups/PlaceBackground"]
+layout_mode = 0
+offset_left = 100.0
+offset_top = 123.0
+offset_right = 507.0
+offset_bottom = 154.0
+step = 0.001
+value = 1.0
+allow_greater = true
+custom_arrow_step = 0.1
+
+[node name="Scale Label" type="Label" parent="Popups/PlaceBackground/Scale"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 169.0
+offset_top = 5.0
+offset_right = -22.0
+offset_bottom = 31.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.501961, 0.501961, 0.501961, 1)
+text = "Background Scale Multiplier"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="CheckBox" type="CheckBox" parent="Popups/PlaceBackground/Scale"]
+offset_left = -24.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = 24.0
+
+[node name="Create" type="Button" parent="Popups/PlaceBackground"]
+layout_mode = 2
+offset_left = 196.0
+offset_top = 531.0
+offset_right = 292.0
+offset_bottom = 571.0
+focus_mode = 0
+theme_override_font_sizes/font_size = 18
+text = "Create"
+
+[node name="Cancel" type="Button" parent="Popups/PlaceBackground"]
+layout_mode = 2
+offset_left = 308.0
+offset_top = 531.0
+offset_right = 394.0
+offset_bottom = 571.0
+theme_override_font_sizes/font_size = 18
+text = "Cancel"
+
 [node name="EditVoiceBank" type="Panel" parent="Popups"]
 visible = false
 layout_mode = 1
@@ -2070,6 +2149,10 @@ text = "Cancel"
 [connection signal="button_up" from="Popups/PlaceEffect/Create" to="Character" method="_on_create_button_up"]
 [connection signal="button_up" from="Popups/PlaceEffect/Create" to="Popups/PlaceEffect" method="_on_create_button_up"]
 [connection signal="button_up" from="Popups/PlaceEffect/Cancel" to="Popups/PlaceEffect" method="_on_cancel_button_up"]
+[connection signal="button_up" from="Popups/PlaceBackground/Scale/CheckBox" to="Popups/PlaceBackground" method="_on_check_box_button_up"]
+[connection signal="button_up" from="Popups/PlaceBackground/Create" to="Character" method="_on_create_button_up"]
+[connection signal="button_up" from="Popups/PlaceBackground/Create" to="Popups/PlaceBackground" method="_on_create_button_up"]
+[connection signal="button_up" from="Popups/PlaceBackground/Cancel" to="Popups/PlaceBackground" method="_on_cancel_button_up"]
 [connection signal="button_up" from="Popups/EditVoiceBank/ScrollContainer/VBankContainer/Bank/Delete" to="Popups/EditVoiceBank/ScrollContainer/VBankContainer/Bank" method="_on_delete_button_up"]
 [connection signal="button_up" from="Popups/EditVoiceBank/ScrollContainer/VBankContainer/Add" to="Popups/EditVoiceBank" method="_on_add_button_up"]
 [connection signal="button_up" from="Popups/EditVoiceBank/Create" to="Popups/EditVoiceBank" method="_on_create_button_up"]

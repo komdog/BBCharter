@@ -53,6 +53,9 @@ func _on_input_handler_gui_input(event):
 				MOUSE_BUTTON_LEFT:
 					selected_key = self
 					mouse_pos_start = self['data']['timestamp']
+					if event.double_click:
+						Popups.id = 1
+						Events.emit_signal('add_background_to_timeline', data)
 				MOUSE_BUTTON_MIDDLE:
 					print(Save.keyframes['background'].find(data))
 				MOUSE_BUTTON_RIGHT:

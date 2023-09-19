@@ -37,6 +37,8 @@ func _on_dir_selected(path: String):
 			dir.make_dir("images")
 		if !dir.dir_exists(path + "/config"):
 			dir.make_dir("config")
+		if !dir.dir_exists(path + "/video"):
+			dir.make_dir("video")
 		
 		var config = ConfigFile.new()
 		if !dir.file_exists(path + "/config/asset.cfg"):
