@@ -1,4 +1,4 @@
-[gd_scene load_steps=80 format=3 uid="uid://bo2pso1k2xik8"]
+[gd_scene load_steps=79 format=3 uid="uid://bo2pso1k2xik8"]
 
 [ext_resource type="Theme" uid="uid://cehpee20dikgi" path="res://themes/main_theme.tres" id="1_71y40"]
 [ext_resource type="Script" path="res://src/cl_main.gd" id="2_ca1lw"]
@@ -17,22 +17,21 @@
 [ext_resource type="PackedScene" uid="uid://c3m8f3aiheycv" path="res://prefabs/Notification.tscn" id="8_vyifj"]
 [ext_resource type="Script" path="res://src/cl_tools.gd" id="8_waaxy"]
 [ext_resource type="Script" path="res://src/cl_menubar_edit.gd" id="8_yungy"]
-[ext_resource type="Texture2D" uid="uid://crfo7mgcdp00n" path="res://assets/icon_select.png" id="9_j5sdo"]
-[ext_resource type="Texture2D" uid="uid://cmfihxdtx36aa" path="res://assets/icon_marquee.png" id="9_lohrd"]
+[ext_resource type="Texture2D" uid="uid://crfo7mgcdp00n" path="res://assets/tool_select.png" id="9_j5sdo"]
+[ext_resource type="Texture2D" uid="uid://cmfihxdtx36aa" path="res://assets/tool_marquee.png" id="9_lohrd"]
 [ext_resource type="Script" path="res://src/cl_menubar_file.gd" id="9_qoohm"]
 [ext_resource type="Script" path="res://src/cl_menubar_help.gd" id="10_p48ck"]
 [ext_resource type="Script" path="res://src/cl_timecode.gd" id="11_ycej5"]
 [ext_resource type="Texture2D" uid="uid://j7ypji0xwic6" path="res://assets/tool_audio.png" id="12_a3q0d"]
 [ext_resource type="Script" path="res://src/cl_sfx.gd" id="13_i7gdi"]
 [ext_resource type="Script" path="res://src/cl_snapping.gd" id="13_oym2h"]
-[ext_resource type="Texture2D" uid="uid://duompl3dtsgg1" path="res://assets/icon_horny.png" id="13_vb1uc"]
-[ext_resource type="Texture2D" uid="uid://betuc1m0gxohi" path="res://assets/icon_modify.png" id="14_11yw1"]
+[ext_resource type="Texture2D" uid="uid://duompl3dtsgg1" path="res://assets/tool_horny.png" id="13_vb1uc"]
+[ext_resource type="Texture2D" uid="uid://betuc1m0gxohi" path="res://assets/tool_modify.png" id="14_11yw1"]
 [ext_resource type="Script" path="res://src/cl_asset_manager.gd" id="14_eesym"]
 [ext_resource type="Script" path="res://src/cl_shutters.gd" id="15_kn5dq"]
 [ext_resource type="Script" path="res://src/cl_popup_new_difficulty.gd" id="18_iev55"]
 [ext_resource type="Script" path="res://src/cl_popup_rename_difficulty.gd" id="18_iev56"]
 [ext_resource type="Script" path="res://src/cl_popup_quit.gd" id="20_brhb6"]
-[ext_resource type="Script" path="res://src/cl_linecenter.gd" id="21_ckpwo"]
 [ext_resource type="Script" path="res://src/cl_menu_image.gd" id="22_btaqb"]
 [ext_resource type="Script" path="res://src/cl_oneshot.gd" id="22_wed7f"]
 [ext_resource type="Script" path="res://src/cl_popups.gd" id="24_hyexw"]
@@ -472,16 +471,13 @@ region_enabled = true
 region_rect = Rect2(0, 0, 4604.4, 2562.3)
 region_filter_clip_enabled = true
 
-[node name="Static" type="Sprite2D" parent="Character/Panel"]
+[node name="Sprite" type="Sprite2D" parent="Character/Panel"]
 visible = false
 position = Vector2(640, 360)
 scale = Vector2(0.667, 0.667)
 texture = ExtResource("6_bp6ey")
 
 [node name="Visual" type="Sprite2D" parent="Character/Panel"]
-position = Vector2(640, 360)
-
-[node name="Effect" type="Sprite2D" parent="Character/Panel"]
 position = Vector2(640, 360)
 
 [node name="Shutters" type="Node2D" parent="Character"]
@@ -551,14 +547,21 @@ item_2/disabled = true
 script = ExtResource("9_qoohm")
 
 [node name="Edit" type="PopupMenu" parent="Toolbar/MenuBar"]
+size = Vector2i(124, 108)
 theme_override_font_sizes/font_size = 20
-item_count = 2
+item_count = 4
 item_0/text = "Undo"
 item_0/id = 0
 item_0/disabled = true
 item_1/text = "Redo"
 item_1/id = 1
 item_1/disabled = true
+item_2/text = ""
+item_2/id = 2
+item_2/separator = true
+item_3/text = "Replace"
+item_3/checkable = 1
+item_3/id = 2
 script = ExtResource("8_yungy")
 
 [node name="Add" type="PopupMenu" parent="Toolbar/MenuBar"]
@@ -849,7 +852,6 @@ position = Vector2(0, 1)
 points = PackedVector2Array(0, 104, 0, -304)
 width = 5.0
 default_color = Color(0.619608, 0.027451, 0.266667, 1)
-script = ExtResource("21_ckpwo")
 
 [node name="NoteScroller" type="ColorRect" parent="NoteTimeline"]
 visible = false

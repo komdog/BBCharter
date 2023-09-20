@@ -31,7 +31,7 @@ func _on_difficulty_renamed(stuff):
 	Events.emit_signal('notify', 'Renamed Difficulty', stuff[1] + ' → ' + difficulty['name'], Save.project_dir + "/thumb.png")
 
 func _on_difficulty_deleted(index):
-	Global.project_saved=false
+	Global.project_saved = false
 	
 	var old_difficulty = get_item_text(index)
 	remove_item(index)

@@ -4,7 +4,7 @@ enum {RELOADPROJECT,NEWDIFFICULTY,DELETEDIFFICULTY,RENAMEDIFFICULTY,ICONDIFFICUL
 
 func _ready():
 	Events.project_loaded.connect(_on_project_loaded)
-	
+
 func _on_id_pressed(id: int):
 	match id:
 		RELOADPROJECT:
@@ -23,4 +23,4 @@ func _on_id_pressed(id: int):
 
 func _on_project_loaded():
 	for i in item_count:
-		set_item_disabled(i,false)
+		set_item_disabled(i, false)

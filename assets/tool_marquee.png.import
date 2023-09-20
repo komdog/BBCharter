@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://duompl3dtsgg1"
-path="res://.godot/imported/icon_horny.png-2d16c6e04d0cfe3e640441d7b2c55f9f.ctex"
+uid="uid://cmfihxdtx36aa"
+path="res://.godot/imported/tool_marquee.png-4a4589251237805ff6156718bc6daec8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/icon_horny.png"
-dest_files=["res://.godot/imported/icon_horny.png-2d16c6e04d0cfe3e640441d7b2c55f9f.ctex"]
+source_file="res://assets/tool_marquee.png"
+dest_files=["res://.godot/imported/tool_marquee.png-4a4589251237805ff6156718bc6daec8.ctex"]
 
 [params]
 

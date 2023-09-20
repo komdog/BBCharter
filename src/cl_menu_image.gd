@@ -13,10 +13,6 @@ func _on_open_image_menu(path,pos):
 	position = pos
 
 func _on_id_pressed(id: int):
-	var time: float
-	if Global.snapping_allowed: time = Global.get_timestamp_snapped()
-	else: time = Global.song_pos
-	
 	match id:
 		ADDANIMATION:
 			Popups.id = 0

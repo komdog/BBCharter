@@ -1,8 +1,7 @@
 extends FileDialog
 
-var create:bool = false
+var create: bool
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
 	if OS.get_name() == "macOS":
 		var dir = OS.get_executable_path().get_basename()
@@ -14,7 +13,7 @@ func _ready():
 		if !OS.is_debug_build():
 			current_dir = OS.get_executable_path().get_base_dir()
 	
-	Global.filedialog = self
+	Global.file_dialog = self
 
 func open_project_dialog():
 	print('Opening New Project...')
@@ -48,7 +47,6 @@ func _on_dir_selected(path: String):
 				"final_video":"",
 				"final_audio":""
 			})
-			await get_tree().physics_frame
 			config.save(path + "/config/asset.cfg")
 		
 		if !dir.file_exists(path + "/config/keyframes.cfg"):
@@ -65,7 +63,6 @@ func _on_dir_selected(path: String):
 				"shutter": [],
 				"voice_bank": []
 			})
-			await get_tree().physics_frame
 			config.save(path + "/config/keyframes.cfg")
 		
 		if !dir.file_exists(path + "/config/meta.cfg"):
@@ -75,7 +72,6 @@ func _on_dir_selected(path: String):
 				"level_index":0,
 				"level_name":"Base"
 			})
-			await get_tree().physics_frame
 			config.save(path + "/config/meta.cfg")
 		
 		if !dir.file_exists(path + "/config/notes.cfg"):
@@ -87,8 +83,19 @@ func _on_dir_selected(path: String):
 				"song_offset":0.0,
 				"background_type":0
 			})
-			await get_tree().physics_frame
 			config.save(path + "/config/settings.cfg")
+		
+		if !dir.file_exists(path + "/config/mod.cfg"):
+			config.set_value("main", "data", {
+				"creator": "None",
+				"description": "No Description",
+				"song_author": "No Song Author",
+				"song_title": "No Song Title",
+				"preview_timestamp": 0.0
+			})
+			config.save(path + "/config/mod.cfg")
+		
+		await get_tree().physics_frame
 		create = false
 	
 	Save.load_project(path)

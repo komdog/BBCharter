@@ -1,18 +1,14 @@
 extends Panel
 
-var VBankContainer:VBoxContainer
-var default_bank:LineEdit
-var button:Button
+@onready var VBankContainer = $ScrollContainer/VBankContainer
+@onready var default_bank = $ScrollContainer/VBankContainer/Bank.duplicate()
+@onready var button = $ScrollContainer/VBankContainer/Add.duplicate()
 
 var timestamp:float
 
 func _ready():
 	Events.popups_opened.connect(_on_popups_opened)
 	Events.add_voicebank_to_timeline.connect(_on_add_voicebank_to_timeline)
-	
-	VBankContainer = $ScrollContainer/VBankContainer
-	default_bank = $ScrollContainer/VBankContainer/Bank.duplicate()
-	button = $ScrollContainer/VBankContainer/Add.duplicate()
 
 func _on_popups_opened(_index):
 	if Popups.id > 0:
@@ -21,7 +17,7 @@ func _on_popups_opened(_index):
 		$Label.text = "Place New Voice Bank"; $Create.text = "Create"
 
 func _on_add_button_up():
-	var bank:LineEdit = default_bank.duplicate()
+	var bank: LineEdit = default_bank.duplicate()
 	VBankContainer.add_child(bank)
 	VBankContainer.move_child(bank, VBankContainer.get_child_count()-2)
 
@@ -41,10 +37,9 @@ func _on_add_voicebank_to_timeline(asset_path):
 		else: time = Global.song_pos
 		
 		for bank in Timeline.voice_banks_track.get_children():
-			if snappedf(bank['data']['timestamp'], 0.001) == snappedf(time, 0.001):
-				if !Global.replacing_allowed:
-					Events.emit_signal('notify', 'Voice Bank Already Exists', 'Timestamp: ' + str(snappedf(time, 0.001)))
-					return
+			if snappedf(bank['data']['timestamp'], 0.001) == snappedf(time, 0.001) and !Global.replacing_allowed:
+				Events.emit_signal('notify', 'Voice Bank Already Exists', 'Timestamp: ' + str(snappedf(time, 0.001)))
+				return
 		
 		_on_add_button_up(); VBankContainer.get_child(0).text = asset_path
 	

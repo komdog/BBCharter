@@ -61,11 +61,13 @@ func _on_add_background_to_timeline(asset_path):
 		var time:float = 0
 		
 		for background in Timeline.backgrounds_track.get_children():
-			if snappedf(background['data']['timestamp'], 0.001) == snappedf(time, 0.001):
-				if !Global.replacing_allowed:
-					Events.emit_signal('notify', 'Background Already Exists', 'Timestamp: ' + str(snappedf(time, 0.001)))
-					return
+			if snappedf(background['data']['timestamp'], 0.001) == snappedf(time, 0.001) and !Global.replacing_allowed:
+				Events.emit_signal('notify', 'Background Already Exists', 'Timestamp: ' + str(snappedf(time, 0.001)))
+				return
 		path = asset_path
+	
+		$Scale/CheckBox.button_pressed = false
+	
 	_on_check_box_button_up()
 	Popups.reveal(Popups.BACKGROUND)
 

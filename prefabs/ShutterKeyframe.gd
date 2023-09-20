@@ -37,7 +37,7 @@ func update_beat_and_position(time: float):
 	data['timestamp'] = time
 	position.x = -((data['timestamp'] - Global.offset) * Global.note_speed)
 
-func _on_input_handler_gui_input(event) -> void:
+func _on_input_handler_gui_input(event):
 	if event is InputEventMouseButton:
 		if event.pressed:
 			match event.button_index:

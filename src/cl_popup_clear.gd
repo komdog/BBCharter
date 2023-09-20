@@ -19,6 +19,7 @@ func _on_yes_button_up():
 		Timeline.delete_keyframes('sound_oneshot', Timeline.oneshot_sound_track)
 	elif Popups.id == 7:
 		Timeline.clear_timeline()
+	
 	await get_tree().process_frame
 	Popups.close()
 	Popups.id = -1
