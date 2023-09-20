@@ -31,9 +31,6 @@ var note_scroller: Control
 
 var inc_scale: float
 
-var marquee_point_a: float = -1
-var marquee_point_b: float = -1
-
 func create_note(key: int):
 	if not Global.project_loaded: return
 	if Popups.open: return
@@ -136,22 +133,6 @@ func _input(event):
 						clamp_seek(inc_scale)
 					if event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
 						clamp_seek(-inc_scale)
-					
-					if event.pressed:
-						match event.button_index:
-							MOUSE_BUTTON_LEFT:
-								if Global.current_tool == Enums.TOOL.MARQUEE:
-									if marquee_point_a < 0:
-										marquee_point_a = Global.music.song_position_raw
-										line_center.set_default_color(Color(1,1,1,1))
-					else:
-						match event.button_index:
-							MOUSE_BUTTON_LEFT:
-								if Global.current_tool == Enums.TOOL.MARQUEE and marquee_point_a >= 0:
-									marquee_point_b = Global.music.song_position_raw
-									line_center.set_default_color(Color(0.61,0.02,0.26,1))
-									marquee_point_a = -1
-									marquee_point_b = -1
 	
 	if event is InputEventPanGesture:
 		if get_viewport().get_mouse_position().y > 672:
