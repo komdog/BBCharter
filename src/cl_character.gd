@@ -97,12 +97,6 @@ func _physics_process(_delta):
 			$Panel/Visual.frame = $Panel/Visual.hframes * $Panel/Visual.vframes - 1
 	$Panel.mouse_default_cursor_shape = 2 if $Panel/Visual.texture != null else 0
 	
-	if Save.keyframes.has('effects') and Save.keyframes['effects'].size() > 0 and Timeline.effects_track.get_child_count() > 0:
-		var arr = Save.keyframes['effects'].filter(func(effect): return Global.song_pos >= effect['timestamp'])
-		effect_index = arr.size()
-		if effect_index > last_effect_index: run_effect(effect_index-1)
-		last_effect_index = effect_index
-	
 	if Save.keyframes.has('background') and Save.keyframes['background'].size() > 0 and Global.project_loaded:
 		var arr = Save.keyframes['background'].filter(func(bg): return Global.song_pos >= bg['timestamp'])
 		bg_index = arr.size()
@@ -262,24 +256,6 @@ func run_loop():
 	loop_tween = create_tween()
 	loop_tween.tween_property($Panel/Visual, "frame", total_sprite_frames-1, animation_time / Global.music.pitch_scale)
 	loop_tween.play()
-
-func run_effect(idx: int):
-	if idx < 0: idx = 0
-	$Panel/Effect.frame = 0
-	if effect_tween: effect_tween.kill() # Abort the previous effect.
-	
-	var effect = Save.keyframes["effects"][idx]
-	$Panel/Effect.texture = Assets.get_asset(effect["path"])
-	$Panel/Effect.hframes = effect["sheet_data"]["h"]
-	$Panel/Effect.vframes = effect["sheet_data"]["v"]
-	$Panel/Effect.scale = Vector2(effect['scale_multiplier'], effect['scale_multiplier']) if effect.has('scale_multiplier') else Vector2(1.0, 1.0)
-	
-	effect_tween = create_tween()
-	effect_tween.tween_property($Panel/Effect, "frame", effect["sheet_data"]["total"]-1, effect["duration"]/effect["playback_speed"] if effect.has("playback_speed") else effect["duration"])
-	effect_tween.play()
-	
-	await effect_tween.finished
-	$Panel/Effect.texture = null
 
 func change_background(idx: int):
 	if idx < 0: idx = 0

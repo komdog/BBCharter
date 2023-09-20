@@ -10,61 +10,54 @@ script = ExtResource("1_71m2e")
 metadata/_edit_horizontal_guides_ = [-104.0]
 
 [node name="Line10" type="Line2D" parent="."]
-position = Vector2(0, -304)
+position = Vector2(0, -200)
 points = PackedVector2Array(0, -200, 0, -311.985, 0, -352)
 width = 3.0
 default_color = Color(0.654902, 0.513726, 0.00784314, 0.196078)
 
 [node name="Line9" type="Line2D" parent="."]
-position = Vector2(0, -248)
-points = PackedVector2Array(0, -152, 0, -360)
+position = Vector2(0, -144)
+points = PackedVector2Array(0, -200, 0, -360)
 width = 3.0
 default_color = Color(0.654902, 0.513726, 0.00784314, 0.196078)
 
 [node name="Line8" type="Line2D" parent="."]
-position = Vector2(0, -248)
-points = PackedVector2Array(0, -48, 0, -256)
+position = Vector2(0, -192)
+points = PackedVector2Array(0, -56, 0, -208)
 width = 3.0
 default_color = Color(0.803922, 0.498039, 0, 0.196078)
 
 [node name="Line7" type="Line2D" parent="."]
-position = Vector2(0, -144)
-points = PackedVector2Array(0, -152, 0, -256)
+position = Vector2(0, -88)
+points = PackedVector2Array(0, -160, 0, -256)
 width = 3.0
 default_color = Color(0.803922, 0.498039, 0, 0.196078)
 
 [node name="Line6" type="Line2D" parent="."]
-position = Vector2(0, -248)
-points = PackedVector2Array(0, -48, 0, -256)
+position = Vector2(0, -144)
+points = PackedVector2Array(0, -56, 0, -256)
 width = 3.0
 default_color = Color(0.803922, 0.498039, 0, 0.196078)
 
 [node name="Line5" type="Line2D" parent="."]
-position = Vector2(0, -248)
-points = PackedVector2Array(0, -48, 0, -152)
+position = Vector2(0, -192)
+points = PackedVector2Array(0, -56, 0, -104)
 width = 3.0
 default_color = Color(0.952941, 0, 0.164706, 0.196078)
 
 [node name="Line4" type="Line2D" parent="."]
-position = Vector2(0, -144)
+position = Vector2(0, -96)
 points = PackedVector2Array(0, -104, 0, -152)
 width = 3.0
 default_color = Color(0.952941, 0, 0.164706, 0.196078)
 
 [node name="Line3" type="Line2D" parent="."]
-position = Vector2(0, -88)
+position = Vector2(0, -40)
 points = PackedVector2Array(0, -112, 0, -208)
 width = 3.0
 default_color = Color(0.952941, 0, 0.164706, 0.196078)
 
 [node name="Line2" type="Line2D" parent="."]
-position = Vector2(0, -48)
 points = PackedVector2Array(0, -104, 0, -248)
-width = 3.0
-default_color = Color(0.952941, 0, 0.164706, 0.196078)
-
-[node name="Line" type="Line2D" parent="."]
-position = Vector2(0, -144)
-points = PackedVector2Array(0, 40, 0, -152)
 width = 3.0
 default_color = Color(0.952941, 0, 0.164706, 0.196078)

@@ -22,7 +22,6 @@ var line_center: Node2D
 
 var shutter_track: Node2D
 var animations_track: Node2D
-var effects_track: Node2D
 var backgrounds_track: Node2D
 var modifier_track: Node2D
 var sfx_track: Node2D
@@ -97,7 +96,6 @@ func clear_timeline():
 	clear_notes_only()
 	delete_keyframes('shutter', shutter_track)
 	delete_keyframes('loops', animations_track)
-	delete_keyframes('effects', effects_track)
 	delete_keyframes('background', backgrounds_track)
 	if Global.project_loaded: for child in modifier_track.get_children():
 		if child.data['timestamp'] != 0: delete_keyframe('modifiers', child, 0)
