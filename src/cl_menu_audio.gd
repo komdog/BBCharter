@@ -9,7 +9,7 @@ func _ready():
 
 func _on_open_audio_menu(path,pos):
 	asset_path = path
-	visible = true
+	show()
 	position = pos
 
 func _on_id_pressed(id: int):

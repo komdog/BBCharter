@@ -1,6 +1,6 @@
 extends PopupMenu
 
-enum {ADDANIMATION,ADDEFFECT,ADDBACKGROUND,SETICON}
+enum {ADDANIMATION,ADDBACKGROUND,SETICON}
 
 var asset_path
 
@@ -9,7 +9,7 @@ func _ready():
 
 func _on_open_image_menu(path,pos):
 	asset_path = path
-	visible = true
+	show()
 	position = pos
 
 func _on_id_pressed(id: int):
@@ -21,9 +21,6 @@ func _on_id_pressed(id: int):
 		ADDANIMATION:
 			Popups.id = 0
 			Events.emit_signal('add_animation_to_timeline', asset_path)
-		ADDEFFECT:
-			Popups.id = 0
-			Events.emit_signal('add_effect_to_timeline', asset_path)
 		ADDBACKGROUND:
 			Popups.id = 0
 			Events.emit_signal('add_background_to_timeline', asset_path)
