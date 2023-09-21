@@ -15,6 +15,13 @@ func _ready():
 	Timeline.sixth_container = $Sixth
 	Timeline.eighth_container = $Eighth
 	Timeline.note_container = $Notes
+	Timeline.marquee_selection = $"../../../MarqueeSelection"
+	Timeline.marquee_selection_area = $"../../../MarqueeSelection/MarqueeSelectionShape"
+	Timeline.note_timeline = $"../.."
+	Timeline.timeline_root = $"../../.."
+	Timeline.key_timeline = $"../../../KeyTimeline"
+	
+	Timeline.timeline_ui = [Timeline.note_timeline, Timeline.key_timeline]
 	
 	Events.chart_loaded.connect(_on_chart_loaded)
 	Events.song_loaded.connect(_on_song_loaded)

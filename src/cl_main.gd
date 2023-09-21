@@ -1,6 +1,7 @@
 extends Control
 
 @onready var file_drop_parser = preload("res://src/rf_drag_and_drop.gd").new()
+#@onready var timeline = $Timeline/NoteTimeline
 
 func _ready():
 	print(DisplayServer.screen_get_size())
@@ -11,6 +12,9 @@ func _ready():
 	get_window().min_size = Vector2i(228, 128)
 	
 	get_viewport().files_dropped.connect(on_files_dropped)
+	
+	#Timeline.note_timeline = timeline
+	
 
 func on_files_dropped(files):
 	file_drop_parser.get_file_type(files)
