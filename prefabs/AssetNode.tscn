@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://c1uylg3wims4w"]
 
 [ext_resource type="Script" path="res://prefabs/AssetNode.gd" id="1_le0sj"]
-[ext_resource type="Texture2D" uid="uid://cmfihxdtx36aa" path="res://assets/icon_marquee.png" id="2_chnd5"]
+[ext_resource type="Texture2D" uid="uid://cmfihxdtx36aa" path="res://assets/tool_marquee.png" id="2_chnd5"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j4cqx"]
 bg_color = Color(0.054902, 0.054902, 0.054902, 1)

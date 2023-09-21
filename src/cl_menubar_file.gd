@@ -8,13 +8,12 @@ func _ready():
 func _on_id_pressed(id: int):
 	match id:
 		NEWPROJECT:
-			Global.filedialog.new_project_dialog()
+			Global.file_dialog.new_project_dialog()
 		OPENPROJECT:
-			Global.filedialog.open_project_dialog()
+			Global.file_dialog.open_project_dialog()
 		SAVEPROJECT:
 			Save.save_project()
 
-
 func _on_project_loaded():
 	for i in item_count:
-		set_item_disabled(i,false)
+		set_item_disabled(i, false)

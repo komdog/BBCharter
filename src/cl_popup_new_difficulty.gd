@@ -1,13 +1,12 @@
 extends Panel
 
-
 func _ready():
 	Events.popups_opened.connect(_on_popups_opened)
 	Events.popups_closed.connect(_on_popups_closed)
 
 func _on_popups_opened(_index):
 	if Save.notes['charts'].size() == 1:
-		$DifficultyCount.text = 'Your project currently has ' + str(Save.notes['charts'].size()) + ' difficulty!'
+		$DifficultyCount.text = 'Your project currently has 1 difficulty!'
 	else:
 		$DifficultyCount.text = 'Your project currently has ' + str(Save.notes['charts'].size()) + ' difficulties!'
 

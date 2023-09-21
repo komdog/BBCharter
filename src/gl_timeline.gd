@@ -18,7 +18,6 @@ var key_sixth_container: Node2D
 var key_eighth_container: Node2D
 
 var note_container: Node2D
-var line_center: Node2D
 
 var shutter_track: Node2D
 var animations_track: Node2D
@@ -46,7 +45,7 @@ var timeline_ui: Array
 
 
 func create_note(key: int):
-	if !Global.project_loaded: return
+	if not Global.project_loaded: return
 	if Popups.open: return
 	
 	var time: float
@@ -55,13 +54,12 @@ func create_note(key: int):
 	if time < 0: time = 0
 	
 	# Check Note Exists
-	for note in Global.current_chart:
-		if snappedf(note['timestamp'], 0.001) == snappedf(time, 0.001):
-			if Global.replacing_allowed:
-				delete_note(note, Save.notes['data']['charts'][Global.difficulty_index]['notes'].find(note['data']))
-			else:
-				print('Note already exists at %s' % [snappedf(note['timestamp'], 0.001)])
-				return
+	for note in Timeline.note_container.get_children(): if snappedf(note.data['timestamp'], 0.001) == snappedf(time, 0.001):
+		if Global.replacing_allowed:
+			delete_note(note, Save.notes['charts'][Global.difficulty_index]['notes'].find(note.data))
+		else:
+			print('Note already exists at %s' % [snappedf(note.data['timestamp'], 0.001)])
+			return
 	
 	# Create New Note
 	var new_note_data = {'input_type':key, "note_modifier":0, 'timestamp':time }
@@ -88,7 +86,7 @@ func delete_keyframes(section: String, parent: Node):
 	for child in parent.get_children(): delete_keyframe(section, child, 0)
 
 func clamp_seek(value):
-	Global.music.song_position_raw = clampf(Global.music.song_position_raw + value, 0.0, Global.song_length )
+	Global.music.song_position_raw = clampf(Global.music.song_position_raw + value, 0.0, Global.song_length)
 	Global.music.seek(Global.music.song_position_raw)
 	Global.music.pause_pos = Global.music.song_position_raw
 	note_scroller.value = Global.music.song_position_raw
@@ -179,7 +177,7 @@ func _input(event):
 		if check_gui_mouse(timeline_root):
 			# Zooming
 			if event.is_command_or_control_pressed():
-				Global.note_speed = clampf(Global.note_speed + (10 * event.delta.y), 100, 1000 )
+				Global.note_speed = clampf(Global.note_speed + (10 * event.delta.y), 100, 1000)
 				Events.emit_signal('update_notespeed')
 			else:
 				# Seeking
@@ -189,30 +187,24 @@ func _input(event):
 	if event is InputEventKey:
 		# Speed up / Slow down song
 		if event.is_action_pressed("ui_up"):
-			Global.music.pitch_scale = clampf(Global.music.pitch_scale + 0.1, 0.5, 2.0 )
+			Global.music.pitch_scale = clampf(Global.music.pitch_scale + 0.1, 0.5, 2.0)
 		if event.is_action_pressed("ui_down"):
-			Global.music.pitch_scale = clampf(Global.music.pitch_scale - 0.1, 0.5, 2.0 )
+			Global.music.pitch_scale = clampf(Global.music.pitch_scale - 0.1, 0.5, 2.0)
 		
 		# Seek to beginning / End
 		if OS.get_name() == "macOS":
-			if event.is_action_pressed("ui_end"):
-				reset()
+			if event.is_action_pressed("ui_end"): reset()
 		else:
-			if event.is_action_pressed("ui_home"):
-				reset()
+			if event.is_action_pressed("ui_home"): reset()
 		if OS.get_name() == "macOS":
-			if event.is_action_pressed("ui_home"):
-				seek(Global.song_length)
+			if event.is_action_pressed("ui_home"): seek(Global.song_length)
 		else:
-			if event.is_action_pressed("ui_end"):
-				seek(Global.song_length)
+			if event.is_action_pressed("ui_end"): seek(Global.song_length)
 		
 		# Fast Seek +5 AND Seek to beginning / End
 		if event.is_action_pressed("ui_right"):
-			if OS.get_name() == "macOS" and event.is_meta_pressed():
-				reset()
-			else:
-				clamp_seek(-5.0)
+			if OS.get_name() == "macOS" and event.is_meta_pressed(): reset()
+			else: clamp_seek(-5.0)
 		if event.is_action_pressed("ui_left"):
 			if OS.get_name() == "macOS" and event.is_meta_pressed():
 				seek(Global.song_length)

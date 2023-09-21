@@ -30,14 +30,14 @@ func get_file_list_of_type(path: String, type:String) -> Array:
 	
 	return files
 
-func load_single_image(filename: String) -> void:
+func load_single_image(filename: String):
 	Assets.lib[filename] = Global.load_texture(Save.project_dir + "/images/" + filename)
 
-func load_images() -> void:
+func load_images():
 	for image in get_file_list_of_type(Save.project_dir + "/images", "png"):
 		Assets.lib[image] = Global.load_texture(Save.project_dir + "/images/" + image)
 
-func load_audio() -> void:
+func load_audio():
 	for audio in get_file_list_of_type(Save.project_dir + "/audio", "mp3"):
 		if audio == Save.asset['song_path']: continue
 		Assets.lib[audio] = Global.load_mp3(Save.project_dir + "/audio/" + audio)

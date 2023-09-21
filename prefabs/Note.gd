@@ -72,12 +72,12 @@ func update_visual():
 	$Glow.self_modulate = Global.note_colors[data['input_type']]
 	$Label.add_theme_constant_override('outline_size', 8)
 	if data['note_modifier'] == 1:
-		$Handsfree.visible = true
+		$Handsfree.show()
 		$Handsfree/Handsfreeinner.self_modulate = Global.note_colors[data['input_type']]
 		$Handsfree/Handsfreeinner.visible = !($Voice.visible)
 		$Voice.self_modulate = Global.note_colors[data['input_type']]
 	else:
-		$Handsfree.visible = false
+		$Handsfree.hide()
 		$Voice.self_modulate = Color.ANTIQUE_WHITE
 	if data['note_modifier'] == 2:
 		$Visual.modulate = Color(1,1,1,0.7)
@@ -86,7 +86,7 @@ func update_visual():
 		$Visual.modulate = Color.WHITE
 		$Glow.modulate = Color.WHITE
 	if data.has('horny') and data['horny'].has('required') and data['horny']['required'] >= 0:
-		$Glow.visible = true
+		$Glow.show()
 		$Label.text = str(data['horny']['required'])
 		$Voice.scale = Vector2(0.666,0.666)
 		$Handsfree/Handsfreeinner.scale = Vector2(0.5,0.5)
@@ -101,7 +101,7 @@ func update_visual():
 			$Label.remove_theme_color_override('font_color')
 			$Label.add_theme_color_override('font_outline_color', $Visual.self_modulate)
 	else:
-		$Glow.visible = false
+		$Glow.hide()
 		$Label.text = ''
 		$Voice.scale = Vector2(0.444,0.444)
 		$Handsfree/Handsfreeinner.scale = Vector2(0.2,0.2)
@@ -114,8 +114,6 @@ func _on_gui_input(event):
 					if Global.current_tool == Enums.TOOL.SELECT:
 						selected_note = self
 						mouse_pos_start = self['data']['timestamp']
-					elif Global.current_tool == Enums.TOOL.MARQUEE:
-						pass
 					else:
 						Global.project_saved = false
 					if Global.current_tool == Enums.TOOL.VOICE:
@@ -139,7 +137,7 @@ func _on_gui_input(event):
 						mouse_pos_end = mouse_pos
 						for note in Timeline.note_container.get_children(): if note != selected_note: if snappedf(note['data']['timestamp'], 0.001) == snappedf(selected_note['data']['timestamp'], 0.001):
 							if Global.replacing_allowed:
-								Timeline.delete_note(note, Save.notes['data']['charts'][Global.difficulty_index]['notes'].find(note['data']))
+								Timeline.delete_note(note, Save.notes['charts'][Global.difficulty_index]['notes'].find(note['data']))
 							else:
 								print('Note already exists at %s' % [snappedf(mouse_pos_end, 0.001)])
 								selected_note.update_beat_and_position(mouse_pos_start)

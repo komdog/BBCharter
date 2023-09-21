@@ -2,12 +2,8 @@ extends Control
 
 const asset_node_prefab = preload("res://prefabs/AssetNode.tscn")
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
-	Events.project_loaded.connect(_on_project_loaded)
-
-func _on_project_loaded():
-	populate_asset_list()
+	Events.project_loaded.connect(populate_asset_list)
 
 # Update the list with all assets currently loaded in the project
 func populate_asset_list():

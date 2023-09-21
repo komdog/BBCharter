@@ -1,6 +1,6 @@
 extends AudioStreamPlayer
 
-func _ready() -> void:
+func _ready():
 	Events.horny_mode.connect(_on_horny_mode)
 
 func _on_horny_mode():

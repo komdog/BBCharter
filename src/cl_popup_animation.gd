@@ -43,11 +43,8 @@ func _on_create_button_up():
 	if $Speed/CheckBox.button_pressed: new_animation_key["manual_speed_multiplier"] = $Speed.value
 	
 	Horny = $Horny.text
-	SheetH = $SheetH.value
-	SheetV = $SheetV.value
-	Total = $Total.value
-	OffsetX = $OffsetX.value
-	OffsetY = $OffsetY.value
+	SheetH = $SheetH.value; SheetV = $SheetV.value; Total = $Total.value
+	OffsetX = $OffsetX.value; OffsetY = $OffsetY.value
 	Scale = $Scale.value
 	Speed = $Speed.value
 	
@@ -70,11 +67,8 @@ func _on_cancel_button_up():
 
 func reset():
 	$Horny.text = Horny
-	$SheetH.value = SheetH
-	$SheetV.value = SheetV
-	$Total.value = Total
-	$OffsetX.value = OffsetX
-	$OffsetY.value = OffsetY
+	$SheetH.value = SheetH; $SheetV.value = SheetV; $Total.value = Total
+	$OffsetX.value = OffsetX; $OffsetY.value = OffsetY
 	$Scale.value = Scale
 	$Speed.value = Speed
 
@@ -113,11 +107,15 @@ func _on_add_animation_to_timeline(asset_path):
 		if time < 0: time = 0
 		
 		for animation in Timeline.animations_track.get_children():
-			if snappedf(animation['data']['timestamp'], 0.001) == snappedf(time, 0.001):
-				if !Global.replacing_allowed:
-					Events.emit_signal('notify', 'Animation Already Exists', 'Timestamp: ' + str(snappedf(time, 0.001)))
-					return
+			if snappedf(animation['data']['timestamp'], 0.001) == snappedf(time, 0.001) and !Global.replacing_allowed:
+				Events.emit_signal('notify', 'Animation Already Exists', 'Timestamp: ' + str(snappedf(time, 0.001)))
+				return
 		animation_name = asset_path
+		
+		$OffsetX/CheckBox.button_pressed = false
+		$Scale/CheckBox.button_pressed = false
+		$Speed/CheckBox.button_pressed = false
+	
 	_on_check_box_button_up()
 	Popups.reveal(Popups.ANIMATION)
 

@@ -3,7 +3,7 @@ extends Node2D
 var note_pos: float
 var note_offset: float
 
-var modifiers: int
+var modifier_count: int
 
 func _ready():
 	# Globalize Tracks
@@ -36,7 +36,7 @@ func _on_chart_loaded():
 		$Notes.add_child(new_note)
 
 func _on_song_loaded():
-	modifiers = Timeline.modifier_track.get_child_count()
+	modifier_count = Timeline.modifier_track.get_child_count()
 	Global.clear_children(Timeline.beat_container)
 	Global.clear_children(Timeline.half_container)
 	Global.clear_children(Timeline.third_container)
@@ -96,7 +96,7 @@ func reset_indicators():
 				new_beat_indicator.setup(i, Enums.UI_INDICATOR_TYPE.BEAT)
 			else:
 				$Beat.remove_child($Beat.get_child($Beat.get_child_count()-1))
-	
+		
 		for i in range((Global.song_beats_total - difference) * 2, Global.song_beats_total * 2, 1 if difference>0 else -1):
 			if i % 2 == 0: continue
 			if difference > 0:
@@ -105,7 +105,7 @@ func reset_indicators():
 				new_beat_indicator.setup(i, Enums.UI_INDICATOR_TYPE.HALF_BEAT)
 			else:
 				$Half.remove_child($Half.get_child($Half.get_child_count()-1))
-	
+		
 		for i in range((Global.song_beats_total - difference) * 3, Global.song_beats_total * 3, 1 if difference>0 else -1):
 			if i % 3 == 0: continue
 			if difference > 0:
@@ -114,7 +114,7 @@ func reset_indicators():
 				new_beat_indicator.setup(i, Enums.UI_INDICATOR_TYPE.THIRD_BEAT)
 			else:
 				$Third.remove_child($Third.get_child($Third.get_child_count()-1))
-	
+		
 		for i in range((Global.song_beats_total - difference) * 4, Global.song_beats_total * 4, 1 if difference>0 else -1):
 			if i % 2 == 0: continue
 			if difference > 0:
@@ -123,7 +123,7 @@ func reset_indicators():
 				new_beat_indicator.setup(i, Enums.UI_INDICATOR_TYPE.QUARTER_BEAT)
 			else:
 				$Quarter.remove_child($Quarter.get_child($Quarter.get_child_count()-1))
-	
+		
 		for i in range((Global.song_beats_total - difference) * 6, Global.song_beats_total * 6, 1 if difference>0 else -1):
 			if i % 3 == 0: continue
 			if i % 2 == 0: continue
@@ -133,7 +133,7 @@ func reset_indicators():
 				new_beat_indicator.setup(i, Enums.UI_INDICATOR_TYPE.SIXTH_BEAT)
 			else:
 				$Sixth.remove_child($Sixth.get_child($Sixth.get_child_count()-1))
-	
+		
 		for i in range((Global.song_beats_total - difference) * 8, Global.song_beats_total * 8, 1 if difference>0 else -1):
 			if i % 2 == 0: continue
 			if difference > 0:
@@ -145,7 +145,6 @@ func reset_indicators():
 	
 	Events.emit_signal('update_snapping', Global.snapping_ratios.find(Global.snapping_factor))
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
 	note_pos = Global.song_pos * Global.note_speed
 	note_offset = Global.offset * Global.note_speed
@@ -163,8 +162,8 @@ func _on_note_created(new_note_data):
 
 # Changes BPM of the song for charting
 func _physics_process(_delta):
-	if modifiers != Timeline.modifier_track.get_child_count():
-		modifiers = Timeline.modifier_track.get_child_count()
+	if modifier_count != Timeline.modifier_track.get_child_count():
+		modifier_count = Timeline.modifier_track.get_child_count()
 
 func _on_update_bpm():
 	if Global.project_loaded: reset_indicators()

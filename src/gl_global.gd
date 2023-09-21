@@ -1,6 +1,6 @@
 extends Node
 
-var filedialog: FileDialog
+var file_dialog: FileDialog
 var music: AudioStreamPlayer
 
 # Chart Data

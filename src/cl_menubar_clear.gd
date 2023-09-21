@@ -67,4 +67,4 @@ func is_timeline_empty():
 
 func _on_project_loaded():
 	for i in item_count:
-		set_item_disabled(i,false)
+		set_item_disabled(i, false)
