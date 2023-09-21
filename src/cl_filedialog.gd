@@ -27,7 +27,9 @@ func new_project_dialog():
 	create = true
 	popup()
 
-func _on_dir_selected(path: String):
+func _on_dir_selected(dummy_path: String):
+	var path = current_dir
+
 	if create:
 		var dir = DirAccess.open(path)
 		if !dir.dir_exists(path + "/audio"):

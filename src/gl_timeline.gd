@@ -31,6 +31,19 @@ var note_scroller: Control
 
 var inc_scale: float
 
+var note_timeline: Panel
+var key_timeline: ScrollContainer
+var timeline_root: Control
+
+var marquee_selection: Node2D
+var marquee_selection_area: Node2D
+var marquee_active: bool = false
+var marquee_point_a: Vector2 = Vector2(0,0)
+var marquee_point_b: Vector2 = Vector2(0,0)
+
+var timeline_ui: Array
+
+
 func create_note(key: int):
 	if not Global.project_loaded: return
 	if Popups.open: return
@@ -115,27 +128,53 @@ func _input(event):
 		create_note(Enums.NOTE.C)
 	if event.is_action_pressed("key_3"):
 		create_note(Enums.NOTE.V)
-	
-	if event is InputEventMouseButton:
-		if get_viewport().get_mouse_position().y > 672:
-			# Zooming
-			if event.is_command_or_control_pressed():
-				if event.button_index == MOUSE_BUTTON_WHEEL_UP:
-					Global.note_speed = clampf(Global.note_speed + 10, 100, 1000)
-				if event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
-					Global.note_speed = clampf(Global.note_speed - 10, 100, 1000)
-				Events.emit_signal('update_notespeed')
+	if event is InputEventMouse:
+		for x in timeline_ui:
+			if check_gui_mouse(x):
+				x.modulate = Color(1, 1, 1)
 			else:
-				if get_viewport().get_mouse_position().y > 872:
-					# Seeking
-					inc_scale = (Global.zoom_factor / 16) if !event.alt_pressed else 0.005
+				x.modulate = Color(0.7, 0.7, 0.7)
+		#note_timeline.modulate = Color(0.818, 0.818, 0.818)
+		#print('Marquee Position:', marquee_selection.position)
+		if marquee_active:
+			if Global.current_tool == Enums.TOOL.MARQUEE:
+				marquee_point_b = event.position
+				set_marquee(event, marquee_selection_area)
+				#marquee_selection_area.position = marquee_selection.position
+				#print(marquee_selection_area.transform.basis_xform_inv(marquee_point_b))
+				pass
+			#print("Marquee Drag")
+		if check_gui_mouse(timeline_root):
+			# Zooming
+			if event.get('button_index') != null:
+				if event.is_command_or_control_pressed():
 					if event.button_index == MOUSE_BUTTON_WHEEL_UP:
-						clamp_seek(inc_scale)
+						Global.note_speed = clampf(Global.note_speed + 10, 100, 1000 )
 					if event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
-						clamp_seek(-inc_scale)
-	
+						Global.note_speed = clampf(Global.note_speed - 10, 100, 1000 )
+					Events.emit_signal('update_notespeed')
+				else:
+					if check_gui_mouse(note_timeline):
+						# Seeking
+						inc_scale = (Global.zoom_factor / 16) if !event.alt_pressed else 0.005
+						if event.button_index == MOUSE_BUTTON_WHEEL_UP:
+							clamp_seek(inc_scale)
+						if event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+							clamp_seek(-inc_scale)
+						
+					if event.pressed:
+						print(event)
+						match event.button_index:
+							MOUSE_BUTTON_LEFT:
+								if Global.current_tool == Enums.TOOL.MARQUEE:
+									print("Set Marquee")
+									marquee_active = true
+									marquee_point_a = event.position
+									set_marquee(event, marquee_selection)
+		if event is InputEventMouseButton and event.is_released():
+			marquee_active = false
 	if event is InputEventPanGesture:
-		if get_viewport().get_mouse_position().y > 672:
+		if check_gui_mouse(timeline_root):
 			# Zooming
 			if event.is_command_or_control_pressed():
 				Global.note_speed = clampf(Global.note_speed + (10 * event.delta.y), 100, 1000)
@@ -169,3 +208,20 @@ func _input(event):
 		if event.is_action_pressed("ui_left"):
 			if OS.get_name() == "macOS" and event.is_meta_pressed(): seek(Global.song_length)
 			else: clamp_seek(5.0)
+
+func set_marquee(ev, obj):
+	var local_to_timeline_panel = timeline_root.get_local_mouse_position()
+	if obj.name == marquee_selection_area.name:
+		if ev is InputEventMouseButton and ev.is_released():
+			obj.shape.size = Vector2(0,0)
+			return
+		var local_to_marquee_root = marquee_selection.get_local_mouse_position()
+		obj.shape.size = abs(local_to_marquee_root)
+		obj.position = Vector2(obj.shape.size.x / 2 * signi(local_to_marquee_root.x), obj.shape.size.y / 2 * signi(local_to_marquee_root.y))
+		pass
+	else:
+		obj.position = local_to_timeline_panel
+	pass
+
+func check_gui_mouse(ref):
+	return ref.get_global_rect().has_point(get_viewport().get_mouse_position())
