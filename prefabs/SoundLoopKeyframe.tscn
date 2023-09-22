@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=3 uid="uid://goxcsw65mq0i"]
+
+[ext_resource type="Script" path="res://prefabs/SoundLoopKeyframe.gd" id="1_84a6l"]
+[ext_resource type="Texture2D" uid="uid://c8qntv7mcufiy" path="res://assets/icon_sfx.png" id="2_qdocg"]
+
+[node name="SoundLoopKeyframe" type="Node2D"]
+script = ExtResource("1_84a6l")
+metadata/_edit_vertical_guides_ = []
+
+[node name="Visual" type="Sprite2D" parent="."]
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("2_qdocg")
+
+[node name="InputHandler" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_default_cursor_shape = 2
+
+[connection signal="gui_input" from="InputHandler" to="." method="_on_input_handler_gui_input"]
+[connection signal="mouse_exited" from="InputHandler" to="." method="_on_mouse_exited"]

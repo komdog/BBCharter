@@ -1,7 +1,5 @@
 extends Panel
 
-
-
 func _on_save_button_up():
 	Save.save_project()
 	await get_tree().process_frame
@@ -12,8 +10,3 @@ func _on_discard_button_up():
 
 func _on_cancel_button_up():
 	Popups.close()
-
-
-
-
-

@@ -1,0 +1,51 @@
+[gd_scene load_steps=3 format=3 uid="uid://cg8cr0wrh6vrd"]
+
+[ext_resource type="Script" path="res://prefabs/ModifierKeyframe.gd" id="1_3pbx6"]
+[ext_resource type="Texture2D" uid="uid://cjdi4qj6ylxiv" path="res://assets/icon_bpm.png" id="2_j45y4"]
+
+[node name="ModifierKeyframe" type="Node2D"]
+script = ExtResource("1_3pbx6")
+metadata/_edit_horizontal_guides_ = []
+metadata/_edit_vertical_guides_ = []
+
+[node name="Visual" type="Sprite2D" parent="."]
+scale = Vector2(1.25, 1.25)
+texture = ExtResource("2_j45y4")
+
+[node name="InputHandler" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -21.0
+offset_top = -19.5
+offset_right = 13.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.25, 1.25)
+mouse_default_cursor_shape = 2
+
+[node name="LineEdit" type="LineEdit" parent="."]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -34.0
+offset_top = -15.5
+offset_right = 34.0
+offset_bottom = 15.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+alignment = 1
+expand_to_text_length = true
+virtual_keyboard_type = 3
+
+[connection signal="gui_input" from="InputHandler" to="." method="_on_input_handler_gui_input"]
+[connection signal="mouse_exited" from="InputHandler" to="." method="_on_mouse_exited"]
+[connection signal="text_submitted" from="LineEdit" to="." method="_on_text_submitted"]

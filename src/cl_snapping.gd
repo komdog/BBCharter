@@ -1,9 +1,7 @@
 extends OptionButton
 
-
 func _ready():
 	Events.update_snapping.connect(_on_update_snapping)
-	
 	if Global.snapping_ratios.has(Global.snapping_factor):
 		selected = Global.snapping_ratios.find(Global.snapping_factor)
 
@@ -13,11 +11,11 @@ func _on_item_selected(index):
 	selected = index
 
 func _on_update_snapping(index):
-	print('Snapping set to 1/%s' % Global.snapping_ratios[index])
+	if !Global.lock_timeline:
+		print('Snapping set to 1/%s' % Global.snapping_ratios[index])
 
 func _input(event):
-	
-	if Popups.open: return
+	if Popups.open or Global.lock_timeline: return
 	
 	if event.is_action_pressed("snap_1"):
 		_on_item_selected(0)
@@ -27,7 +25,10 @@ func _input(event):
 		_on_item_selected(2)
 	elif event.is_action_pressed("snap_4"):
 		_on_item_selected(3)
-
+	elif event.is_action_pressed("snap_5"):
+		_on_item_selected(4)
+	elif event.is_action_pressed("snap_6"):
+		_on_item_selected(5)
 
 func _on_snap_toggle_toggled(state: bool):
 	Global.snapping_allowed = state

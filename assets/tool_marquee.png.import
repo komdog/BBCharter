@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cmfihxdtx36aa"
-path="res://.godot/imported/icon_marquee.png-f9906c941add200fe1c6b05ebf090bd2.ctex"
+path="res://.godot/imported/tool_marquee.png-4a4589251237805ff6156718bc6daec8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/icon_marquee.png"
-dest_files=["res://.godot/imported/icon_marquee.png-f9906c941add200fe1c6b05ebf090bd2.ctex"]
+source_file="res://assets/tool_marquee.png"
+dest_files=["res://.godot/imported/tool_marquee.png-4a4589251237805ff6156718bc6daec8.ctex"]
 
 [params]
 

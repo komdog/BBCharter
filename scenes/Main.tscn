@@ -1,66 +1,56 @@
-[gd_scene load_steps=52 format=3 uid="uid://bo2pso1k2xik8"]
+[gd_scene load_steps=80 format=3 uid="uid://bo2pso1k2xik8"]
 
 [ext_resource type="Theme" uid="uid://cehpee20dikgi" path="res://themes/main_theme.tres" id="1_71y40"]
 [ext_resource type="Script" path="res://src/cl_main.gd" id="2_ca1lw"]
+[ext_resource type="Script" path="res://src/cl_keycontroller.gd" id="3_5l1uq"]
 [ext_resource type="Script" path="res://src/cl_notecontroller.gd" id="3_t55vn"]
 [ext_resource type="Script" path="res://src/cl_menubar_add.gd" id="5_2p0vi"]
 [ext_resource type="Script" path="res://src/cl_menubar_project.gd" id="5_577ur"]
+[ext_resource type="Texture2D" uid="uid://b84des7awlnu5" path="res://scenes/Gradient.tres" id="5_dqdvp"]
 [ext_resource type="Script" path="res://src/cl_character.gd" id="5_in5ur"]
 [ext_resource type="Script" path="res://src/cl_filedialog.gd" id="5_qvt2c"]
+[ext_resource type="Texture2D" uid="uid://cod8x65epafno" path="res://assets/Pattern.png" id="5_v7o4k"]
 [ext_resource type="Texture2D" uid="uid://cfg72q00eldnt" path="res://assets/Checker.png" id="6_bp6ey"]
 [ext_resource type="Script" path="res://src/cl_music.gd" id="6_f3wwk"]
+[ext_resource type="Script" path="res://src/cl_menubar_clear.gd" id="6_pgban"]
 [ext_resource type="Script" path="res://src/cl_difficulty.gd" id="7_alc5b"]
 [ext_resource type="PackedScene" uid="uid://c3m8f3aiheycv" path="res://prefabs/Notification.tscn" id="8_vyifj"]
 [ext_resource type="Script" path="res://src/cl_tools.gd" id="8_waaxy"]
 [ext_resource type="Script" path="res://src/cl_menubar_edit.gd" id="8_yungy"]
-[ext_resource type="Texture2D" uid="uid://crfo7mgcdp00n" path="res://assets/icon_select.png" id="9_j5sdo"]
-[ext_resource type="Texture2D" uid="uid://cmfihxdtx36aa" path="res://assets/icon_marquee.png" id="9_lohrd"]
+[ext_resource type="Texture2D" uid="uid://crfo7mgcdp00n" path="res://assets/tool_select.png" id="9_j5sdo"]
+[ext_resource type="Texture2D" uid="uid://cmfihxdtx36aa" path="res://assets/tool_marquee.png" id="9_lohrd"]
 [ext_resource type="Script" path="res://src/cl_menubar_file.gd" id="9_qoohm"]
 [ext_resource type="Script" path="res://src/cl_menubar_help.gd" id="10_p48ck"]
 [ext_resource type="Script" path="res://src/cl_timecode.gd" id="11_ycej5"]
 [ext_resource type="Texture2D" uid="uid://j7ypji0xwic6" path="res://assets/tool_audio.png" id="12_a3q0d"]
 [ext_resource type="Script" path="res://src/cl_sfx.gd" id="13_i7gdi"]
 [ext_resource type="Script" path="res://src/cl_snapping.gd" id="13_oym2h"]
+[ext_resource type="Texture2D" uid="uid://duompl3dtsgg1" path="res://assets/tool_horny.png" id="13_vb1uc"]
+[ext_resource type="Texture2D" uid="uid://betuc1m0gxohi" path="res://assets/tool_modify.png" id="14_11yw1"]
 [ext_resource type="Script" path="res://src/cl_asset_manager.gd" id="14_eesym"]
 [ext_resource type="Script" path="res://src/cl_shutters.gd" id="15_kn5dq"]
 [ext_resource type="Script" path="res://src/cl_popup_new_difficulty.gd" id="18_iev55"]
+[ext_resource type="Script" path="res://src/cl_popup_rename_difficulty.gd" id="18_iev56"]
 [ext_resource type="Script" path="res://src/cl_popup_quit.gd" id="20_brhb6"]
+[ext_resource type="Script" path="res://src/cl_menu_image.gd" id="22_btaqb"]
 [ext_resource type="Script" path="res://src/cl_oneshot.gd" id="22_wed7f"]
 [ext_resource type="Script" path="res://src/cl_popups.gd" id="24_hyexw"]
-[ext_resource type="Script" path="res://src/cl_popup_place_animation.gd" id="26_6tqyk"]
+[ext_resource type="Script" path="res://src/cl_voice.gd" id="26_3mi6w"]
+[ext_resource type="Script" path="res://src/cl_scrollbar.gd" id="26_31a3u"]
+[ext_resource type="Script" path="res://src/cl_horny.gd" id="31_rybx7"]
+[ext_resource type="Script" path="res://src/cl_popup_delete_difficulty.gd" id="32_m4kvt"]
+[ext_resource type="Script" path="res://src/cl_menu_audio.gd" id="34_8buew"]
+[ext_resource type="Script" path="res://src/cl_popup_clear.gd" id="34_pacga"]
+[ext_resource type="Script" path="res://src/cl_popup_icon_difficulty.gd" id="36_j4s2r"]
+[ext_resource type="Texture2D" uid="uid://f5ooa0gle4sk" path="res://assets/icon_difficulty.png" id="37_8v42t"]
+[ext_resource type="Script" path="res://src/cl_popup_animation.gd" id="42_u4042"]
+[ext_resource type="Script" path="res://src/cl_popup_voicebank.gd" id="44_earsn"]
+[ext_resource type="Script" path="res://src/cl_popup_background.gd" id="44_tvfc5"]
+[ext_resource type="Script" path="res://prefabs/VoiceBankNode.gd" id="45_gd3qt"]
+[ext_resource type="Texture2D" uid="uid://bt6ryhnpjv6yf" path="res://assets/icon-delete.png" id="45_lslcg"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_id34j"]
-bg_color = Color(0, 0, 0, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ritwt"]
-bg_color = Color(0.0588235, 0.0588235, 0.0588235, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fxxnx"]
-bg_color = Color(0.0627451, 0.0627451, 0.0627451, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w0hwe"]
-bg_color = Color(0, 0, 0, 1)
-
-[sub_resource type="ButtonGroup" id="ButtonGroup_xvp3s"]
-
-[sub_resource type="InputEventKey" id="InputEventKey_kwt1r"]
-device = -1
-keycode = 80
-unicode = 112
-
-[sub_resource type="Shortcut" id="Shortcut_t0pcs"]
-events = [SubResource("InputEventKey_kwt1r")]
-
-[sub_resource type="InputEventKey" id="InputEventKey_mmjiq"]
-device = -1
-keycode = 84
-unicode = 116
-
-[sub_resource type="Shortcut" id="Shortcut_4ufp1"]
-events = [SubResource("InputEventKey_mmjiq")]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bx0p2"]
-bg_color = Color(0.0823529, 0.0823529, 0.0823529, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x5vw1"]
+bg_color = Color(0.0862745, 0.0862745, 0.0862745, 1)
 
 [sub_resource type="Animation" id="Animation_jfjoc"]
 length = 0.001
@@ -124,14 +114,62 @@ _data = {
 "Shutters": SubResource("Animation_0h03h")
 }
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fxxnx"]
+bg_color = Color(0.0627451, 0.0627451, 0.0627451, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w0hwe"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_xvp3s"]
+
+[sub_resource type="InputEventKey" id="InputEventKey_kwt1r"]
+device = -1
+keycode = 80
+unicode = 112
+
+[sub_resource type="Shortcut" id="Shortcut_t0pcs"]
+events = [SubResource("InputEventKey_kwt1r")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_mmjiq"]
+device = -1
+keycode = 84
+unicode = 116
+
+[sub_resource type="Shortcut" id="Shortcut_4ufp1"]
+events = [SubResource("InputEventKey_mmjiq")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_572c4"]
+device = -1
+keycode = 65
+unicode = 103
+
+[sub_resource type="Shortcut" id="Shortcut_8dmvh"]
+events = [SubResource("InputEventKey_572c4")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_wk7lj"]
+device = -1
+keycode = 72
+unicode = 103
+
+[sub_resource type="Shortcut" id="Shortcut_lu0dt"]
+events = [SubResource("InputEventKey_wk7lj")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_ouc0w"]
+device = -1
+keycode = 77
+unicode = 104
+
+[sub_resource type="Shortcut" id="Shortcut_4noe4"]
+events = [SubResource("InputEventKey_ouc0w")]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bx0p2"]
+bg_color = Color(0.0823529, 0.0823529, 0.0823529, 1)
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8ujmx"]
 bg_color = Color(0.0470588, 0.0470588, 0.0470588, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_41pyu"]
 bg_color = Color(0, 0, 0, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2cfo2"]
-bg_color = Color(0.909804, 0.909804, 0.909804, 1)
 
 [sub_resource type="InputEventKey" id="InputEventKey_pbv2h"]
 device = -1
@@ -141,14 +179,25 @@ keycode = 83
 [sub_resource type="Shortcut" id="Shortcut_02m8d"]
 events = [SubResource("InputEventKey_pbv2h")]
 
-[sub_resource type="Gradient" id="Gradient_gs3md"]
-colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 0)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_3shvh"]
-gradient = SubResource("Gradient_gs3md")
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4kvjm"]
+bg_color = Color(0.137255, 0.137255, 0.137255, 1)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_awqg8"]
-texture = SubResource("GradientTexture2D_3shvh")
+texture = ExtResource("5_dqdvp")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ritwt"]
+bg_color = Color(0.0588235, 0.0588235, 0.0588235, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_x3vgy"]
+texture = ExtResource("5_dqdvp")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_id34j"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_pc1s3"]
+texture = ExtResource("5_dqdvp")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ji2dx"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qq0lv"]
 bg_color = Color(0, 0, 0, 0.498039)
@@ -165,42 +214,80 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_right = 640.0
+offset_bottom = 360.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_71y40")
 script = ExtResource("2_ca1lw")
 metadata/_edit_lock_ = true
 
-[node name="Background" type="Panel" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="Character" type="Node2D" parent="."]
+position = Vector2(992, 336)
+scale = Vector2(0.778, 0.778)
+script = ExtResource("5_in5ur")
+
+[node name="Panel" type="Panel" parent="Character"]
+clip_contents = true
+offset_left = -640.0
+offset_top = -360.0
+offset_right = 640.0
+offset_bottom = 360.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_x5vw1")
 metadata/_edit_lock_ = true
 
-[node name="Background3" type="Panel" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 768.0
-offset_bottom = -208.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_id34j")
+[node name="Pattern" type="Sprite2D" parent="Character/Panel"]
+texture_repeat = 2
+scale = Vector2(0.278, 0.281)
+texture = ExtResource("5_v7o4k")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 4604.4, 2562.3)
+region_filter_clip_enabled = true
 
-[node name="Background4" type="Panel" parent="."]
+[node name="Sprite" type="Sprite2D" parent="Character/Panel"]
+visible = false
+position = Vector2(640, 360)
+scale = Vector2(0.667, 0.667)
+texture = ExtResource("6_bp6ey")
+
+[node name="Visual" type="Sprite2D" parent="Character/Panel"]
+position = Vector2(640, 360)
+
+[node name="Shutters" type="Node2D" parent="Character"]
+script = ExtResource("15_kn5dq")
+
+[node name="Top" type="Polygon2D" parent="Character/Shutters"]
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-640, -360, -640, -360, 640, -360, 640, -360)
+
+[node name="Bottom" type="Polygon2D" parent="Character/Shutters"]
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-640, 360, 640, 360, 640, 360, -640, 360)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Character/Shutters"]
+libraries = {
+"": SubResource("AnimationLibrary_0k37x")
+}
+
+[node name="Hud" type="Node2D" parent="Character"]
+
+[node name="TopBlack" type="Polygon2D" parent="Character/Hud"]
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-640, -360, 80, -360, -640, -210)
+
+[node name="BottomBlack" type="Polygon2D" parent="Character/Hud"]
+position = Vector2(-1200, -450)
+scale = Vector2(1.25, 1.25)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(1472, 648, 896, 648, 1472, 520)
+
+[node name="Panel" type="Panel" parent="."]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 720.0
-offset_bottom = -312.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_ritwt")
+offset_left = 1490.0
+offset_top = 56.0
+offset_right = 1920.0
+offset_bottom = 616.0
 
 [node name="Toolbar" type="Panel" parent="."]
 layout_mode = 0
@@ -210,21 +297,18 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_fxxnx")
 
 [node name="MenuBar" type="MenuBar" parent="Toolbar"]
 layout_direction = 2
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+layout_mode = 0
 offset_left = 16.0
 offset_top = 8.0
-offset_right = 289.0
-offset_bottom = 10.0
-grow_horizontal = 2
-grow_vertical = 2
+offset_right = 491.0
+offset_bottom = 50.0
 theme_override_constants/h_separation = 20
 theme_override_font_sizes/font_size = 24
 flat = true
+switch_on_hover = false
 
 [node name="File" type="PopupMenu" parent="Toolbar/MenuBar"]
+size = Vector2i(154, 104)
 theme_override_font_sizes/font_size = 20
 item_count = 3
 item_0/text = "New Project"
@@ -233,45 +317,101 @@ item_1/text = "Open Project"
 item_1/id = 1
 item_2/text = "Save Project"
 item_2/id = 2
+item_2/disabled = true
 script = ExtResource("9_qoohm")
 
 [node name="Edit" type="PopupMenu" parent="Toolbar/MenuBar"]
+size = Vector2i(124, 108)
 theme_override_font_sizes/font_size = 20
-item_count = 3
-item_0/text = "<temp>"
+item_count = 4
+item_0/text = "Undo"
 item_0/id = 0
 item_0/disabled = true
-item_1/text = "<temp>"
+item_1/text = "Redo"
 item_1/id = 1
 item_1/disabled = true
-item_2/text = "Clear Chart"
+item_2/text = ""
 item_2/id = 2
+item_2/separator = true
+item_3/text = "Replace"
+item_3/checkable = 1
+item_3/id = 2
 script = ExtResource("8_yungy")
 
 [node name="Add" type="PopupMenu" parent="Toolbar/MenuBar"]
+size = Vector2i(252, 136)
 theme_override_font_sizes/font_size = 20
-item_count = 1
+item_count = 4
 item_0/text = "Add Shutter"
 item_0/id = 0
 item_0/disabled = true
+item_1/text = "Add Modifier"
+item_1/id = 1
+item_1/disabled = true
+item_2/text = "Add Empty Sound Loop"
+item_2/id = 2
+item_2/disabled = true
+item_3/text = "Add Empty Voice Bank"
+item_3/id = 3
+item_3/disabled = true
 script = ExtResource("5_2p0vi")
 
-[node name="Project" type="PopupMenu" parent="Toolbar/MenuBar"]
+[node name="Clear" type="PopupMenu" parent="Toolbar/MenuBar"]
+size = Vector2i(194, 168)
 theme_override_font_sizes/font_size = 20
-item_count = 4
+item_count = 8
+item_0/text = "Clear Chart"
+item_0/id = 0
+item_0/disabled = true
+item_1/text = "Clear Shutters"
+item_1/id = 1
+item_1/disabled = true
+item_2/text = "Clear Animations"
+item_2/id = 2
+item_2/disabled = true
+item_3/text = "Clear Backgrounds"
+item_3/id = 3
+item_3/disabled = true
+item_4/text = "Clear Modifiers"
+item_4/id = 4
+item_4/disabled = true
+item_5/text = "Clear Sound Loops"
+item_5/id = 5
+item_5/disabled = true
+item_6/text = "Clear Oneshots"
+item_6/id = 6
+item_6/disabled = true
+item_7/text = "Clear Timeline"
+item_7/id = 7
+item_7/disabled = true
+script = ExtResource("6_pgban")
+
+[node name="Project" type="PopupMenu" parent="Toolbar/MenuBar"]
+size = Vector2i(233, 172)
+theme_override_font_sizes/font_size = 20
+item_count = 6
 item_0/text = "Reload Project"
 item_0/id = 0
 item_0/disabled = true
-item_1/text = "Create New Difficulty"
+item_1/text = ""
 item_1/id = 1
-item_1/disabled = true
-item_2/text = "Delete Difficulty"
-item_2/id = 2
-item_3/text = "Rename Difficulty"
-item_3/id = 3
+item_1/separator = true
+item_2/text = "Create New Difficulty"
+item_2/id = 1
+item_2/disabled = true
+item_3/text = "Delete Difficulty"
+item_3/id = 2
+item_3/disabled = true
+item_4/text = "Rename Difficulty"
+item_4/id = 3
+item_4/disabled = true
+item_5/text = "Set Difficulty Icon"
+item_5/id = 4
+item_5/disabled = true
 script = ExtResource("5_577ur")
 
 [node name="Help" type="PopupMenu" parent="Toolbar/MenuBar"]
+size = Vector2i(169, 100)
 theme_override_font_sizes/font_size = 20
 item_count = 2
 item_0/text = "Github Repo"
@@ -295,6 +435,7 @@ grow_horizontal = 0
 grow_vertical = 2
 tooltip_text = "Change Difficulty"
 focus_mode = 0
+mouse_default_cursor_shape = 2
 theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
 theme_override_colors/font_disabled_color = Color(0.482353, 0.482353, 0.482353, 1)
 theme_override_styles/pressed = SubResource("StyleBoxFlat_w0hwe")
@@ -322,6 +463,7 @@ custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 tooltip_text = "Pointer Tool"
 focus_mode = 0
+mouse_default_cursor_shape = 2
 toggle_mode = true
 button_pressed = true
 button_group = SubResource("ButtonGroup_xvp3s")
@@ -335,6 +477,7 @@ custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 tooltip_text = "Marquee Tool"
 focus_mode = 0
+mouse_default_cursor_shape = 2
 toggle_mode = true
 button_group = SubResource("ButtonGroup_xvp3s")
 shortcut = SubResource("Shortcut_4ufp1")
@@ -345,12 +488,39 @@ icon_alignment = 1
 texture_filter = 1
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
-tooltip_text = "Marquee Tool"
+tooltip_text = "Voice Tool"
 focus_mode = 0
+mouse_default_cursor_shape = 2
 toggle_mode = true
 button_group = SubResource("ButtonGroup_xvp3s")
-shortcut = SubResource("Shortcut_4ufp1")
+shortcut = SubResource("Shortcut_8dmvh")
 icon = ExtResource("12_a3q0d")
+icon_alignment = 1
+
+[node name="Horny" type="Button" parent="Toolbar/Tools"]
+texture_filter = 1
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+tooltip_text = "Horny Tool"
+focus_mode = 0
+mouse_default_cursor_shape = 2
+toggle_mode = true
+button_group = SubResource("ButtonGroup_xvp3s")
+shortcut = SubResource("Shortcut_lu0dt")
+icon = ExtResource("13_vb1uc")
+icon_alignment = 1
+
+[node name="Modify" type="Button" parent="Toolbar/Tools"]
+texture_filter = 1
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+tooltip_text = "Modifier Tool"
+focus_mode = 0
+mouse_default_cursor_shape = 2
+toggle_mode = true
+button_group = SubResource("ButtonGroup_xvp3s")
+shortcut = SubResource("Shortcut_4noe4")
+icon = ExtResource("14_11yw1")
 icon_alignment = 1
 
 [node name="Assets" type="Control" parent="."]
@@ -359,13 +529,13 @@ offset_left = 1.0
 offset_top = 56.0
 offset_right = 494.0
 offset_bottom = 616.0
-metadata/_edit_group_ = true
 
-[node name="Panel" type="Panel" parent="Assets"]
+[node name="AssetPanel" type="Panel" parent="Assets"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = -1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_bx0p2")
@@ -387,93 +557,14 @@ theme_override_constants/separation = 10
 alignment = 1
 
 [node name="FileDialog" type="FileDialog" parent="."]
-title = "Open a File"
+title = "Open a Directory"
 position = Vector2i(460, 140)
 size = Vector2i(1000, 800)
 popup_window = true
-ok_button_text = "Open"
-mode_overrides_title = false
-file_mode = 0
+ok_button_text = "Select Current Folder"
+file_mode = 2
 access = 2
 script = ExtResource("5_qvt2c")
-
-[node name="Character" type="Node2D" parent="."]
-position = Vector2(992, 336)
-scale = Vector2(0.778, 0.778)
-script = ExtResource("5_in5ur")
-metadata/_edit_group_ = true
-
-[node name="Checkers" type="Sprite2D" parent="Character"]
-texture = ExtResource("6_bp6ey")
-metadata/_edit_lock_ = true
-
-[node name="Visual" type="Sprite2D" parent="Character"]
-
-[node name="Shutters" type="Node2D" parent="Character"]
-script = ExtResource("15_kn5dq")
-
-[node name="Top" type="Polygon2D" parent="Character/Shutters"]
-color = Color(0, 0, 0, 1)
-polygon = PackedVector2Array(-640, -360, -640, -360, 640, -360, 640, -360)
-
-[node name="Bottom" type="Polygon2D" parent="Character/Shutters"]
-color = Color(0, 0, 0, 1)
-polygon = PackedVector2Array(-640, 360, 640, 360, 640, 360, -640, 360)
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Character/Shutters"]
-libraries = {
-"": SubResource("AnimationLibrary_0k37x")
-}
-
-[node name="Hud" type="Node2D" parent="Character"]
-
-[node name="Polygon2D" type="Polygon2D" parent="Character/Hud"]
-color = Color(0, 0, 0, 1)
-polygon = PackedVector2Array(-640, -360, 80, -360, -640, -210)
-
-[node name="Polygon2D2" type="Polygon2D" parent="Character/Hud"]
-position = Vector2(-1200, -450)
-scale = Vector2(1.25, 1.25)
-color = Color(0, 0, 0, 1)
-polygon = PackedVector2Array(1472, 648, 896, 648, 1472, 520)
-
-[node name="NoteTimeline" type="Panel" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 872.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_fxxnx")
-
-[node name="NoteLine" type="Line2D" parent="NoteTimeline"]
-position = Vector2(960, 104)
-points = PackedVector2Array(-960, 0, 960, 0)
-width = 5.0
-
-[node name="NoteController" type="Node2D" parent="NoteTimeline/NoteLine"]
-script = ExtResource("3_t55vn")
-
-[node name="Indicators" type="Node2D" parent="NoteTimeline/NoteLine/NoteController"]
-
-[node name="Notes" type="Node2D" parent="NoteTimeline/NoteLine/NoteController"]
-
-[node name="AnimationsTrack" type="Node2D" parent="NoteTimeline/NoteLine/NoteController"]
-position = Vector2(0, -156)
-
-[node name="OneshotSoundTrack" type="Node2D" parent="NoteTimeline/NoteLine/NoteController"]
-position = Vector2(0, -232)
-
-[node name="ShutterTrack" type="Node2D" parent="NoteTimeline/NoteLine/NoteController"]
-position = Vector2(0, -280)
-
-[node name="LineCenter" type="Line2D" parent="NoteTimeline/NoteLine"]
-points = PackedVector2Array(0, 104, 0, -304)
-width = 5.0
-default_color = Color(0.619608, 0.027451, 0.266667, 1)
-
-[node name="Notification" parent="." instance=ExtResource("8_vyifj")]
 
 [node name="BottomBar" type="Panel" parent="."]
 layout_mode = 0
@@ -487,14 +578,14 @@ layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
-offset_left = 42.0
-offset_top = -22.5
-offset_right = 186.0
-offset_bottom = 22.5
+offset_left = 34.0
+offset_top = -22.0
+offset_right = 285.0
+offset_bottom = 23.0
 grow_vertical = 2
 theme_override_font_sizes/font_size = 24
-text = "0:00 - 0:00"
-horizontal_alignment = 1
+text = "00:00.000 : 00:00.000"
+horizontal_alignment = 2
 vertical_alignment = 1
 script = ExtResource("11_ycej5")
 
@@ -513,17 +604,22 @@ grow_horizontal = 2
 grow_vertical = 2
 tooltip_text = "Snapping Interval"
 focus_mode = 0
+mouse_default_cursor_shape = 2
 theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
 theme_override_styles/pressed = SubResource("StyleBoxFlat_41pyu")
-item_count = 4
+item_count = 6
 popup/item_0/text = "Beat"
 popup/item_0/id = 0
 popup/item_1/text = "1/2"
 popup/item_1/id = 1
-popup/item_2/text = "1/4"
+popup/item_2/text = "1/3"
 popup/item_2/id = 2
-popup/item_3/text = "1/8"
+popup/item_3/text = "1/4"
 popup/item_3/id = 3
+popup/item_4/text = "1/6"
+popup/item_4/id = 4
+popup/item_5/text = "1/8"
+popup/item_5/id = 5
 script = ExtResource("13_oym2h")
 
 [node name="SnapToggle" type="Button" parent="BottomBar/Snapping"]
@@ -533,65 +629,53 @@ offset_right = -8.0
 offset_bottom = 31.0
 tooltip_text = "Toggle Timeline Snapping"
 focus_mode = 0
+mouse_default_cursor_shape = 2
 theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
-theme_override_styles/pressed = SubResource("StyleBoxFlat_2cfo2")
 toggle_mode = true
 button_pressed = true
 shortcut = SubResource("Shortcut_02m8d")
 text = "SNAPPING : ON"
 
-[node name="Music" type="AudioStreamPlayer" parent="."]
-script = ExtResource("6_f3wwk")
-
-[node name="Sfx" type="AudioStreamPlayer" parent="."]
-script = ExtResource("13_i7gdi")
-
-[node name="OneShot" type="AudioStreamPlayer" parent="."]
-script = ExtResource("22_wed7f")
-
-[node name="Background5" type="Panel" parent="."]
+[node name="Timeline" type="Control" parent="."]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 672.0
-offset_right = -1728.0
-grow_horizontal = 2
-grow_vertical = 2
+anchor_top = 0.466667
+anchor_right = 0.75
+anchor_bottom = 0.75
+metadata/_edit_use_anchors_ = true
+
+[node name="KeyTimeline" type="ScrollContainer" parent="Timeline"]
+modulate = Color(0.817521, 0.817521, 0.817521, 1)
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 200.0
+horizontal_scroll_mode = 0
+
+[node name="KeyContainer" type="VBoxContainer" parent="Timeline/KeyTimeline"]
+clip_contents = true
+custom_minimum_size = Vector2(1912, 448)
+layout_mode = 2
+theme_override_constants/separation = 0
+script = ExtResource("3_5l1uq")
+
+[node name="Shutter" type="Panel" parent="Timeline/KeyTimeline/KeyContainer"]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_4kvjm")
+
+[node name="Track" type="Node2D" parent="Timeline/KeyTimeline/KeyContainer/Shutter"]
+z_index = 1
+position = Vector2(960, 24)
+
+[node name="Gradient" type="Panel" parent="Timeline/KeyTimeline/KeyContainer/Shutter"]
+z_index = 1
+layout_mode = 0
+offset_right = 192.0
+offset_bottom = 48.0
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_awqg8")
 
-[node name="Label" type="Label" parent="Background5"]
-layout_mode = 0
-offset_left = 16.0
-offset_top = 208.0
-offset_right = 136.0
-offset_bottom = 237.0
-theme_override_colors/font_color = Color(1, 1, 1, 0.737255)
-theme_override_font_sizes/font_size = 18
-text = "NOTES"
-
-[node name="Label2" type="Label" parent="Background5"]
-layout_mode = 0
-offset_left = 16.0
-offset_top = 104.0
-offset_right = 143.0
-offset_bottom = 133.0
-theme_override_colors/font_color = Color(1, 1, 1, 0.737255)
-theme_override_font_sizes/font_size = 18
-text = "ANIMATIONS"
-
-[node name="Label3" type="Label" parent="Background5"]
-layout_mode = 0
-offset_left = 16.0
-offset_top = 56.0
-offset_right = 189.0
-offset_bottom = 85.0
-theme_override_colors/font_color = Color(1, 1, 1, 0.737255)
-theme_override_font_sizes/font_size = 18
-text = "ONESHOT SOUND"
-
-[node name="Label4" type="Label" parent="Background5"]
+[node name="Label" type="Label" parent="Timeline/KeyTimeline/KeyContainer/Shutter"]
+z_index = 1
 layout_mode = 0
 offset_left = 16.0
 offset_top = 8.0
@@ -599,16 +683,349 @@ offset_right = 189.0
 offset_bottom = 37.0
 theme_override_colors/font_color = Color(1, 1, 1, 0.737255)
 theme_override_font_sizes/font_size = 18
-text = "SHUTTER"
+text = "SHUTTERS"
 
-[node name="Popups" type="Panel" parent="."]
-visible = false
-layout_mode = 1
+[node name="Animations" type="Panel" parent="Timeline/KeyTimeline/KeyContainer"]
+custom_minimum_size = Vector2(0, 104)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ritwt")
+
+[node name="Track" type="Node2D" parent="Timeline/KeyTimeline/KeyContainer/Animations"]
+z_index = 1
+position = Vector2(960, 52)
+
+[node name="Gradient" type="Panel" parent="Timeline/KeyTimeline/KeyContainer/Animations"]
+z_index = 1
+layout_mode = 0
+offset_right = 192.0
+offset_bottom = 104.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_x3vgy")
+
+[node name="Label" type="Label" parent="Timeline/KeyTimeline/KeyContainer/Animations"]
+z_index = 1
+layout_mode = 0
+offset_left = 16.0
+offset_top = 8.0
+offset_right = 143.0
+offset_bottom = 37.0
+theme_override_colors/font_color = Color(1, 1, 1, 0.737255)
+theme_override_font_sizes/font_size = 18
+text = "ANIMATIONS"
+
+[node name="Backgrounds" type="Panel" parent="Timeline/KeyTimeline/KeyContainer"]
+custom_minimum_size = Vector2(0, 104)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_id34j")
+
+[node name="Track" type="Node2D" parent="Timeline/KeyTimeline/KeyContainer/Backgrounds"]
+z_index = 1
+position = Vector2(960, 52)
+
+[node name="Gradient" type="Panel" parent="Timeline/KeyTimeline/KeyContainer/Backgrounds"]
+z_index = 1
+layout_mode = 0
+offset_right = 192.0
+offset_bottom = 104.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_x3vgy")
+
+[node name="Label" type="Label" parent="Timeline/KeyTimeline/KeyContainer/Backgrounds"]
+z_index = 1
+layout_mode = 0
+offset_left = 16.0
+offset_top = 8.0
+offset_right = 152.0
+offset_bottom = 37.0
+theme_override_colors/font_color = Color(1, 1, 1, 0.737255)
+theme_override_font_sizes/font_size = 18
+text = "BACKGROUNDS"
+
+[node name="Modifier" type="Panel" parent="Timeline/KeyTimeline/KeyContainer"]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ritwt")
+
+[node name="Track" type="Node2D" parent="Timeline/KeyTimeline/KeyContainer/Modifier"]
+z_index = 1
+position = Vector2(960, 24)
+
+[node name="Gradient" type="Panel" parent="Timeline/KeyTimeline/KeyContainer/Modifier"]
+z_index = 1
+layout_mode = 0
+offset_right = 192.0
+offset_bottom = 48.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_awqg8")
+
+[node name="Label" type="Label" parent="Timeline/KeyTimeline/KeyContainer/Modifier"]
+z_index = 1
+layout_mode = 0
+offset_left = 16.0
+offset_top = 8.0
+offset_right = 112.0
+offset_bottom = 37.0
+theme_override_colors/font_color = Color(1, 1, 1, 0.737255)
+theme_override_font_sizes/font_size = 18
+text = "MODIFIERS"
+
+[node name="SoundLoops" type="Panel" parent="Timeline/KeyTimeline/KeyContainer"]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_4kvjm")
+
+[node name="Track" type="Node2D" parent="Timeline/KeyTimeline/KeyContainer/SoundLoops"]
+z_index = 1
+position = Vector2(960, 24)
+
+[node name="Gradient" type="Panel" parent="Timeline/KeyTimeline/KeyContainer/SoundLoops"]
+z_index = 1
+layout_mode = 0
+offset_right = 192.0
+offset_bottom = 48.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_awqg8")
+
+[node name="Label" type="Label" parent="Timeline/KeyTimeline/KeyContainer/SoundLoops"]
+z_index = 1
+layout_mode = 0
+offset_left = 15.0
+offset_top = 8.0
+offset_right = 188.0
+offset_bottom = 37.0
+theme_override_colors/font_color = Color(1, 1, 1, 0.737255)
+theme_override_font_sizes/font_size = 18
+text = "SOUND LOOPS"
+
+[node name="OneshotSound" type="Panel" parent="Timeline/KeyTimeline/KeyContainer"]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ritwt")
+
+[node name="Track" type="Node2D" parent="Timeline/KeyTimeline/KeyContainer/OneshotSound"]
+z_index = 1
+position = Vector2(960, 24)
+
+[node name="Gradient" type="Panel" parent="Timeline/KeyTimeline/KeyContainer/OneshotSound"]
+z_index = 1
+layout_mode = 0
+offset_right = 192.0
+offset_bottom = 48.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_awqg8")
+
+[node name="Label" type="Label" parent="Timeline/KeyTimeline/KeyContainer/OneshotSound"]
+z_index = 1
+layout_mode = 0
+offset_left = 16.0
+offset_top = 8.0
+offset_right = 189.0
+offset_bottom = 37.0
+theme_override_colors/font_color = Color(1, 1, 1, 0.737255)
+theme_override_font_sizes/font_size = 18
+text = "ONESHOT SOUNDS"
+
+[node name="VoiceBanks" type="Panel" parent="Timeline/KeyTimeline/KeyContainer"]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_id34j")
+
+[node name="Track" type="Node2D" parent="Timeline/KeyTimeline/KeyContainer/VoiceBanks"]
+z_index = 1
+position = Vector2(960, 24)
+
+[node name="Gradient" type="Panel" parent="Timeline/KeyTimeline/KeyContainer/VoiceBanks"]
+z_index = 1
+layout_mode = 0
+offset_right = 192.0
+offset_bottom = 48.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_awqg8")
+
+[node name="Label" type="Label" parent="Timeline/KeyTimeline/KeyContainer/VoiceBanks"]
+z_index = 1
+layout_mode = 0
+offset_left = 15.0
+offset_top = 8.0
+offset_right = 188.0
+offset_bottom = 37.0
+theme_override_colors/font_color = Color(1, 1, 1, 0.737255)
+theme_override_font_sizes/font_size = 18
+text = "VOICE BANKS"
+
+[node name="Beat" type="Node2D" parent="Timeline/KeyTimeline/KeyContainer"]
+position = Vector2(960, 552)
+
+[node name="Half" type="Node2D" parent="Timeline/KeyTimeline/KeyContainer"]
+position = Vector2(960, 552)
+
+[node name="Third" type="Node2D" parent="Timeline/KeyTimeline/KeyContainer"]
+position = Vector2(960, 552)
+
+[node name="Quarter" type="Node2D" parent="Timeline/KeyTimeline/KeyContainer"]
+position = Vector2(960, 552)
+
+[node name="Sixth" type="Node2D" parent="Timeline/KeyTimeline/KeyContainer"]
+position = Vector2(960, 552)
+
+[node name="Eighth" type="Node2D" parent="Timeline/KeyTimeline/KeyContainer"]
+position = Vector2(960, 552)
+
+[node name="Timer" type="Timer" parent="Timeline/KeyTimeline"]
+
+[node name="NoteTimeline" type="Panel" parent="Timeline"]
+modulate = Color(0.815686, 0.815686, 0.815686, 1)
+layout_mode = 0
+offset_top = 199.0
+offset_right = 1920.0
+offset_bottom = 408.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_fxxnx")
+
+[node name="NoteLine" type="Line2D" parent="Timeline/NoteTimeline"]
+position = Vector2(960, 104)
+points = PackedVector2Array(-960, 0, 960, 0)
+width = 5.0
+
+[node name="NoteController" type="Node2D" parent="Timeline/NoteTimeline/NoteLine"]
+script = ExtResource("3_t55vn")
+
+[node name="Beat" type="Node2D" parent="Timeline/NoteTimeline/NoteLine/NoteController"]
+
+[node name="Half" type="Node2D" parent="Timeline/NoteTimeline/NoteLine/NoteController"]
+
+[node name="Third" type="Node2D" parent="Timeline/NoteTimeline/NoteLine/NoteController"]
+
+[node name="Quarter" type="Node2D" parent="Timeline/NoteTimeline/NoteLine/NoteController"]
+
+[node name="Sixth" type="Node2D" parent="Timeline/NoteTimeline/NoteLine/NoteController"]
+
+[node name="Eighth" type="Node2D" parent="Timeline/NoteTimeline/NoteLine/NoteController"]
+
+[node name="Notes" type="Node2D" parent="Timeline/NoteTimeline/NoteLine/NoteController"]
+
+[node name="Gradient" type="Panel" parent="Timeline/NoteTimeline/NoteLine/NoteController"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = -960.0
+offset_top = -104.0
+offset_right = -768.0
+offset_bottom = 105.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_pc1s3")
+
+[node name="Label" type="Label" parent="Timeline/NoteTimeline/NoteLine/NoteController"]
+anchors_preset = -1
+anchor_top = 0.49
+anchor_bottom = 0.49
+offset_left = -944.0
+offset_top = -95.5099
+offset_right = -824.0
+offset_bottom = -66.5099
+theme_override_colors/font_color = Color(1, 1, 1, 0.737255)
+theme_override_font_sizes/font_size = 18
+text = "NOTES"
+
+[node name="LineCenter" type="Line2D" parent="Timeline/NoteTimeline/NoteLine"]
+z_index = 1
+position = Vector2(0, 1)
+points = PackedVector2Array(0, 104, 0, -304)
+width = 5.0
+default_color = Color(0.619608, 0.027451, 0.266667, 1)
+
+[node name="NoteScroller" type="ColorRect" parent="Timeline/NoteTimeline"]
+visible = false
+z_index = 1
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -960.0
+offset_top = -16.0
+offset_right = 960.0
+grow_horizontal = 2
+grow_vertical = 0
+color = Color(0.3, 0.3, 0.3, 1)
+
+[node name="HScrollBar" type="HScrollBar" parent="Timeline/NoteTimeline/NoteScroller"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 960.0
+offset_top = -16.0
+offset_right = 2880.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(-1, 1)
+step = 0.001
+script = ExtResource("26_31a3u")
+
+[node name="MarqueeSelection" type="Area2D" parent="Timeline"]
+position = Vector2(-106, 100)
+input_pickable = false
+
+[node name="MarqueeSelectionShape" type="CollisionShape2D" parent="Timeline/MarqueeSelection"]
+shape = SubResource("RectangleShape2D_ji2dx")
+
+[node name="Notification" parent="." instance=ExtResource("8_vyifj")]
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+script = ExtResource("6_f3wwk")
+
+[node name="Sfx" type="AudioStreamPlayer" parent="."]
+script = ExtResource("13_i7gdi")
+
+[node name="Voice" type="AudioStreamPlayer" parent="."]
+script = ExtResource("26_3mi6w")
+
+[node name="OneShot" type="AudioStreamPlayer" parent="."]
+script = ExtResource("22_wed7f")
+
+[node name="Horny" type="AudioStreamPlayer" parent="."]
+script = ExtResource("31_rybx7")
+
+[node name="AudioMenu" type="PopupMenu" parent="."]
+size = Vector2i(182, 100)
+unresizable = false
+allow_search = false
+item_count = 3
+item_0/text = "Add Sound Loop"
+item_0/id = 0
+item_1/text = "Add Oneshot Sound"
+item_1/id = 1
+item_2/text = "Add Voice Bank"
+item_2/id = 2
+script = ExtResource("34_8buew")
+
+[node name="ImageMenu" type="PopupMenu" parent="."]
+size = Vector2i(164, 100)
+unresizable = false
+allow_search = false
+item_count = 4
+item_0/text = "Add Animation"
+item_0/id = 0
+item_1/text = "Add Background"
+item_1/id = 1
+item_2/text = ""
+item_2/id = 2
+item_2/separator = true
+item_3/text = "Set Difficulty Icon"
+item_3/id = 2
+script = ExtResource("22_btaqb")
+
+[node name="Popups" type="Panel" parent="."]
+visible = false
+z_index = 1
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_qq0lv")
 script = ExtResource("24_hyexw")
 
@@ -657,15 +1074,12 @@ focus_mode = 1
 theme_override_font_sizes/font_size = 24
 placeholder_text = "Difficulty Name"
 
-[node name="DifficultyRatingField" type="SpinBox" parent="Popups/NewDifficultyPopup"]
+[node name="DifficultyCount" type="Label" parent="Popups/NewDifficultyPopup"]
 layout_mode = 0
 offset_left = 74.0
 offset_top = 142.0
 offset_right = 481.0
 offset_bottom = 173.0
-max_value = 10.0
-value = 1.0
-rounded = true
 
 [node name="Create" type="Button" parent="Popups/NewDifficultyPopup"]
 layout_mode = 2
@@ -679,6 +1093,192 @@ text = "Create"
 
 [node name="Cancel" type="Button" parent="Popups/NewDifficultyPopup"]
 layout_mode = 2
+offset_left = 284.0
+offset_top = 210.0
+offset_right = 356.0
+offset_bottom = 250.0
+theme_override_font_sizes/font_size = 18
+text = "Cancel"
+
+[node name="DeleteDifficultyPopup" type="Panel" parent="Popups"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -276.0
+offset_top = -76.0
+offset_right = 276.0
+offset_bottom = 76.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_y543m")
+script = ExtResource("32_m4kvt")
+
+[node name="Label" type="Label" parent="Popups/DeleteDifficultyPopup"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 58.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 20
+text = "Are You Sure?"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Yes" type="Button" parent="Popups/DeleteDifficultyPopup"]
+layout_mode = 2
+offset_left = 196.0
+offset_top = 104.0
+offset_right = 268.0
+offset_bottom = 136.0
+focus_mode = 0
+theme_override_font_sizes/font_size = 18
+text = "Yes"
+
+[node name="No" type="Button" parent="Popups/DeleteDifficultyPopup"]
+layout_mode = 2
+offset_left = 284.0
+offset_top = 104.0
+offset_right = 356.0
+offset_bottom = 136.0
+theme_override_font_sizes/font_size = 18
+text = "No"
+
+[node name="RenameDifficultyPopup" type="Panel" parent="Popups"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -276.0
+offset_top = -134.0
+offset_right = 276.0
+offset_bottom = 134.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_y543m")
+script = ExtResource("18_iev56")
+
+[node name="Label" type="Label" parent="Popups/RenameDifficultyPopup"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 58.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 20
+text = "Rename Difficulty"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DifficultyNameField" type="LineEdit" parent="Popups/RenameDifficultyPopup"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -203.0
+offset_top = -45.0
+offset_right = 205.0
+offset_bottom = -6.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 1
+theme_override_font_sizes/font_size = 24
+
+[node name="DifficultyRatingField" type="SpinBox" parent="Popups/RenameDifficultyPopup"]
+layout_mode = 0
+offset_left = 74.0
+offset_top = 142.0
+offset_right = 481.0
+offset_bottom = 173.0
+rounded = true
+
+[node name="Rename" type="Button" parent="Popups/RenameDifficultyPopup"]
+layout_mode = 2
+offset_left = 196.0
+offset_top = 210.0
+offset_right = 268.0
+offset_bottom = 250.0
+focus_mode = 0
+theme_override_font_sizes/font_size = 18
+text = "Rename"
+
+[node name="Cancel" type="Button" parent="Popups/RenameDifficultyPopup"]
+layout_mode = 2
+offset_left = 284.0
+offset_top = 210.0
+offset_right = 356.0
+offset_bottom = 250.0
+theme_override_font_sizes/font_size = 18
+text = "Cancel"
+
+[node name="IconDifficultyPopup" type="Panel" parent="Popups"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -276.0
+offset_top = -134.0
+offset_right = 276.0
+offset_bottom = 134.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_y543m")
+script = ExtResource("36_j4s2r")
+
+[node name="Label" type="Label" parent="Popups/IconDifficultyPopup"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 58.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 20
+text = "Set Difficulty Icon"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="File" type="LineEdit" parent="Popups/IconDifficultyPopup"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -203.0
+offset_top = -45.0
+offset_right = 123.0
+offset_bottom = -6.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 1
+theme_override_font_sizes/font_size = 24
+placeholder_text = "File Name"
+
+[node name="Icon" type="Sprite2D" parent="Popups/IconDifficultyPopup"]
+position = Vector2(440, 111)
+texture = ExtResource("37_8v42t")
+
+[node name="Set" type="Button" parent="Popups/IconDifficultyPopup"]
+layout_mode = 0
+offset_left = 196.0
+offset_top = 210.0
+offset_right = 268.0
+offset_bottom = 250.0
+focus_mode = 0
+theme_override_font_sizes/font_size = 18
+text = "Set"
+
+[node name="Cancel" type="Button" parent="Popups/IconDifficultyPopup"]
+layout_mode = 0
 offset_left = 284.0
 offset_top = 210.0
 offset_right = 356.0
@@ -701,7 +1301,7 @@ offset_bottom = 295.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_y543m")
-script = ExtResource("26_6tqyk")
+script = ExtResource("42_u4042")
 
 [node name="Label" type="Label" parent="Popups/PlaceAnimation"]
 layout_mode = 1
@@ -714,32 +1314,208 @@ text = "Place New Animation"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="SheetH" type="SpinBox" parent="Popups/PlaceAnimation"]
+[node name="Horny" type="LineEdit" parent="Popups/PlaceAnimation"]
 layout_mode = 0
 offset_left = 100.0
 offset_top = 123.0
 offset_right = 507.0
 offset_bottom = 154.0
-value = 2.0
-rounded = true
+placeholder_text = "Horny Alternative Animation"
 
-[node name="SheetV" type="SpinBox" parent="Popups/PlaceAnimation"]
+[node name="SheetH" type="SpinBox" parent="Popups/PlaceAnimation"]
 layout_mode = 0
 offset_left = 100.0
 offset_top = 163.0
-offset_right = 507.0
+offset_right = 235.0
 offset_bottom = 194.0
+min_value = 1.0
+value = 2.0
+rounded = true
+allow_greater = true
+
+[node name="SheetH Label" type="Label" parent="Popups/PlaceAnimation/SheetH"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 33.0
+offset_top = 5.0
+offset_right = -21.0
+offset_bottom = 31.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.501961, 0.501961, 0.501961, 1)
+text = "Horizontal"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="SheetV" type="SpinBox" parent="Popups/PlaceAnimation"]
+layout_mode = 0
+offset_left = 236.0
+offset_top = 163.0
+offset_right = 371.0
+offset_bottom = 194.0
+min_value = 1.0
 value = 3.0
 rounded = true
+allow_greater = true
+
+[node name="SheetV Label" type="Label" parent="Popups/PlaceAnimation/SheetV"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 55.0
+offset_top = 5.0
+offset_right = -21.0
+offset_bottom = 31.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.501961, 0.501961, 0.501961, 1)
+text = "Vertical"
+horizontal_alignment = 2
+vertical_alignment = 1
 
 [node name="Total" type="SpinBox" parent="Popups/PlaceAnimation"]
 layout_mode = 0
+offset_left = 372.0
+offset_top = 163.0
+offset_right = 507.0
+offset_bottom = 194.0
+min_value = 1.0
+value = 6.0
+rounded = true
+allow_greater = true
+
+[node name="Total Label" type="Label" parent="Popups/PlaceAnimation/Total"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 75.0
+offset_top = 5.0
+offset_right = -21.0
+offset_bottom = 31.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.501961, 0.501961, 0.501961, 1)
+text = "Total"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="OffsetX" type="SpinBox" parent="Popups/PlaceAnimation"]
+layout_mode = 0
 offset_left = 100.0
+offset_top = 203.0
+offset_right = 304.0
+offset_bottom = 234.0
+rounded = true
+allow_greater = true
+allow_lesser = true
+
+[node name="OffsetX Label" type="Label" parent="Popups/PlaceAnimation/OffsetX"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 119.0
+offset_top = 5.0
+offset_right = -21.5
+offset_bottom = 31.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.501961, 0.501961, 0.501961, 1)
+text = "X-Offset"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="CheckBox" type="CheckBox" parent="Popups/PlaceAnimation/OffsetX"]
+layout_mode = 0
+offset_left = -24.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = 24.0
+
+[node name="OffsetY" type="SpinBox" parent="Popups/PlaceAnimation"]
+layout_mode = 0
+offset_left = 304.0
 offset_top = 203.0
 offset_right = 507.0
 offset_bottom = 234.0
-value = 6.0
 rounded = true
+allow_greater = true
+allow_lesser = true
+
+[node name="OffsetY Label" type="Label" parent="Popups/PlaceAnimation/OffsetY"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 119.0
+offset_top = 5.0
+offset_right = -21.0
+offset_bottom = 31.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.501961, 0.501961, 0.501961, 1)
+text = "Y-Offset"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Scale" type="SpinBox" parent="Popups/PlaceAnimation"]
+layout_mode = 0
+offset_left = 100.0
+offset_top = 243.0
+offset_right = 507.0
+offset_bottom = 274.0
+step = 0.001
+value = 1.0
+allow_greater = true
+custom_arrow_step = 0.1
+
+[node name="Scale Label" type="Label" parent="Popups/PlaceAnimation/Scale"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 265.0
+offset_top = 5.0
+offset_right = -22.0
+offset_bottom = 31.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.501961, 0.501961, 0.501961, 1)
+text = "Scale Multiplier"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="CheckBox" type="CheckBox" parent="Popups/PlaceAnimation/Scale"]
+layout_mode = 0
+offset_left = -24.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = 24.0
+
+[node name="Speed" type="SpinBox" parent="Popups/PlaceAnimation"]
+layout_mode = 0
+offset_left = 100.0
+offset_top = 283.0
+offset_right = 507.0
+offset_bottom = 314.0
+min_value = 0.001
+step = 0.001
+value = 1.0
+allow_greater = true
+custom_arrow_step = 0.1
+
+[node name="Speed Label" type="Label" parent="Popups/PlaceAnimation/Speed"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 197.0
+offset_top = 5.0
+offset_right = -21.0
+offset_bottom = 31.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.501961, 0.501961, 0.501961, 1)
+text = "Manual Speed Multiplier"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="CheckBox" type="CheckBox" parent="Popups/PlaceAnimation/Speed"]
+layout_mode = 0
+offset_left = -24.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = 24.0
 
 [node name="Create" type="Button" parent="Popups/PlaceAnimation"]
 layout_mode = 2
@@ -759,6 +1535,213 @@ offset_right = 394.0
 offset_bottom = 571.0
 theme_override_font_sizes/font_size = 18
 text = "Cancel"
+
+[node name="PlaceBackground" type="Panel" parent="Popups"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -295.0
+offset_right = 300.0
+offset_bottom = 295.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_y543m")
+script = ExtResource("44_tvfc5")
+
+[node name="Label" type="Label" parent="Popups/PlaceBackground"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 58.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 20
+text = "Place New Background"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Scale" type="SpinBox" parent="Popups/PlaceBackground"]
+layout_mode = 0
+offset_left = 100.0
+offset_top = 123.0
+offset_right = 507.0
+offset_bottom = 154.0
+step = 0.001
+value = 1.0
+allow_greater = true
+custom_arrow_step = 0.1
+
+[node name="Scale Label" type="Label" parent="Popups/PlaceBackground/Scale"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 169.0
+offset_top = 5.0
+offset_right = -22.0
+offset_bottom = 31.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.501961, 0.501961, 0.501961, 1)
+text = "Background Scale Multiplier"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="CheckBox" type="CheckBox" parent="Popups/PlaceBackground/Scale"]
+layout_mode = 0
+offset_left = -24.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = 24.0
+
+[node name="Create" type="Button" parent="Popups/PlaceBackground"]
+layout_mode = 2
+offset_left = 196.0
+offset_top = 531.0
+offset_right = 292.0
+offset_bottom = 571.0
+focus_mode = 0
+theme_override_font_sizes/font_size = 18
+text = "Create"
+
+[node name="Cancel" type="Button" parent="Popups/PlaceBackground"]
+layout_mode = 2
+offset_left = 308.0
+offset_top = 531.0
+offset_right = 394.0
+offset_bottom = 571.0
+theme_override_font_sizes/font_size = 18
+text = "Cancel"
+
+[node name="EditVoiceBank" type="Panel" parent="Popups"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -295.0
+offset_right = 300.0
+offset_bottom = 295.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_y543m")
+script = ExtResource("44_earsn")
+
+[node name="Label" type="Label" parent="Popups/EditVoiceBank"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 58.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 20
+text = "Place New Voice Bank"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Popups/EditVoiceBank"]
+clip_contents = false
+layout_mode = 2
+offset_left = 100.0
+offset_top = 123.0
+offset_right = 507.0
+offset_bottom = 431.0
+follow_focus = true
+horizontal_scroll_mode = 0
+
+[node name="VBankContainer" type="VBoxContainer" parent="Popups/EditVoiceBank/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Bank" type="LineEdit" parent="Popups/EditVoiceBank/ScrollContainer/VBankContainer"]
+layout_mode = 2
+focus_mode = 1
+placeholder_text = "Audio File Name"
+script = ExtResource("45_gd3qt")
+
+[node name="Delete" type="Button" parent="Popups/EditVoiceBank/ScrollContainer/VBankContainer/Bank"]
+layout_mode = 0
+offset_left = 377.0
+offset_top = 3.0
+offset_right = 441.0
+offset_bottom = 67.0
+scale = Vector2(0.4, 0.4)
+icon = ExtResource("45_lslcg")
+
+[node name="Add" type="Button" parent="Popups/EditVoiceBank/ScrollContainer/VBankContainer"]
+layout_mode = 2
+text = "Add"
+flat = true
+
+[node name="Create" type="Button" parent="Popups/EditVoiceBank"]
+layout_mode = 2
+offset_left = 196.0
+offset_top = 531.0
+offset_right = 292.0
+offset_bottom = 571.0
+focus_mode = 0
+theme_override_font_sizes/font_size = 18
+text = "Edit"
+
+[node name="Cancel" type="Button" parent="Popups/EditVoiceBank"]
+layout_mode = 2
+offset_left = 308.0
+offset_top = 531.0
+offset_right = 394.0
+offset_bottom = 571.0
+theme_override_font_sizes/font_size = 18
+text = "Cancel"
+
+[node name="ClearPopup" type="Panel" parent="Popups"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -276.0
+offset_top = -76.0
+offset_right = 276.0
+offset_bottom = 76.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_y543m")
+script = ExtResource("34_pacga")
+
+[node name="Label" type="Label" parent="Popups/ClearPopup"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 58.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 20
+text = "Are You Sure?"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Yes" type="Button" parent="Popups/ClearPopup"]
+layout_mode = 2
+offset_left = 196.0
+offset_top = 104.0
+offset_right = 268.0
+offset_bottom = 136.0
+focus_mode = 0
+theme_override_font_sizes/font_size = 18
+text = "Yes"
+
+[node name="No" type="Button" parent="Popups/ClearPopup"]
+layout_mode = 2
+offset_left = 284.0
+offset_top = 104.0
+offset_right = 356.0
+offset_bottom = 136.0
+theme_override_font_sizes/font_size = 18
+text = "No"
 
 [node name="QuitPopup" type="Panel" parent="Popups"]
 visible = false
@@ -817,21 +1800,48 @@ offset_bottom = 136.0
 theme_override_font_sizes/font_size = 18
 text = "Cancel"
 
+[connection signal="gui_input" from="Character/Panel" to="Character" method="_on_panel_gui_input"]
 [connection signal="id_pressed" from="Toolbar/MenuBar/File" to="Toolbar/MenuBar/File" method="_on_id_pressed"]
 [connection signal="id_pressed" from="Toolbar/MenuBar/Edit" to="Toolbar/MenuBar/Edit" method="_on_id_pressed"]
 [connection signal="id_pressed" from="Toolbar/MenuBar/Add" to="Toolbar/MenuBar/Add" method="_on_id_pressed"]
+[connection signal="id_pressed" from="Toolbar/MenuBar/Clear" to="Toolbar/MenuBar/Clear" method="_on_id_pressed"]
 [connection signal="id_pressed" from="Toolbar/MenuBar/Project" to="Toolbar/MenuBar/Project" method="_on_id_pressed"]
 [connection signal="id_pressed" from="Toolbar/MenuBar/Help" to="Toolbar/MenuBar/Help" method="_on_id_pressed"]
 [connection signal="item_selected" from="Toolbar/Difficulty" to="Toolbar/Difficulty" method="_on_item_selected"]
 [connection signal="dir_selected" from="FileDialog" to="FileDialog" method="_on_dir_selected"]
-[connection signal="file_selected" from="FileDialog" to="FileDialog" method="_on_file_selected"]
 [connection signal="item_selected" from="BottomBar/Snapping" to="BottomBar/Snapping" method="_on_item_selected"]
 [connection signal="toggled" from="BottomBar/Snapping/SnapToggle" to="BottomBar/Snapping" method="_on_snap_toggle_toggled"]
+[connection signal="scrolling" from="Timeline/NoteTimeline/NoteScroller/HScrollBar" to="Timeline/NoteTimeline/NoteScroller/HScrollBar" method="_on_scrolling"]
+[connection signal="value_changed" from="Timeline/NoteTimeline/NoteScroller/HScrollBar" to="Timeline/NoteTimeline/NoteScroller/HScrollBar" method="_on_value_changed"]
+[connection signal="id_pressed" from="AudioMenu" to="AudioMenu" method="_on_id_pressed"]
+[connection signal="id_pressed" from="ImageMenu" to="ImageMenu" method="_on_id_pressed"]
 [connection signal="gui_input" from="Popups" to="Popups" method="_on_gui_input"]
 [connection signal="button_up" from="Popups/NewDifficultyPopup/Create" to="Popups/NewDifficultyPopup" method="_on_create_button_up"]
 [connection signal="button_up" from="Popups/NewDifficultyPopup/Cancel" to="Popups/NewDifficultyPopup" method="_on_cancel_button_up"]
+[connection signal="button_up" from="Popups/DeleteDifficultyPopup/Yes" to="Popups/DeleteDifficultyPopup" method="_on_yes_button_up"]
+[connection signal="button_up" from="Popups/DeleteDifficultyPopup/No" to="Popups/DeleteDifficultyPopup" method="_on_no_button_up"]
+[connection signal="value_changed" from="Popups/RenameDifficultyPopup/DifficultyRatingField" to="Popups/RenameDifficultyPopup" method="_on_value_changed"]
+[connection signal="button_up" from="Popups/RenameDifficultyPopup/Rename" to="Popups/RenameDifficultyPopup" method="_on_rename_button_up"]
+[connection signal="button_up" from="Popups/RenameDifficultyPopup/Cancel" to="Popups/RenameDifficultyPopup" method="_on_cancel_button_up"]
+[connection signal="text_changed" from="Popups/IconDifficultyPopup/File" to="Popups/IconDifficultyPopup" method="_on_file_text_changed"]
+[connection signal="button_up" from="Popups/IconDifficultyPopup/Set" to="Popups/IconDifficultyPopup" method="_on_set_button_up"]
+[connection signal="button_up" from="Popups/IconDifficultyPopup/Cancel" to="Popups/RenameDifficultyPopup" method="_on_cancel_button_up"]
+[connection signal="button_up" from="Popups/PlaceAnimation/OffsetX/CheckBox" to="Popups/PlaceAnimation" method="_on_check_box_button_up"]
+[connection signal="button_up" from="Popups/PlaceAnimation/Scale/CheckBox" to="Popups/PlaceAnimation" method="_on_check_box_button_up"]
+[connection signal="button_up" from="Popups/PlaceAnimation/Speed/CheckBox" to="Popups/PlaceAnimation" method="_on_check_box_button_up"]
+[connection signal="button_up" from="Popups/PlaceAnimation/Create" to="Character" method="_on_create_button_up"]
 [connection signal="button_up" from="Popups/PlaceAnimation/Create" to="Popups/PlaceAnimation" method="_on_create_button_up"]
 [connection signal="button_up" from="Popups/PlaceAnimation/Cancel" to="Popups/PlaceAnimation" method="_on_cancel_button_up"]
+[connection signal="button_up" from="Popups/PlaceBackground/Scale/CheckBox" to="Popups/PlaceBackground" method="_on_check_box_button_up"]
+[connection signal="button_up" from="Popups/PlaceBackground/Create" to="Character" method="_on_create_button_up"]
+[connection signal="button_up" from="Popups/PlaceBackground/Create" to="Popups/PlaceBackground" method="_on_create_button_up"]
+[connection signal="button_up" from="Popups/PlaceBackground/Cancel" to="Popups/PlaceBackground" method="_on_cancel_button_up"]
+[connection signal="button_up" from="Popups/EditVoiceBank/ScrollContainer/VBankContainer/Bank/Delete" to="Popups/EditVoiceBank/ScrollContainer/VBankContainer/Bank" method="_on_delete_button_up"]
+[connection signal="button_up" from="Popups/EditVoiceBank/ScrollContainer/VBankContainer/Add" to="Popups/EditVoiceBank" method="_on_add_button_up"]
+[connection signal="button_up" from="Popups/EditVoiceBank/Create" to="Popups/EditVoiceBank" method="_on_create_button_up"]
+[connection signal="button_up" from="Popups/EditVoiceBank/Cancel" to="Popups/EditVoiceBank" method="_on_cancel_button_up"]
+[connection signal="button_up" from="Popups/ClearPopup/Yes" to="Popups/ClearPopup" method="_on_yes_button_up"]
+[connection signal="button_up" from="Popups/ClearPopup/No" to="Popups/ClearPopup" method="_on_no_button_up"]
 [connection signal="button_up" from="Popups/QuitPopup/Save" to="Popups/QuitPopup" method="_on_save_button_up"]
 [connection signal="button_up" from="Popups/QuitPopup/Discard" to="Popups/QuitPopup" method="_on_discard_button_up"]
 [connection signal="button_up" from="Popups/QuitPopup/Cancel" to="Popups/QuitPopup" method="_on_cancel_button_up"]

@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://cjvtneegijn1g"]
+
+[ext_resource type="Script" path="res://prefabs/VoiceBankKeyframe.gd" id="1_ml5nj"]
+[ext_resource type="Texture2D" uid="uid://bhv30c8agkxbl" path="res://assets/icon_voice.png" id="2_vfkfi"]
+
+[node name="OneshotSoundKeyframe" type="Node2D"]
+script = ExtResource("1_ml5nj")
+
+[node name="Visual" type="Sprite2D" parent="."]
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("2_vfkfi")
+
+[node name="InputHandler" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -19.0
+offset_top = -29.0
+offset_right = 19.0
+offset_bottom = 29.0
+mouse_default_cursor_shape = 2
+
+[connection signal="gui_input" from="InputHandler" to="." method="_on_input_handler_gui_input"]
+[connection signal="mouse_exited" from="InputHandler" to="." method="_on_mouse_exited"]

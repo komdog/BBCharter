@@ -2,20 +2,31 @@
 
 The Godot 4.0 version of the BB Modding Tool
 
-**Currently there is no way to start a new project. The current best way to make a mod is to take existing levels or mods and change them by deleting or replacing the existing files in it**
+To create a new project, click on File and select New Project. Then, select a directory to create your project in.
+**While you can start a new project, you may still need to add or edit some files manually**
 
 ### Engine Shortcuts
 | Hotkey | Function |
 | ------ | ------ |
-|Ctrl + S|Save the current mod.|
-|Ctrl + O|Open an existing mod.|
+|Ctrl/Cmd + S|Save the current mod.|
+|Ctrl/Cmd + O|Open an existing mod.|
+|Ctrl/Cmd + R|Reload the current mod.|
+|Ctrl/Cmd + F|Toggle fullscreen|
 |Alt + S|Toggle snapping|
 ### Directory Shortcuts
 | Hotkey | Function |
 | ------ | ------ |
-|5|Open `keyframes.cfg` configuration file|
-|6|Open `note.cfg` configuration file|
-|7|Open project directory|
+|7|Open `keyframes.cfg` configuration file|
+|8|Open `note.cfg` configuration file|
+|9|Open project directory|
+### Tool Shortcuts
+| Hotkey | Function |
+| ------ | ------ |
+|P|Pointer Tool|
+|T|Marquee Tool|
+|A|Voice Tool|
+|H|Horny Tool|
+|M|Modifier Tool|
 ### Charting Shortcuts
 | Hotkey | Function |
 | ------ | ------ |
@@ -23,17 +34,19 @@ The Godot 4.0 version of the BB Modding Tool
 |X|Spawn A Orange note|
 |C|Spawn A Red note|
 |V|Spawn A Purple note|
-|Delete|Delete Selected notes|
+|Delete or Backspace|Delete Selected notes|
 ### Timeline Shortcuts
 | Hotkey | Function |
 | ------ | ------ |
 |Mouse Scroll| Scrub timeline|
 |Alt + Mouse Scroll| Slow Scrub timeline|
-|Ctrl + Mouse Scroll| Zoom|
+|Ctrl/Cmd + Mouse Scroll| Zoom|
 |Spacebar|Play / Pause|
-|Page Up| Scrub -5.0 seconds|
-|Page Down| Scrub 5.0 seconds|
+|Right Arrow| Scrub -5.0 seconds|
+|Left Arrow| Scrub 5.0 seconds|
 |Home|Go to Beginning|
 |End|Go to end|
-|Right Arrow|Speed Up Song|
-|Left Arrow|Slow Down Song|
+|Up Arrow|Speed Up Song|
+|Down Arrow|Slow Down Song|
+
+*Home and End functions are reversed on macOS
