@@ -142,7 +142,6 @@ func _input(event):
 				set_marquee(event, marquee_selection_area)
 				#marquee_selection_area.position = marquee_selection.position
 				#print(marquee_selection_area.transform.basis_xform_inv(marquee_point_b))
-				pass
 			#print("Marquee Drag")
 		if check_gui_mouse(timeline_root):
 			# Zooming
@@ -218,10 +217,8 @@ func set_marquee(ev, obj):
 		var local_to_marquee_root = marquee_selection.get_local_mouse_position()
 		obj.shape.size = abs(local_to_marquee_root)
 		obj.position = Vector2(obj.shape.size.x / 2 * signi(local_to_marquee_root.x), obj.shape.size.y / 2 * signi(local_to_marquee_root.y))
-		pass
 	else:
 		obj.position = local_to_timeline_panel
-	pass
 
 func check_gui_mouse(ref):
 	return ref.get_global_rect().has_point(get_viewport().get_mouse_position())
