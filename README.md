@@ -5,6 +5,10 @@ The Godot 4.0 version of the BB Modding Tool
 To create a new project, click on File and select New Project. Then, select a directory to create your project in.
 **While you can start a new project, you may still need to add or edit some files manually**
 
+## Downloads
+
+Latest downloads are available [here!](https://mega.nz/folder/KHhDhB5I#OP6ufDzOscwsbFnCZttBSw)
+
 ### Engine Shortcuts
 | Hotkey | Function |
 | ------ | ------ |
