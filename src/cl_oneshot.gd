@@ -9,7 +9,7 @@ func _ready():
 func _on_song_loaded():
 	sound_index = 0; last_sound_index = 0
 
-func _physics_process(_delta):
+func _process(_delta):
 	if Save.keyframes.has('sound_oneshot') and Save.keyframes['sound_oneshot'].size() > 0 and Timeline.oneshot_sound_track.get_child_count() > 0:
 		var arr = Save.keyframes['sound_oneshot'].filter(func(sound): return Global.song_pos >= sound['timestamp'])
 		sound_index = arr.size()

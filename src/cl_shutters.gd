@@ -16,5 +16,4 @@ func _process(_delta):
 		shutter_index = arr.size()
 		if shutter_index != last_shutter_index:
 			last_shutter_index = shutter_index
-			$AnimationPlayer.stop()
-			$AnimationPlayer.play("Shutters")
+			$AnimationPlayer.play("Shutters"); $AnimationPlayer.seek(0, true)

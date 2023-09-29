@@ -12,7 +12,7 @@ func _on_song_loaded():
 	sound_loop_index = 0; last_sound_loop_index = 0
 	change_sound(sound_loop_index)
 
-func _physics_process(_delta):
+func _process(_delta):
 	if Save.keyframes.has('sound_loop') and Save.keyframes['sound_loop'].size() > 0 and Timeline.sfx_track.get_child_count() > 0:
 		var arr = Save.keyframes['sound_loop'].filter(func(loop): return Global.song_pos >= loop['timestamp'])
 		sound_loop_index = arr.size()

@@ -92,7 +92,6 @@ func _physics_process(_delta):
 			if horny_notes['deactivators'].has(loop_index):
 				horny = true
 				horny_notes['deactivators'].remove_at(horny_notes['deactivators'].find(loop_index))
-			await get_tree().physics_frame
 			change_animation(loop_index-1)
 		
 		if Global.song_pos < Save.keyframes['loops'][0]['timestamp']:
@@ -125,6 +124,9 @@ func set_animation(idx: int):
 	var loop = Save.keyframes['loops'][idx]
 	
 	# Change Texture
+	visual.hframes = loop['sheet_data'].h
+	visual.vframes = loop['sheet_data'].v
+	total_sprite_frames = loop['sheet_data'].total
 	if horny: visual.texture = Assets.get_asset(loop['animations']['horny'])
 	else: visual.texture = Assets.get_asset(loop['animations']['normal'])
 	
@@ -143,10 +145,6 @@ func set_animation(idx: int):
 		visual.offset.y = loop['position_offset'].y / 1.5
 	else:
 		if idx == 0: visual.offset = Vector2(0, 0)
-	
-	visual.hframes = loop['sheet_data'].h
-	visual.vframes = loop['sheet_data'].v
-	total_sprite_frames = loop['sheet_data'].total
 
 func change_animation(idx: int):
 	set_animation(idx)
