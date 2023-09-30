@@ -46,6 +46,7 @@ func change_bank(idx):
 		current_bank.append(Assets.get_asset(voice_file))
 
 func _on_hit_note(data):
+	if !$"../Music".playing: return
 	if data.has('trigger_voice'):
 		if current_bank.size() > 0 and data['trigger_voice']:
 			stream = current_bank[wrapi(voice_trigger_index, 0, current_bank.size())]

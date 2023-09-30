@@ -10,6 +10,7 @@ signal difficulty_deleted(index)
 signal update_bpm()
 signal update_notespeed()
 signal update_snapping(index)
+signal update_position()
 
 signal notify()
 signal popups_opened(index)

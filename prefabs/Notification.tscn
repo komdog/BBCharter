@@ -1,6 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://c3m8f3aiheycv"]
+[gd_scene load_steps=8 format=3 uid="uid://c3m8f3aiheycv"]
 
 [ext_resource type="Script" path="res://prefabs/Notification.gd" id="1_g8b3e"]
+[ext_resource type="FontFile" uid="uid://ng4opj2ro7vr" path="res://assets/fonts/NOTOSANSJP-BOLD.OTF" id="2_jvlxx"]
+[ext_resource type="FontFile" uid="uid://qk8f6nsgdvd3" path="res://assets/fonts/NOTOSANSJP-MEDIUM.OTF" id="3_nabpj"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cb5t2"]
 bg_color = Color(0.0627451, 0.0627451, 0.0627451, 1)
@@ -67,6 +69,7 @@ offset_left = 34.0
 offset_top = 24.0
 offset_right = 390.0
 offset_bottom = 88.0
+theme_override_fonts/font = ExtResource("2_jvlxx")
 theme_override_font_sizes/font_size = 40
 text = "_Header"
 
@@ -77,6 +80,7 @@ offset_top = 89.0
 offset_right = 219.0
 offset_bottom = 126.0
 theme_override_colors/default_color = Color(1, 0.427451, 0.12549, 1)
+theme_override_fonts/normal_font = ExtResource("3_nabpj")
 theme_override_font_sizes/normal_font_size = 24
 bbcode_enabled = true
 text = "_ SUBHEADER"

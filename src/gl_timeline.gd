@@ -30,16 +30,27 @@ var voice_banks_track: Node2D
 var note_scroller: Control
 
 var inc_scale: float
+var scroll: bool = false
 
 var note_timeline: Panel
 var key_timeline: ScrollContainer
+var key_container: VBoxContainer
 var timeline_root: Control
+var shutter_timeline: Panel
+var animations_timeline: Panel
+var backgrounds_timeline: Panel
+var modifier_timeline: Panel
+var sound_loops_timeline: Panel
+var one_shot_sound_timeline: Panel
+var voice_bank_timeline: Panel
 
 var marquee_selection: Node2D
 var marquee_selection_area: Node2D
 var marquee_active: bool = false
 var marquee_point_a: Vector2 = Vector2(0,0)
 var marquee_point_b: Vector2 = Vector2(0,0)
+var marquee_visible: ColorRect
+
 
 var timeline_ui: Array
 
@@ -58,7 +69,7 @@ func create_note(key: int):
 		if Global.replacing_allowed:
 			delete_note(note, Save.notes['charts'][Global.difficulty_index]['notes'].find(note.data))
 		else:
-			print('Note already exists at %s' % [snappedf(note.data['timestamp'], 0.001)])
+			print('[Timeline] Note already exists at %s' % [snappedf(note.data['timestamp'], 0.001)])
 			return
 	
 	# Create New Note
@@ -136,8 +147,10 @@ func _input(event):
 				x.modulate = Color(0.7, 0.7, 0.7)
 		#note_timeline.modulate = Color(0.818, 0.818, 0.818)
 		#print('Marquee Position:', marquee_selection.position)
+		Timeline.marquee_selection.monitoring = marquee_active
 		if marquee_active:
 			if Global.current_tool == Enums.TOOL.MARQUEE:
+				("Drag Marquee")
 				marquee_point_b = event.position
 				set_marquee(event, marquee_selection_area)
 				#marquee_selection_area.position = marquee_selection.position
@@ -162,7 +175,6 @@ func _input(event):
 							clamp_seek(-inc_scale)
 						
 					if event.pressed:
-						print(event)
 						match event.button_index:
 							MOUSE_BUTTON_LEFT:
 								if Global.current_tool == Enums.TOOL.MARQUEE:
@@ -209,16 +221,22 @@ func _input(event):
 			else: clamp_seek(5.0)
 
 func set_marquee(ev, obj):
+	if Popups.open: return
 	var local_to_timeline_panel = timeline_root.get_local_mouse_position()
 	if obj.name == marquee_selection_area.name:
 		if ev is InputEventMouseButton and ev.is_released():
 			obj.shape.size = Vector2(0,0)
+			marquee_visible.size = Vector2(0,0)
 			return
 		var local_to_marquee_root = marquee_selection.get_local_mouse_position()
 		obj.shape.size = abs(local_to_marquee_root)
 		obj.position = Vector2(obj.shape.size.x / 2 * signi(local_to_marquee_root.x), obj.shape.size.y / 2 * signi(local_to_marquee_root.y))
+		marquee_visible.size = obj.shape.size
+		marquee_visible.position = Vector2(-marquee_visible.size.x / 2, -marquee_visible.size.y / 2)
+		#marquee_visible.position = Vector2(marquee_visible.size.x / 2, marquee_visible.size.y / 2)
 	else:
 		obj.position = local_to_timeline_panel
 
 func check_gui_mouse(ref):
 	return ref.get_global_rect().has_point(get_viewport().get_mouse_position())
+
