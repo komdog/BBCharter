@@ -12,7 +12,7 @@ func _input(event):
 
 func clear_clipboard():
 	print("Clear!")
-	var clear_queue : Array
+	var clear_queue : Array = []
 	for x in selected_notes.size():
 		if selected_notes[x] == null: 
 			clear_queue.append(x)

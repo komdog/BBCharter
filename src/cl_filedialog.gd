@@ -27,8 +27,9 @@ func new_project_dialog():
 	create = true
 	popup()
 
-func _on_dir_selected(_path: String):
-	var path = current_dir
+func _on_dir_selected(path: String):
+	#var path = current_dir
+	#print(patj)
 	
 	if create:
 		var dir = DirAccess.open(path)
