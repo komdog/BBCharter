@@ -157,7 +157,6 @@ func reset_indicators():
 func _process(_delta):
 	note_pos = Global.song_pos * Global.note_speed
 	note_offset = Global.offset * Global.note_speed
-	
 	for child in get_children():
 		if child.has_node("Track"):
 			child.get_node("Track").position.x = note_pos - note_offset + 960
