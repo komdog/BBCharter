@@ -54,7 +54,6 @@ var marquee_visible: ColorRect
 
 var timeline_ui: Array
 
-
 func create_note(key: int):
 	if not Global.project_loaded: return
 	if Popups.open: return
@@ -92,6 +91,7 @@ func delete_keyframe(section: String, node: Node2D, idx: int):
 		print("Deleting %s %s at %s (index %s)" % [section, node, node.data['timestamp'],idx])
 		Save.keyframes[section].remove_at(idx)
 		node.queue_free()
+	update_visuals()
 
 func delete_keyframes(section: String, parent: Node):
 	for child in parent.get_children(): delete_keyframe(section, child, 0)
@@ -128,9 +128,46 @@ func clear_notes_only():
 	Global.current_chart.clear()
 	for note in note_container.get_children(): note.queue_free()
 
+
+func update_visuals():
+	print("Update Visuals!")
+	var ref
+	var ref_bg
+	var ref_next
+	var ref_thumb
+	var frame_size_ref
+	for x in Timeline.animations_track.get_children().size():
+		frame_size_ref = Timeline.animations_track.get_children()[x].frame_size
+		ref = Timeline.animations_track.get_children()[x]
+		ref_bg = Timeline.animations_track.get_children()[x].get_node("Background")
+		ref_thumb = Timeline.animations_track.get_children()[x].get_node("Thumb")
+		
+		if x+1 == Timeline.animations_track.get_children().size():
+			ref_bg.size = ref_thumb.get_rect().size
+			ref_bg.position = Vector2(-ref_bg.size.x, -ref_bg.size.y / 2) ## Reset size and pos
+			
+			ref_bg.size.x = abs(Timeline.note_container.get_children().back().position.x) / ref.scale.x
+			ref_bg.position.x += ref_thumb.get_rect().size.x
+			ref_bg.position.y = ref_bg.size.y / 2
+			break
+		
+		ref_next = Timeline.animations_track.get_children()[x+1]
+
+		
+		ref_bg.size = ref_thumb.get_rect().size
+		ref_bg.position = Vector2(-ref_bg.size.x, -ref_bg.size.y / 2) ## Reset size and pos
+		
+		ref_bg.size.x = abs(ref_next.position.x - ref.position.x) / ref.scale.x
+		ref_bg.position.x += ref_thumb.get_rect().size.x
+		ref_bg.position.y = ref_bg.size.y / 2
+	for x in Timeline.animations_track.get_children().size():
+		print(x,": ",Timeline.animations_track.get_children()[x].get_node("Background").size, Timeline.animations_track.get_children()[x].get_node("Background").position)
+		pass
+
+
 func _input(event):
 	if Popups.open or Global.lock_timeline: return
-	
+	#print(event)
 	if event.is_action_pressed("key_0"):
 		create_note(Enums.NOTE.Z)
 	if event.is_action_pressed("key_1"):
@@ -165,6 +202,7 @@ func _input(event):
 					if event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
 						Global.note_speed = clampf(Global.note_speed - 10, 100, 1000 )
 					Events.emit_signal('update_notespeed')
+					update_visuals()	
 				else:
 					if check_gui_mouse(note_timeline):
 						# Seeking
