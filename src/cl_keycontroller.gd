@@ -42,6 +42,7 @@ func _on_song_loaded():
 	Global.clear_children(Timeline.key_eighth_container)
 	
 	create_ui()
+	
 
 # Add sprites of the animation keyframes to timeline
 func spawn_keyframes(section_name: String, prefab: PackedScene, parent: Node):
@@ -51,6 +52,7 @@ func spawn_keyframes(section_name: String, prefab: PackedScene, parent: Node):
 			spawn_single_keyframe(keyframe_data, prefab, parent)
 	else:
 		Save.keyframes[section_name] = []
+	Timeline.update_visuals()
 
 func spawn_single_keyframe(keyframe_data, prefab: PackedScene, parent: Node):
 	var new_keyframe = prefab.instantiate()
@@ -157,7 +159,6 @@ func reset_indicators():
 func _process(_delta):
 	note_pos = Global.song_pos * Global.note_speed
 	note_offset = Global.offset * Global.note_speed
-	
 	for child in get_children():
 		if child.has_node("Track"):
 			child.get_node("Track").position.x = note_pos - note_offset + 960

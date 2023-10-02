@@ -3,6 +3,7 @@ extends Control
 @onready var file_drop_parser = preload("res://src/rf_drag_and_drop.gd").new()
 #@onready var timeline = $Timeline/NoteTimeline
 
+
 func _ready():
 	get_window().min_size = Vector2i(228, 128)
 	
@@ -14,8 +15,9 @@ func _ready():
 	
 	get_viewport().files_dropped.connect(on_files_dropped)
 	
-	#Timeline.note_timeline = timeline
-	
+	for x in Timeline.key_container.get_children():
+		if x.get_class() == "Panel":
+			x.gui_input.connect(input_test)
 
 func on_files_dropped(files):
 	file_drop_parser.get_file_type(files)
@@ -53,3 +55,47 @@ func _notification(what):
 func open_uri(uri: String):
 	if OS.get_name() == "macOS": uri = "file:" + uri
 	OS.shell_open(uri)
+
+
+func _on_timeline_gui_input(_event): ##doesn't respond to clicks
+	#print(event)
+	#if event is InputEventMouseButton:
+	#	if event.pressed and event.button_mask == MOUSE_BUTTON_MASK_LEFT:
+
+		#if Global.current_tool == Enums.TOOL.SELECT or Global.current_tool == Enums.TOOL.MARQUEE:
+			#if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+				#if Global.current_tool == Enums.TOOL.SELECT:
+					#if (get_viewport().get_mouse_position().x < $InputHandler.global_position.x
+					#or get_viewport().get_mouse_position().x > $InputHandler.global_position.x + $InputHandler.size.x
+					#and clear_clipboard):
+						#Clipboard.selected_notes.clear()
+						#update_visual()
+	pass # Replace with function body.
+
+
+func _on_note_timeline_gui_input(event):
+	if event is InputEventMouseButton:
+		if event.pressed and event.button_mask == MOUSE_BUTTON_MASK_LEFT:
+			print("clearing buffer")
+			Clipboard.clear_clipboard()
+			Events.emit_signal('update_position')
+	check_drag(event)
+	pass # Replace with function body.
+
+func check_drag(event):
+	if event is InputEventMouseButton:
+		if event.pressed and event.button_mask == MOUSE_BUTTON_MASK_MIDDLE:
+				Timeline.key_timeline.mouse_default_cursor_shape = CURSOR_DRAG
+				Timeline.note_timeline.mouse_default_cursor_shape = CURSOR_DRAG
+				Timeline.scroll = true
+		elif (!event.pressed):
+				Timeline.key_container.mouse_default_cursor_shape = CURSOR_ARROW
+				Timeline.note_timeline.mouse_default_cursor_shape = CURSOR_ARROW
+				Timeline.scroll = false
+	if event is InputEventMouseMotion:
+		if Timeline.scroll:
+			Timeline.clamp_seek(event.relative.x * 0.005)
+
+func input_test(event):
+	check_drag(event)
+	pass

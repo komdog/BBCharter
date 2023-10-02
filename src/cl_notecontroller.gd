@@ -17,16 +17,37 @@ func _ready():
 	Timeline.note_container = $Notes
 	Timeline.marquee_selection = $"../../../MarqueeSelection"
 	Timeline.marquee_selection_area = $"../../../MarqueeSelection/MarqueeSelectionShape"
+	Timeline.marquee_visible = $"../../../MarqueeSelection/MarqueeSelectionShape/MarqueeVisible"
+	
 	Timeline.note_timeline = $"../.."
 	Timeline.timeline_root = $"../../.."
 	Timeline.key_timeline = $"../../../KeyTimeline"
+	Timeline.key_container = $"../../../KeyTimeline/KeyContainer"
+	Timeline.shutter_timeline = $"../../../KeyTimeline/KeyContainer/Shutter"
+	Timeline.animations_timeline = $"../../../KeyTimeline/KeyContainer/Animations"
+	Timeline.backgrounds_timeline = $"../../../KeyTimeline/KeyContainer/Backgrounds"
+	Timeline.modifier_timeline = $"../../../KeyTimeline/KeyContainer/Modifier"
+	Timeline.sound_loops_timeline = $"../../../KeyTimeline/KeyContainer/SoundLoops"
+	Timeline.one_shot_sound_timeline = $"../../../KeyTimeline/KeyContainer/OneshotSound"
+	Timeline.voice_bank_timeline = $"../../../KeyTimeline/KeyContainer/VoiceBanks"
 	
-	Timeline.timeline_ui = [Timeline.note_timeline, Timeline.key_timeline]
+	Timeline.timeline_ui = [
+		Timeline.note_timeline, 
+		Timeline.key_timeline, 
+		Timeline.animations_timeline, 
+		Timeline.backgrounds_timeline,
+		Timeline.modifier_timeline,
+		Timeline.sound_loops_timeline,
+		Timeline.one_shot_sound_timeline,
+		Timeline.voice_bank_timeline
+	]
+	
 	
 	Events.chart_loaded.connect(_on_chart_loaded)
 	Events.song_loaded.connect(_on_song_loaded)
 	Events.note_created.connect(_on_note_created)
 	Events.update_bpm.connect(_on_update_bpm)
+	Timeline.marquee_selection.area_entered.connect(on_area_enter)
 
 func _on_chart_loaded():
 	print('Spawning Notes')
@@ -44,6 +65,12 @@ func _on_song_loaded():
 	Global.clear_children(Timeline.sixth_container)
 	Global.clear_children(Timeline.eighth_container)
 	create_ui()
+
+func on_area_enter(area):
+	if area.owner.selected_note != null: return
+	area.owner.selected_note = area.owner
+	Clipboard.selected_notes.append(area.owner)
+	area.owner.selected_note.update_visual()
 
 # Create the indicators / Seperators in the timeline
 func create_ui():

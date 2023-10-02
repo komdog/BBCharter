@@ -27,4 +27,5 @@ func change_sound(idx: int):
 	stream = Assets.get_asset(sound['path'])
 
 func _on_hit_note(_data):
+	if !$"../Music".playing: return
 	if Save.keyframes['sound_loop'].size() > 0: play()

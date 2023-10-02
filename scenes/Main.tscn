@@ -1,4 +1,4 @@
-[gd_scene load_steps=80 format=3 uid="uid://bo2pso1k2xik8"]
+[gd_scene load_steps=82 format=3 uid="uid://bo2pso1k2xik8"]
 
 [ext_resource type="Theme" uid="uid://cehpee20dikgi" path="res://themes/main_theme.tres" id="1_71y40"]
 [ext_resource type="Script" path="res://src/cl_main.gd" id="2_ca1lw"]
@@ -14,6 +14,8 @@
 [ext_resource type="Script" path="res://src/cl_music.gd" id="6_f3wwk"]
 [ext_resource type="Script" path="res://src/cl_menubar_clear.gd" id="6_pgban"]
 [ext_resource type="Script" path="res://src/cl_difficulty.gd" id="7_alc5b"]
+[ext_resource type="FontFile" uid="uid://ng4opj2ro7vr" path="res://assets/fonts/NOTOSANSJP-BOLD.OTF" id="7_yw7ih"]
+[ext_resource type="FontFile" uid="uid://qk8f6nsgdvd3" path="res://assets/fonts/NOTOSANSJP-MEDIUM.OTF" id="8_ln5wy"]
 [ext_resource type="PackedScene" uid="uid://c3m8f3aiheycv" path="res://prefabs/Notification.tscn" id="8_vyifj"]
 [ext_resource type="Script" path="res://src/cl_tools.gd" id="8_waaxy"]
 [ext_resource type="Script" path="res://src/cl_menubar_edit.gd" id="8_yungy"]
@@ -303,12 +305,14 @@ offset_top = 8.0
 offset_right = 491.0
 offset_bottom = 50.0
 theme_override_constants/h_separation = 20
+theme_override_fonts/font = ExtResource("7_yw7ih")
 theme_override_font_sizes/font_size = 24
 flat = true
 switch_on_hover = false
 
 [node name="File" type="PopupMenu" parent="Toolbar/MenuBar"]
-size = Vector2i(154, 104)
+size = Vector2i(154, 110)
+theme_override_fonts/font = ExtResource("8_ln5wy")
 theme_override_font_sizes/font_size = 20
 item_count = 3
 item_0/text = "New Project"
@@ -321,7 +325,8 @@ item_2/disabled = true
 script = ExtResource("9_qoohm")
 
 [node name="Edit" type="PopupMenu" parent="Toolbar/MenuBar"]
-size = Vector2i(124, 108)
+size = Vector2i(124, 114)
+theme_override_fonts/font = ExtResource("8_ln5wy")
 theme_override_font_sizes/font_size = 20
 item_count = 4
 item_0/text = "Undo"
@@ -339,7 +344,8 @@ item_3/id = 2
 script = ExtResource("8_yungy")
 
 [node name="Add" type="PopupMenu" parent="Toolbar/MenuBar"]
-size = Vector2i(252, 136)
+size = Vector2i(252, 144)
+theme_override_fonts/font = ExtResource("8_ln5wy")
 theme_override_font_sizes/font_size = 20
 item_count = 4
 item_0/text = "Add Shutter"
@@ -357,7 +363,8 @@ item_3/disabled = true
 script = ExtResource("5_2p0vi")
 
 [node name="Clear" type="PopupMenu" parent="Toolbar/MenuBar"]
-size = Vector2i(194, 168)
+size = Vector2i(209, 280)
+theme_override_fonts/font = ExtResource("8_ln5wy")
 theme_override_font_sizes/font_size = 20
 item_count = 8
 item_0/text = "Clear Chart"
@@ -387,7 +394,8 @@ item_7/disabled = true
 script = ExtResource("6_pgban")
 
 [node name="Project" type="PopupMenu" parent="Toolbar/MenuBar"]
-size = Vector2i(233, 172)
+size = Vector2i(233, 182)
+theme_override_fonts/font = ExtResource("8_ln5wy")
 theme_override_font_sizes/font_size = 20
 item_count = 6
 item_0/text = "Reload Project"
@@ -412,6 +420,7 @@ script = ExtResource("5_577ur")
 
 [node name="Help" type="PopupMenu" parent="Toolbar/MenuBar"]
 size = Vector2i(169, 100)
+theme_override_fonts/font = ExtResource("8_ln5wy")
 theme_override_font_sizes/font_size = 20
 item_count = 2
 item_0/text = "Github Repo"
@@ -564,6 +573,7 @@ popup_window = true
 ok_button_text = "Select Current Folder"
 file_mode = 2
 access = 2
+use_native_dialog = true
 script = ExtResource("5_qvt2c")
 
 [node name="BottomBar" type="Panel" parent="."]
@@ -583,6 +593,7 @@ offset_top = -22.0
 offset_right = 285.0
 offset_bottom = 23.0
 grow_vertical = 2
+theme_override_fonts/font = ExtResource("7_yw7ih")
 theme_override_font_sizes/font_size = 24
 text = "00:00.000 : 00:00.000"
 horizontal_alignment = 2
@@ -631,6 +642,7 @@ tooltip_text = "Toggle Timeline Snapping"
 focus_mode = 0
 mouse_default_cursor_shape = 2
 theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("7_yw7ih")
 toggle_mode = true
 button_pressed = true
 shortcut = SubResource("Shortcut_02m8d")
@@ -641,14 +653,16 @@ layout_mode = 1
 anchor_top = 0.466667
 anchor_right = 0.75
 anchor_bottom = 0.75
-metadata/_edit_use_anchors_ = true
+mouse_force_pass_scroll_events = false
 
 [node name="KeyTimeline" type="ScrollContainer" parent="Timeline"]
 modulate = Color(0.817521, 0.817521, 0.817521, 1)
 layout_mode = 0
-offset_right = 1920.0
-offset_bottom = 200.0
+anchor_right = 1.0
+anchor_bottom = 0.490197
+mouse_filter = 0
 horizontal_scroll_mode = 0
+metadata/_edit_use_anchors_ = true
 
 [node name="KeyContainer" type="VBoxContainer" parent="Timeline/KeyTimeline"]
 clip_contents = true
@@ -682,6 +696,7 @@ offset_top = 8.0
 offset_right = 189.0
 offset_bottom = 37.0
 theme_override_colors/font_color = Color(1, 1, 1, 0.737255)
+theme_override_fonts/font = ExtResource("7_yw7ih")
 theme_override_font_sizes/font_size = 18
 text = "SHUTTERS"
 
@@ -710,6 +725,7 @@ offset_top = 8.0
 offset_right = 143.0
 offset_bottom = 37.0
 theme_override_colors/font_color = Color(1, 1, 1, 0.737255)
+theme_override_fonts/font = ExtResource("7_yw7ih")
 theme_override_font_sizes/font_size = 18
 text = "ANIMATIONS"
 
@@ -738,6 +754,7 @@ offset_top = 8.0
 offset_right = 152.0
 offset_bottom = 37.0
 theme_override_colors/font_color = Color(1, 1, 1, 0.737255)
+theme_override_fonts/font = ExtResource("7_yw7ih")
 theme_override_font_sizes/font_size = 18
 text = "BACKGROUNDS"
 
@@ -875,10 +892,14 @@ position = Vector2(960, 552)
 
 [node name="NoteTimeline" type="Panel" parent="Timeline"]
 modulate = Color(0.815686, 0.815686, 0.815686, 1)
-layout_mode = 0
-offset_top = 199.0
-offset_right = 1920.0
-offset_bottom = 408.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 189.0
+offset_bottom = 0.000488281
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_fxxnx")
 
 [node name="NoteLine" type="Line2D" parent="Timeline/NoteTimeline"]
@@ -925,6 +946,7 @@ offset_top = -95.5099
 offset_right = -824.0
 offset_bottom = -66.5099
 theme_override_colors/font_color = Color(1, 1, 1, 0.737255)
+theme_override_fonts/font = ExtResource("7_yw7ih")
 theme_override_font_sizes/font_size = 18
 text = "NOTES"
 
@@ -973,6 +995,17 @@ input_pickable = false
 
 [node name="MarqueeSelectionShape" type="CollisionShape2D" parent="Timeline/MarqueeSelection"]
 shape = SubResource("RectangleShape2D_ji2dx")
+
+[node name="MarqueeVisible" type="ColorRect" parent="Timeline/MarqueeSelection/MarqueeSelectionShape"]
+z_index = 99
+z_as_relative = false
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+pivot_offset = Vector2(20, 20)
+mouse_filter = 2
+color = Color(0.486275, 0.615686, 0.835294, 0.345098)
 
 [node name="Notification" parent="." instance=ExtResource("8_vyifj")]
 
@@ -1811,7 +1844,8 @@ text = "Cancel"
 [connection signal="dir_selected" from="FileDialog" to="FileDialog" method="_on_dir_selected"]
 [connection signal="item_selected" from="BottomBar/Snapping" to="BottomBar/Snapping" method="_on_item_selected"]
 [connection signal="toggled" from="BottomBar/Snapping/SnapToggle" to="BottomBar/Snapping" method="_on_snap_toggle_toggled"]
-[connection signal="scrolling" from="Timeline/NoteTimeline/NoteScroller/HScrollBar" to="Timeline/NoteTimeline/NoteScroller/HScrollBar" method="_on_scrolling"]
+[connection signal="gui_input" from="Timeline" to="." method="_on_timeline_gui_input"]
+[connection signal="gui_input" from="Timeline/NoteTimeline" to="." method="_on_note_timeline_gui_input"]
 [connection signal="value_changed" from="Timeline/NoteTimeline/NoteScroller/HScrollBar" to="Timeline/NoteTimeline/NoteScroller/HScrollBar" method="_on_value_changed"]
 [connection signal="id_pressed" from="AudioMenu" to="AudioMenu" method="_on_id_pressed"]
 [connection signal="id_pressed" from="ImageMenu" to="ImageMenu" method="_on_id_pressed"]

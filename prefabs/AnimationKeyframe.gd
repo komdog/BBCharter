@@ -9,6 +9,9 @@ var mouse_pos_start: float
 var mouse_pos_end: float
 var selected_key: Node2D
 
+var frame_size : Vector2
+var ratio = 104
+
 func _ready():
 	Events.update_notespeed.connect(update_position)
 
@@ -35,21 +38,29 @@ func setup(keyframe_data):
 		$Thumb.hframes = data['sheet_data']["h"] # Get hframes from preset
 		$Thumb.vframes = data['sheet_data']["v"] # Get vframes from preset
 		$Thumb.texture_filter = TEXTURE_FILTER_LINEAR
-		var frame_size = $Thumb.texture.get_size() / Vector2($Thumb.hframes, $Thumb.vframes)
-		var ratio = 104
+		frame_size = $Thumb.texture.get_size() / Vector2($Thumb.hframes, $Thumb.vframes)
 		scale = Vector2(ratio * 1.777,ratio)/frame_size
 		$InputHandler.size = frame_size
 		$InputHandler.position = -$InputHandler.size/2
 		update_position()
+	$Thumb.offset = Vector2(-$Thumb.get_rect().size.x, -$Thumb.get_rect().size.y / 2)
+	$Background.size = $Thumb.get_rect().size
+	$InputHandler.size = $Thumb.get_rect().size
+	$InputHandler.position = Vector2(-$InputHandler.get_rect().size.x, -$InputHandler.get_rect().size.y / 2)
+	$Background.position = Vector2(-$Background.get_rect().size.x, -$Background.get_rect().size.y / 2)
+	$Background.color = Color(randf(), randf(), randf(), 0.4)
+
 
 func update_position():
 	data['timestamp'] = Global.get_time_at_beat(beat)
 	position.x = -((data['timestamp'] - Global.offset) * Global.note_speed)
+	#Timeline.update_visuals()
 
 func update_beat_and_position(time: float):
 	beat = Global.get_beat_at_time(time)
 	data['timestamp'] = time
 	position.x = -((data['timestamp'] - Global.offset) * Global.note_speed)
+	Timeline.update_visuals()
 
 func _on_input_handler_gui_input(event):
 	if event is InputEventMouseButton:

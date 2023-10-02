@@ -30,19 +30,29 @@ var voice_banks_track: Node2D
 var note_scroller: Control
 
 var inc_scale: float
+var scroll: bool = false
 
 var note_timeline: Panel
 var key_timeline: ScrollContainer
+var key_container: VBoxContainer
 var timeline_root: Control
+var shutter_timeline: Panel
+var animations_timeline: Panel
+var backgrounds_timeline: Panel
+var modifier_timeline: Panel
+var sound_loops_timeline: Panel
+var one_shot_sound_timeline: Panel
+var voice_bank_timeline: Panel
 
 var marquee_selection: Node2D
 var marquee_selection_area: Node2D
 var marquee_active: bool = false
 var marquee_point_a: Vector2 = Vector2(0,0)
 var marquee_point_b: Vector2 = Vector2(0,0)
+var marquee_visible: ColorRect
+
 
 var timeline_ui: Array
-
 
 func create_note(key: int):
 	if not Global.project_loaded: return
@@ -58,7 +68,7 @@ func create_note(key: int):
 		if Global.replacing_allowed:
 			delete_note(note, Save.notes['charts'][Global.difficulty_index]['notes'].find(note.data))
 		else:
-			print('Note already exists at %s' % [snappedf(note.data['timestamp'], 0.001)])
+			print('[Timeline] Note already exists at %s' % [snappedf(note.data['timestamp'], 0.001)])
 			return
 	
 	# Create New Note
@@ -81,6 +91,7 @@ func delete_keyframe(section: String, node: Node2D, idx: int):
 		print("Deleting %s %s at %s (index %s)" % [section, node, node.data['timestamp'],idx])
 		Save.keyframes[section].remove_at(idx)
 		node.queue_free()
+	update_visuals()
 
 func delete_keyframes(section: String, parent: Node):
 	for child in parent.get_children(): delete_keyframe(section, child, 0)
@@ -117,9 +128,46 @@ func clear_notes_only():
 	Global.current_chart.clear()
 	for note in note_container.get_children(): note.queue_free()
 
+
+func update_visuals():
+	print("Update Visuals!")
+	var ref
+	var ref_bg
+	var ref_next
+	var ref_thumb
+	var frame_size_ref
+	for x in Timeline.animations_track.get_children().size():
+		frame_size_ref = Timeline.animations_track.get_children()[x].frame_size
+		ref = Timeline.animations_track.get_children()[x]
+		ref_bg = Timeline.animations_track.get_children()[x].get_node("Background")
+		ref_thumb = Timeline.animations_track.get_children()[x].get_node("Thumb")
+		
+		if x+1 == Timeline.animations_track.get_children().size():
+			ref_bg.size = ref_thumb.get_rect().size
+			ref_bg.position = Vector2(-ref_bg.size.x, -ref_bg.size.y / 2) ## Reset size and pos
+			
+			ref_bg.size.x = abs(Timeline.note_container.get_children().back().position.x) / ref.scale.x
+			ref_bg.position.x += ref_thumb.get_rect().size.x
+			ref_bg.position.y = ref_bg.size.y / 2
+			break
+		
+		ref_next = Timeline.animations_track.get_children()[x+1]
+
+		
+		ref_bg.size = ref_thumb.get_rect().size
+		ref_bg.position = Vector2(-ref_bg.size.x, -ref_bg.size.y / 2) ## Reset size and pos
+		
+		ref_bg.size.x = abs(ref_next.position.x - ref.position.x) / ref.scale.x
+		ref_bg.position.x += ref_thumb.get_rect().size.x
+		ref_bg.position.y = ref_bg.size.y / 2
+	for x in Timeline.animations_track.get_children().size():
+		print(x,": ",Timeline.animations_track.get_children()[x].get_node("Background").size, Timeline.animations_track.get_children()[x].get_node("Background").position)
+		pass
+
+
 func _input(event):
 	if Popups.open or Global.lock_timeline: return
-	
+	#print(event)
 	if event.is_action_pressed("key_0"):
 		create_note(Enums.NOTE.Z)
 	if event.is_action_pressed("key_1"):
@@ -136,8 +184,10 @@ func _input(event):
 				x.modulate = Color(0.7, 0.7, 0.7)
 		#note_timeline.modulate = Color(0.818, 0.818, 0.818)
 		#print('Marquee Position:', marquee_selection.position)
+		Timeline.marquee_selection.monitoring = marquee_active
 		if marquee_active:
 			if Global.current_tool == Enums.TOOL.MARQUEE:
+				("Drag Marquee")
 				marquee_point_b = event.position
 				set_marquee(event, marquee_selection_area)
 				#marquee_selection_area.position = marquee_selection.position
@@ -152,6 +202,7 @@ func _input(event):
 					if event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
 						Global.note_speed = clampf(Global.note_speed - 10, 100, 1000 )
 					Events.emit_signal('update_notespeed')
+					update_visuals()	
 				else:
 					if check_gui_mouse(note_timeline):
 						# Seeking
@@ -162,7 +213,6 @@ func _input(event):
 							clamp_seek(-inc_scale)
 						
 					if event.pressed:
-						print(event)
 						match event.button_index:
 							MOUSE_BUTTON_LEFT:
 								if Global.current_tool == Enums.TOOL.MARQUEE:
@@ -209,16 +259,22 @@ func _input(event):
 			else: clamp_seek(5.0)
 
 func set_marquee(ev, obj):
+	if Popups.open: return
 	var local_to_timeline_panel = timeline_root.get_local_mouse_position()
 	if obj.name == marquee_selection_area.name:
 		if ev is InputEventMouseButton and ev.is_released():
 			obj.shape.size = Vector2(0,0)
+			marquee_visible.size = Vector2(0,0)
 			return
 		var local_to_marquee_root = marquee_selection.get_local_mouse_position()
 		obj.shape.size = abs(local_to_marquee_root)
 		obj.position = Vector2(obj.shape.size.x / 2 * signi(local_to_marquee_root.x), obj.shape.size.y / 2 * signi(local_to_marquee_root.y))
+		marquee_visible.size = obj.shape.size
+		marquee_visible.position = Vector2(-marquee_visible.size.x / 2, -marquee_visible.size.y / 2)
+		#marquee_visible.position = Vector2(marquee_visible.size.x / 2, marquee_visible.size.y / 2)
 	else:
 		obj.position = local_to_timeline_panel
 
 func check_gui_mouse(ref):
 	return ref.get_global_rect().has_point(get_viewport().get_mouse_position())
+

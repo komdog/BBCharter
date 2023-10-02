@@ -38,7 +38,7 @@ var project_loaded = false
 var project_saved = false
 
 var current_tool = Enums.TOOL.SELECT
-var replacing_allowed = false
+var replacing_allowed = true
 
 var lock_timeline = false
 var reloading_bpm = false
@@ -148,4 +148,4 @@ func get_time_at_beat(beat: float) -> float:
 		if bpm_beatstamps[idx] > beat:
 			break
 		idx += 1
-	return bpm_timestamps[idx-1] + ((beat - bpm_beatstamps[idx-1]) * (1 / (bpms[idx-1] / 60.0)))
+	return snappedf(bpm_timestamps[idx-1] + ((beat - bpm_beatstamps[idx-1]) * (1 / (bpms[idx-1] / 60.0))), 0.001)

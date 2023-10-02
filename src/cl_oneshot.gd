@@ -18,6 +18,7 @@ func _process(_delta):
 			run_sound(sound_index-1)
 
 func run_sound(idx: int):
+	if !$"../Music".playing: return
 	if idx < 0: idx = 0
 	var sound = Save.keyframes['sound_oneshot'][idx]['path']
 	stream = Assets.get_asset(sound)
