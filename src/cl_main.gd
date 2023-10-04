@@ -1,7 +1,6 @@
 extends Control
 
 @onready var file_drop_parser = preload("res://src/rf_drag_and_drop.gd").new()
-#@onready var timeline = $Timeline/NoteTimeline
 
 
 func _ready():
@@ -57,22 +56,6 @@ func open_uri(uri: String):
 	OS.shell_open(uri)
 
 
-func _on_timeline_gui_input(_event): ##doesn't respond to clicks
-	#print(event)
-	#if event is InputEventMouseButton:
-	#	if event.pressed and event.button_mask == MOUSE_BUTTON_MASK_LEFT:
-
-		#if Global.current_tool == Enums.TOOL.SELECT or Global.current_tool == Enums.TOOL.MARQUEE:
-			#if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
-				#if Global.current_tool == Enums.TOOL.SELECT:
-					#if (get_viewport().get_mouse_position().x < $InputHandler.global_position.x
-					#or get_viewport().get_mouse_position().x > $InputHandler.global_position.x + $InputHandler.size.x
-					#and clear_clipboard):
-						#Clipboard.selected_notes.clear()
-						#update_visual()
-	pass # Replace with function body.
-
-
 func _on_note_timeline_gui_input(event):
 	if event is InputEventMouseButton:
 		if event.pressed and event.button_mask == MOUSE_BUTTON_MASK_LEFT:
@@ -80,7 +63,6 @@ func _on_note_timeline_gui_input(event):
 			Clipboard.clear_clipboard()
 			Events.emit_signal('update_position')
 	check_drag(event)
-	pass # Replace with function body.
 
 func check_drag(event):
 	if event is InputEventMouseButton:
@@ -98,4 +80,3 @@ func check_drag(event):
 
 func input_test(event):
 	check_drag(event)
-	pass

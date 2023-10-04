@@ -1844,7 +1844,6 @@ text = "Cancel"
 [connection signal="dir_selected" from="FileDialog" to="FileDialog" method="_on_dir_selected"]
 [connection signal="item_selected" from="BottomBar/Snapping" to="BottomBar/Snapping" method="_on_item_selected"]
 [connection signal="toggled" from="BottomBar/Snapping/SnapToggle" to="BottomBar/Snapping" method="_on_snap_toggle_toggled"]
-[connection signal="gui_input" from="Timeline" to="." method="_on_timeline_gui_input"]
 [connection signal="gui_input" from="Timeline/NoteTimeline" to="." method="_on_note_timeline_gui_input"]
 [connection signal="value_changed" from="Timeline/NoteTimeline/NoteScroller/HScrollBar" to="Timeline/NoteTimeline/NoteScroller/HScrollBar" method="_on_value_changed"]
 [connection signal="id_pressed" from="AudioMenu" to="AudioMenu" method="_on_id_pressed"]

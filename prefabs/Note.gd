@@ -35,19 +35,6 @@ func update_beat_and_position(time: float):
 	data['timestamp'] = time
 	position.x = -((data['timestamp'] - Global.offset) * Global.note_speed)
 
-func _input(_event):
-	pass
-	#if event is InputEventKey: clear_clipboard = !event.is_command_or_control_pressed()
-	#if event is InputEventMouseButton:
-		#print(event)
-	#if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
-		#if Global.current_tool == Enums.TOOL.SELECT:
-			#if (get_viewport().get_mouse_position().x < $InputHandler.global_position.x
-			#or get_viewport().get_mouse_position().x > $InputHandler.global_position.x + $InputHandler.size.x
-			#and clear_clipboard):
-				#Clipboard.selected_notes.clear()
-				#update_visual()
-
 func _process(_delta):
 	visible = global_position.x >= Global.note_culling_bounds.x and global_position.x < Global.note_culling_bounds.y
 	$Selected.visible = Clipboard.selected_notes.has(self)
@@ -65,10 +52,6 @@ func _process(_delta):
 		else: mouse_pos = Global.get_mouse_timestamp()
 		if mouse_pos < 0: mouse_pos = 0
 		
-		#if selected_note != null:
-			#if clear_clipboard: Clipboard.selected_notes.clear()
-			#else: Clipboard.selected_notes.append(selected_note)
-			#update_visual()
 		if Clipboard.selected_notes.is_empty():return
 		if Global.current_tool != Enums.TOOL.SELECT: return
 		if move_pos:
@@ -133,11 +116,6 @@ func _on_gui_input(event):
 							if !Clipboard.selected_notes.has(selected_note):
 								Clipboard.selected_notes.append(selected_note)
 							update_visual()
-						#elif Clipboard.selected_notes.has(self):
-							#pass
-						#else:
-							#Clipboard.clear_clipboard()
-							#update_visual()
 					else:
 						Global.project_saved = false
 					if Global.current_tool == Enums.TOOL.VOICE:
@@ -175,7 +153,6 @@ func _on_gui_input(event):
 						update_position()
 						if mouse_pos_start != selected_note['data']['timestamp']: 
 							Global.project_saved = false
-						#selected_note = null
 						mouse_pos_start = 0
 						mouse_pos_end = 0 
 						move_pos = false
