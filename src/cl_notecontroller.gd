@@ -55,6 +55,7 @@ func _on_chart_loaded():
 		var new_note = Prefabs.note.instantiate()
 		new_note.setup(note)
 		$Notes.add_child(new_note)
+	Timeline.update_visuals()
 
 func _on_song_loaded():
 	modifier_count = Timeline.modifier_track.get_child_count()

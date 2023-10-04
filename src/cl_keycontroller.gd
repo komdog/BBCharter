@@ -52,7 +52,7 @@ func spawn_keyframes(section_name: String, prefab: PackedScene, parent: Node):
 			spawn_single_keyframe(keyframe_data, prefab, parent)
 	else:
 		Save.keyframes[section_name] = []
-	Timeline.update_visuals()
+	#Timeline.update_visuals()
 
 func spawn_single_keyframe(keyframe_data, prefab: PackedScene, parent: Node):
 	var new_keyframe = prefab.instantiate()

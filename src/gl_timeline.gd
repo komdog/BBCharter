@@ -145,8 +145,9 @@ func update_visuals():
 		if x+1 == Timeline.animations_track.get_children().size():
 			ref_bg.size = ref_thumb.get_rect().size
 			ref_bg.position = Vector2(-ref_bg.size.x, -ref_bg.size.y / 2) ## Reset size and pos
-			
-			ref_bg.size.x = abs(Timeline.note_container.get_children().back().position.x) / ref.scale.x
+			print(Timeline.note_container.get_children().back().position.x, ref_bg.position.x)
+			ref_bg.size.x = abs(Timeline.note_container.get_children().back().position.x - ref.position.x) / ref.scale.x
+			print(ref_bg.size.x)
 			ref_bg.position.x += ref_thumb.get_rect().size.x
 			ref_bg.position.y = ref_bg.size.y / 2
 			break
