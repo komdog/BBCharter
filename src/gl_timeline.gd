@@ -138,6 +138,8 @@ func update_visuals():
 	var ref_thumb
 	var frame_size_ref
 	var ref_arr : Array = Timeline.animations_track.get_children()
+	var note_arr : Array = Timeline.note_container.get_children()
+	
 	ref_arr.sort_custom(func(a, b): return a['data']['timestamp'] < b['data']['timestamp'])
 	for x in ref_arr.size():
 		frame_size_ref = ref_arr[x].frame_size
@@ -145,12 +147,12 @@ func update_visuals():
 		ref_bg = ref_arr[x].get_node("Background")
 		ref_thumb = ref_arr[x].get_node("Thumb")
 		
+		if note_arr == null or note_arr.is_empty() : return
+		
 		if x+1 == ref_arr.size():
 			ref_bg.size = ref_thumb.get_rect().size
 			ref_bg.position = Vector2(-ref_bg.size.x, -ref_bg.size.y / 2) ## Reset size and pos
-			print(Timeline.note_container.get_children().back().position.x, ref_bg.position.x)
-			ref_bg.size.x = abs(Timeline.note_container.get_children().back().position.x - ref.position.x) / ref.scale.x
-			print(ref_bg.size.x)
+			ref_bg.size.x = abs(note_arr.back().position.x - ref.position.x) / ref.scale.x
 			ref_bg.position.x += ref_thumb.get_rect().size.x
 			ref_bg.position.y = ref_bg.size.y / 2
 			break
@@ -164,9 +166,6 @@ func update_visuals():
 		ref_bg.size.x = abs(ref_next.position.x - ref.position.x) / ref.scale.x
 		ref_bg.position.x += ref_thumb.get_rect().size.x
 		ref_bg.position.y = ref_bg.size.y / 2
-	for x in Timeline.animations_track.get_children().size():
-		print(x,": ",ref_arr[x].get_node("Background").size, ref_arr[x].get_node("Background").position)
-		pass
 
 
 func _input(event):
