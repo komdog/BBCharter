@@ -58,6 +58,7 @@ func spawn_single_keyframe(keyframe_data, prefab: PackedScene, parent: Node):
 	var new_keyframe = prefab.instantiate()
 	new_keyframe.setup(keyframe_data)
 	parent.add_child(new_keyframe)
+	Timeline.update_visuals()
 
 # Create the indicators / Seperators in the timeline
 func create_ui():

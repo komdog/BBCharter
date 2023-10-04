@@ -91,6 +91,7 @@ func delete_keyframe(section: String, node: Node2D, idx: int):
 		print("Deleting %s %s at %s (index %s)" % [section, node, node.data['timestamp'],idx])
 		Save.keyframes[section].remove_at(idx)
 		node.queue_free()
+	await get_tree().process_frame
 	update_visuals()
 
 func delete_keyframes(section: String, parent: Node):
@@ -136,13 +137,15 @@ func update_visuals():
 	var ref_next
 	var ref_thumb
 	var frame_size_ref
-	for x in Timeline.animations_track.get_children().size():
-		frame_size_ref = Timeline.animations_track.get_children()[x].frame_size
-		ref = Timeline.animations_track.get_children()[x]
-		ref_bg = Timeline.animations_track.get_children()[x].get_node("Background")
-		ref_thumb = Timeline.animations_track.get_children()[x].get_node("Thumb")
+	var ref_arr : Array = Timeline.animations_track.get_children()
+	ref_arr.sort_custom(func(a, b): return a['data']['timestamp'] < b['data']['timestamp'])
+	for x in ref_arr.size():
+		frame_size_ref = ref_arr[x].frame_size
+		ref = ref_arr[x]
+		ref_bg = ref_arr[x].get_node("Background")
+		ref_thumb = ref_arr[x].get_node("Thumb")
 		
-		if x+1 == Timeline.animations_track.get_children().size():
+		if x+1 == ref_arr.size():
 			ref_bg.size = ref_thumb.get_rect().size
 			ref_bg.position = Vector2(-ref_bg.size.x, -ref_bg.size.y / 2) ## Reset size and pos
 			print(Timeline.note_container.get_children().back().position.x, ref_bg.position.x)
@@ -152,7 +155,7 @@ func update_visuals():
 			ref_bg.position.y = ref_bg.size.y / 2
 			break
 		
-		ref_next = Timeline.animations_track.get_children()[x+1]
+		ref_next = ref_arr[x+1]
 
 		
 		ref_bg.size = ref_thumb.get_rect().size
@@ -162,7 +165,7 @@ func update_visuals():
 		ref_bg.position.x += ref_thumb.get_rect().size.x
 		ref_bg.position.y = ref_bg.size.y / 2
 	for x in Timeline.animations_track.get_children().size():
-		print(x,": ",Timeline.animations_track.get_children()[x].get_node("Background").size, Timeline.animations_track.get_children()[x].get_node("Background").position)
+		print(x,": ",ref_arr[x].get_node("Background").size, ref_arr[x].get_node("Background").position)
 		pass
 
 
