@@ -52,11 +52,11 @@ func _process(_delta):
 	visible = global_position.x >= Global.note_culling_bounds.x and global_position.x < Global.note_culling_bounds.y
 	$Selected.visible = Clipboard.selected_notes.has(self)
 	if global_position.x >= 960 and !hit:
-		print("Hit?")
+		#print("Hit?")
 		Events.emit_signal('hit_note', data)
 		hit = true
 	elif global_position.x < 960 and hit:
-		print("Hit?2")
+		#print("Hit?2")
 		Events.emit_signal('miss_note', data)
 		hit = false
 	
