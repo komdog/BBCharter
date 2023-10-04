@@ -164,9 +164,8 @@ func update_visuals():
 		ref_bg.size.x = abs(ref_next.position.x - ref.position.x) / ref.scale.x
 		ref_bg.position.x += ref_thumb.get_rect().size.x
 		ref_bg.position.y = ref_bg.size.y / 2
-	for x in Timeline.animations_track.get_children().size():
+	for x in Timeline.animations_track.get_child_count():
 		print(x,": ",ref_arr[x].get_node("Background").size, ref_arr[x].get_node("Background").position)
-		pass
 
 
 func _input(event):
