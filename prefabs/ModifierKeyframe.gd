@@ -93,6 +93,7 @@ func _on_input_handler_gui_input(event):
 
 func _input(event):
 	if $LineEdit.visible and event is InputEventMouseButton and event.pressed:
+		if event.button_index == MOUSE_BUTTON_MIDDLE: return
 		if (get_window().get_mouse_position().x < $LineEdit.global_position.x
 		or get_window().get_mouse_position().x > $LineEdit.global_position.x + $LineEdit.size.x
 		or get_window().get_mouse_position().y < $LineEdit.global_position.y

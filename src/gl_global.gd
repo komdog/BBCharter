@@ -20,9 +20,11 @@ var difficulty_index: int
 var mods_need_reapply: bool
 
 # Realtime Info
+var song_playing: bool
 var song_pos: float
 var song_length: float
 var mouse_pos: float
+var song_pitch_speed: float
 
 var song_beats_total: int
 var zoom_factor: float
@@ -141,6 +143,19 @@ func get_beat_at_time(time: float) -> float:
 			break
 		idx += 1
 	return bpm_beatstamps[idx-1] + ((time - bpm_timestamps[idx-1]) * (bpms[idx-1] / 60.0))
+
+func scratch_playback(ev, ref:AudioStreamPlayer):
+	var pitch_scratch : float
+	if Timeline.scroll:
+		if ev is InputEventMouseMotion:
+			pitch_scratch = ev.velocity.x / 10000
+			if sign(pitch_scratch) < 0:
+				print("exception check ", ref.pitch_scale)
+				if ref.pitch_scale < 0.1 : return # Exception check
+				ref.pitch_scale += pitch_scratch
+			ref.pitch_scale = clampf(ref.pitch_scale, 0.0001, 1.0)
+	else:
+		ref.pitch_scale = 1.0
 
 func get_time_at_beat(beat: float) -> float:
 	var idx = 1

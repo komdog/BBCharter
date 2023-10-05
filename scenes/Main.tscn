@@ -1,4 +1,4 @@
-[gd_scene load_steps=82 format=3 uid="uid://bo2pso1k2xik8"]
+[gd_scene load_steps=86 format=3 uid="uid://bo2pso1k2xik8"]
 
 [ext_resource type="Theme" uid="uid://cehpee20dikgi" path="res://themes/main_theme.tres" id="1_71y40"]
 [ext_resource type="Script" path="res://src/cl_main.gd" id="2_ca1lw"]
@@ -198,6 +198,32 @@ bg_color = Color(0, 0, 0, 1)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_pc1s3"]
 texture = ExtResource("5_dqdvp")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_11a35"]
+bg_color = Color(0, 0, 0, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mg6ra"]
+content_margin_left = 70.0
+content_margin_right = 70.0
+bg_color = Color(0.427451, 0.427451, 0.427451, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s2020"]
+bg_color = Color(0.717647, 0.717647, 0.717647, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v02rj"]
+bg_color = Color(0.427451, 0.427451, 0.427451, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ji2dx"]
 
@@ -582,6 +608,7 @@ offset_top = 616.0
 offset_right = 1920.0
 offset_bottom = 672.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_8ujmx")
+script = ExtResource("11_ycej5")
 
 [node name="TimeCode" type="Label" parent="BottomBar"]
 layout_mode = 1
@@ -598,7 +625,21 @@ theme_override_font_sizes/font_size = 24
 text = "00:00.000 : 00:00.000"
 horizontal_alignment = 2
 vertical_alignment = 1
-script = ExtResource("11_ycej5")
+
+[node name="PlaybackSpeed" type="Label" parent="BottomBar"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 303.0
+offset_top = -22.0
+offset_right = 357.0
+offset_bottom = 23.0
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("7_yw7ih")
+theme_override_font_sizes/font_size = 24
+text = "x1.0"
+vertical_alignment = 1
 
 [node name="Snapping" type="OptionButton" parent="BottomBar"]
 layout_mode = 1
@@ -665,7 +706,6 @@ horizontal_scroll_mode = 0
 metadata/_edit_use_anchors_ = true
 
 [node name="KeyContainer" type="VBoxContainer" parent="Timeline/KeyTimeline"]
-clip_contents = true
 custom_minimum_size = Vector2(1912, 448)
 layout_mode = 2
 theme_override_constants/separation = 0
@@ -893,14 +933,14 @@ position = Vector2(960, 552)
 [node name="NoteTimeline" type="Panel" parent="Timeline"]
 modulate = Color(0.815686, 0.815686, 0.815686, 1)
 layout_mode = 1
-anchors_preset = 15
+anchors_preset = -1
+anchor_top = 0.463236
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 189.0
-offset_bottom = 0.000488281
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_fxxnx")
+metadata/_edit_use_anchors_ = true
 
 [node name="NoteLine" type="Line2D" parent="Timeline/NoteTimeline"]
 position = Vector2(960, 104)
@@ -958,34 +998,63 @@ width = 5.0
 default_color = Color(0.619608, 0.027451, 0.266667, 1)
 
 [node name="NoteScroller" type="ColorRect" parent="Timeline/NoteTimeline"]
-visible = false
 z_index = 1
+clip_contents = true
 layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
+anchors_preset = -1
+anchor_top = 0.853881
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -960.0
-offset_top = -16.0
-offset_right = 960.0
 grow_horizontal = 2
 grow_vertical = 0
 color = Color(0.3, 0.3, 0.3, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="Map" type="HBoxContainer" parent="Timeline/NoteTimeline/NoteScroller"]
+modulate = Color(0.45098, 0.45098, 0.45098, 0.733333)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -76.0
+offset_bottom = 76.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+metadata/_edit_lock_ = true
+
+[node name="ColorRect3" type="ColorRect" parent="Timeline/NoteTimeline/NoteScroller/Map"]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+size_flags_horizontal = 3
+color = Color(0.301961, 0.560784, 0.388235, 1)
+
+[node name="ColorRect4" type="ColorRect" parent="Timeline/NoteTimeline/NoteScroller/Map"]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+size_flags_horizontal = 3
+color = Color(0.447059, 0.403922, 0.92549, 1)
+
+[node name="ColorRect5" type="ColorRect" parent="Timeline/NoteTimeline/NoteScroller/Map"]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+size_flags_horizontal = 3
+color = Color(0.823529, 0.2, 0.572549, 1)
 
 [node name="HScrollBar" type="HScrollBar" parent="Timeline/NoteTimeline/NoteScroller"]
 layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
+anchors_preset = 15
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 960.0
-offset_top = -16.0
-offset_right = 2880.0
+offset_left = 1920.0
+offset_right = 1920.0
 grow_horizontal = 2
-grow_vertical = 0
+grow_vertical = 2
 scale = Vector2(-1, 1)
+theme_override_styles/scroll = SubResource("StyleBoxFlat_11a35")
+theme_override_styles/grabber = SubResource("StyleBoxFlat_mg6ra")
+theme_override_styles/grabber_highlight = SubResource("StyleBoxFlat_s2020")
+theme_override_styles/grabber_pressed = SubResource("StyleBoxFlat_v02rj")
 step = 0.001
 script = ExtResource("26_31a3u")
 

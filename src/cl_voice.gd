@@ -18,6 +18,9 @@ func _on_chart_loaded():
 	voice_trigger_index = 0; last_voice_trigger_index = 0
 	change_bank(voice_bank_index)
 
+func _input(event):
+	Global.scratch_playback(event, self)
+
 func _process(_delta):
 	var arr = Global.current_chart.filter(func(note): return Global.song_pos >= note['timestamp'] and note.get('trigger_voice', false))
 	voice_trigger_index = arr.size()

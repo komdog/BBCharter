@@ -23,3 +23,6 @@ func run_sound(idx: int):
 	var sound = Save.keyframes['sound_oneshot'][idx]['path']
 	stream = Assets.get_asset(sound)
 	play()
+
+func _input(event):
+	Global.scratch_playback(event, self)

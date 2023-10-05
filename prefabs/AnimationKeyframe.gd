@@ -54,7 +54,6 @@ func setup(keyframe_data):
 func update_position():
 	data['timestamp'] = Global.get_time_at_beat(beat)
 	position.x = -((data['timestamp'] - Global.offset) * Global.note_speed)
-	#Timeline.update_visuals()
 
 func update_beat_and_position(time: float):
 	beat = Global.get_beat_at_time(time)

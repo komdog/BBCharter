@@ -136,13 +136,11 @@ func update_visuals():
 	var ref_bg
 	var ref_next
 	var ref_thumb
-	var frame_size_ref
 	var ref_arr : Array = Timeline.animations_track.get_children()
 	var note_arr : Array = Timeline.note_container.get_children()
 	
 	ref_arr.sort_custom(func(a, b): return a['data']['timestamp'] < b['data']['timestamp'])
 	for x in ref_arr.size():
-		frame_size_ref = ref_arr[x].frame_size
 		ref = ref_arr[x]
 		ref_bg = ref_arr[x].get_node("Background")
 		ref_thumb = ref_arr[x].get_node("Thumb")

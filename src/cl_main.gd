@@ -14,6 +14,8 @@ func _ready():
 	
 	get_viewport().files_dropped.connect(on_files_dropped)
 	
+	Timeline.note_timeline.gui_input.connect(input_test)
+	
 	for x in Timeline.key_container.get_children():
 		if x.get_class() == "Panel":
 			x.gui_input.connect(input_test)
@@ -62,16 +64,20 @@ func _on_note_timeline_gui_input(event):
 			print("clearing buffer")
 			Clipboard.clear_clipboard()
 			Events.emit_signal('update_position')
-	check_drag(event)
+	#check_drag(event)
 
 func check_drag(event):
 	if event is InputEventMouseButton:
 		if event.pressed and event.button_mask == MOUSE_BUTTON_MASK_MIDDLE:
-				Timeline.key_timeline.mouse_default_cursor_shape = CURSOR_DRAG
+				for x in Timeline.timeline_ui:
+					if Timeline.check_gui_mouse(x):
+						x.mouse_default_cursor_shape = CURSOR_DRAG
 				Timeline.note_timeline.mouse_default_cursor_shape = CURSOR_DRAG
 				Timeline.scroll = true
 		elif (!event.pressed):
-				Timeline.key_container.mouse_default_cursor_shape = CURSOR_ARROW
+				for x in Timeline.timeline_ui: ## For stubborn multinested KeyContainer
+					if Timeline.check_gui_mouse(x):
+						x.mouse_default_cursor_shape = CURSOR_ARROW
 				Timeline.note_timeline.mouse_default_cursor_shape = CURSOR_ARROW
 				Timeline.scroll = false
 	if event is InputEventMouseMotion:
