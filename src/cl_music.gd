@@ -29,6 +29,8 @@ func _process(_delta):
 		# Get raw song position for pausing
 		song_position_raw = (get_playback_position() + AudioServer.get_time_since_last_mix() - AudioServer.get_output_latency())
 		Timeline.note_scroller.value = song_position_raw
+	else:
+		pitch_scale = 1.0
 		
 	Global.song_pos = song_position_raw - Global.offset
 	Global.song_pitch_speed = pitch_scale

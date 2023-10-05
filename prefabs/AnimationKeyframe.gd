@@ -60,6 +60,7 @@ func update_beat_and_position(time: float):
 	data['timestamp'] = time
 	position.x = -((data['timestamp'] - Global.offset) * Global.note_speed)
 	Timeline.update_visuals()
+	Timeline.update_map()
 
 func _on_input_handler_gui_input(event):
 	if event is InputEventMouseButton:

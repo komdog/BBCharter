@@ -154,8 +154,8 @@ func scratch_playback(ev, ref:AudioStreamPlayer):
 				if ref.pitch_scale < 0.1 : return # Exception check
 				ref.pitch_scale += pitch_scratch
 			ref.pitch_scale = clampf(ref.pitch_scale, 0.0001, 1.0)
-	else:
-		ref.pitch_scale = 1.0
+		else:
+			ref.pitch_scale = 1.0
 
 func get_time_at_beat(beat: float) -> float:
 	var idx = 1

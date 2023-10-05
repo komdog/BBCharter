@@ -19,6 +19,7 @@ func _ready():
 	Timeline.marquee_selection_area = $"../../../MarqueeSelection/MarqueeSelectionShape"
 	Timeline.marquee_visible = $"../../../MarqueeSelection/MarqueeSelectionShape/MarqueeVisible"
 	
+	Timeline.note_scroller_map = $"../../NoteScroller/Map"
 	Timeline.note_timeline = $"../.."
 	Timeline.timeline_root = $"../../.."
 	Timeline.key_timeline = $"../../../KeyTimeline"
@@ -56,6 +57,7 @@ func _on_chart_loaded():
 		new_note.setup(note)
 		$Notes.add_child(new_note)
 	Timeline.update_visuals()
+	Timeline.update_map()
 
 func _on_song_loaded():
 	modifier_count = Timeline.modifier_track.get_child_count()

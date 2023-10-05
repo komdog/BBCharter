@@ -33,6 +33,7 @@ var inc_scale: float
 var scroll: bool = false
 
 var note_timeline: Panel
+var note_scroller_map: HBoxContainer
 var key_timeline: ScrollContainer
 var key_container: VBoxContainer
 var timeline_root: Control
@@ -93,6 +94,7 @@ func delete_keyframe(section: String, node: Node2D, idx: int):
 		node.queue_free()
 	await get_tree().process_frame
 	update_visuals()
+	update_map()
 
 func delete_keyframes(section: String, parent: Node):
 	for child in parent.get_children(): delete_keyframe(section, child, 0)
@@ -159,12 +161,44 @@ func update_visuals():
 
 		
 		ref_bg.size = ref_thumb.get_rect().size
+		print("Color: ", ref_bg.color)
 		ref_bg.position = Vector2(-ref_bg.size.x, -ref_bg.size.y / 2) ## Reset size and pos
 		
 		ref_bg.size.x = abs(ref_next.position.x - ref.position.x) / ref.scale.x
 		ref_bg.position.x += ref_thumb.get_rect().size.x
 		ref_bg.position.y = ref_bg.size.y / 2
+	
 
+func update_map():
+	var map_size : int = 0
+	var ref_arr : Array = Timeline.animations_track.get_children()
+	
+	ref_arr.sort_custom(func(a, b): return a['data']['timestamp'] < b['data']['timestamp'])
+	
+	if Timeline.note_scroller_map.get_children().size() > 0:
+		Global.clear_children(Timeline.note_scroller_map)
+	
+	for x in ref_arr.size():
+		#print(ref_arr[x].get_node("Background").size.x)
+		map_size += ref_arr[x].get_node("Background").size.x
+	print(map_size)
+	for x in range(ref_arr.size()-1, -1, -1):
+		var cell = ColorRect.new()
+		print(x)
+		cell.color = ref_arr[x].get_node("Background").color
+		cell.color.a = 1.0
+		cell.size_flags_horizontal = Control.SIZE_EXPAND
+		
+		# Cell size
+		cell.custom_minimum_size.y = 300
+		print(ref_arr[x].get_node("Background").size.x)
+		cell.custom_minimum_size.x = ((ref_arr[x].get_node("Background").size.x) / map_size) * Timeline.note_scroller.size.x
+		print("Cell Color: ", ref_arr[x].get_node("Background").color, cell.custom_minimum_size.x)
+		Timeline.note_scroller_map.add_child(cell)
+		pass
+	print(Timeline.note_scroller_map.get_children())
+	pass
+	
 
 func _input(event):
 	if Popups.open or Global.lock_timeline: return
@@ -203,7 +237,8 @@ func _input(event):
 					if event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
 						Global.note_speed = clampf(Global.note_speed - 10, 100, 1000 )
 					Events.emit_signal('update_notespeed')
-					update_visuals()	
+					update_visuals()
+					update_map()
 				else:
 					if check_gui_mouse(note_timeline):
 						# Seeking
@@ -278,4 +313,3 @@ func set_marquee(ev, obj):
 
 func check_gui_mouse(ref):
 	return ref.get_global_rect().has_point(get_viewport().get_mouse_position())
-
